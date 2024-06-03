@@ -4,4 +4,31 @@
     --fondo: #b5c0d0;
     --fondo-form: #F1EFEF;
     --botones-footer: #efbc9b;
+    --hover-primario: #faa47f;
 }
+
+.btn-primary{
+    background-color: var(--botones);
+    border-color: var(--botones);
+    color: black;
+}
+
+.btn-primary:hover{
+    background-color: var(--hover-primario);
+    border-color: var(--botones);
+    color: black;
+}
+
+.btn-dark{
+    background-color: var(--botones);
+    border-color: var(--botones);
+    color: black;
+}
+
+.btn-dark:hover{
+    background-color: var(--hover-primario);
+    border-color: var(--botones);
+    color: black;
+}
+
+
