@@ -1,0 +1,113 @@
+/*Estilos de la barra de navegacion*/
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #b5c0d0;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+    
+}
+header {
+    background-color: #63997A; 
+    width: 100%;
+    
+}
+nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap
+}
+img {
+    height: 100px; ;
+    margin-top: 5px;
+}
+.botones {
+    display: flex;
+    gap: 30px;
+    margin-left: 10px;
+    margin-right: 50px;
+}
+.boton-nav{
+    border: solid 1px;
+    border-color: black;
+    border-radius: 5px;
+    background-color: #FA7F4B;
+    height: 40px;
+    width: 150px;
+}
+button a {
+    text-decoration: none;
+    color: white;
+    font-size: 20px
+}
+button:hover {
+    background-color: #63997A;
+    
+}
+a:hover {
+    color: #1e0fa1;
+}
+
+/*Estilos del formulario*/
+
+.contenedor-form {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    margin: 100px;
+    background-color: #63997A;
+    color: white;
+    border-radius: 10px;
+    width: 600px;
+    border: solid white 1px;
+    
+}
+.form-iniciosesion {
+    display: flex;
+    flex-direction: column;
+    margin-left: 80px;
+    margin-right:80px;
+    margin-top: 10px;
+    margin-bottom: 40px;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+label {
+    font-size: 20px;
+}
+.boton-ingresar {
+    margin-top:  10px;
+    background-color:#FA7F4B;
+    color: white;
+    font-size: 20px;
+    border: solid 1px;
+    border-radius: 10px;
+    border-color: #ccc;
+    padding: 5px;
+    cursor: pointer;
+}
+input {
+    border-radius: 5px;
+    border: solid 1px #ccc;
+    color: black;
+    padding: 10px;
+    font-size: 16px;
+}
+.boton-ingresar:hover {
+    background-color: #ffa927;
+}
+h5 {
+    font-size: 20px;
+}
+h5 a {
+    color: #055a47;
+    font-size: 20px;
+}
