@@ -2,7 +2,7 @@
 body {
     margin: 0;
     padding: 0;
-    
+    background-color: #b5c0d0;
 }
 header {
     background-color: #63997A; 
@@ -44,9 +44,29 @@ a:hover {
 }
 
 
-
-
-
+/* Estilos para el main*/
+main {
+    margin: 20px;
+}
+.informacion {
+    margin: 30px;
+}
+h2{
+    display: flex;
+    justify-content: center;
+}
+.secciones {
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    
+}
+.section{
+    margin: 10px;
+    display: flex;
+    flex-direction: row;
+}
 
 
 /*Estilos para el footer*/
@@ -94,6 +114,9 @@ footer{
 
 
 @media screen and (max-width: 600px){
+    .seccion{
+        flex-direction: column;
+    }
     .botones-footer{
         align-items: center;
     }
