@@ -2,14 +2,16 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #b5c0d0;
+    background-color: #ECF2FF;
 }
+
 /* Estilos para el header*/
 header {
-    background-color: #63997A; 
+    background-color: #63997A;
     width: 100%;
-    
+
 }
+
 nav {
     display: flex;
     flex-direction: row;
@@ -17,17 +19,21 @@ nav {
     align-items: center;
     flex-wrap: wrap
 }
+
 img {
-    height: 100px; ;
+    height: 100px;
+    ;
     margin-top: 5px;
 }
+
 .botones {
     display: flex;
     gap: 30px;
     margin-left: 10px;
     margin-right: 50px;
 }
-.boton-nav{
+
+.boton-nav {
     border: solid 1px;
     border-color: black;
     border-radius: 5px;
@@ -35,15 +41,18 @@ img {
     height: 40px;
     width: 150px;
 }
+
 button a {
     text-decoration: none;
     color: white;
     font-size: 20px
 }
+
 button:hover {
     background-color: #63997A;
-    
+
 }
+
 a:hover {
     color: #8f185d;
 }
@@ -61,7 +70,8 @@ a:hover {
     display: flex;
     justify-content: center;
 }
-.profile{
+
+.profile {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -69,18 +79,21 @@ a:hover {
     margin-left: 7vh;
     margin-right: 7vh;
 }
-.profile-avatar-container{
+
+.profile-avatar-container {
     position: relative;
     width: 150px;
     height: 150px;
     border-radius: 50%;
 }
-.profile-avatar{
+
+.profile-avatar {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
-.edit-icon{
+
+.edit-icon {
     position: absolute;
     bottom: 10px;
     right: 10px;
@@ -90,25 +103,29 @@ a:hover {
     padding: 5px;
     cursor: pointer;
 }
-.edicion{
+
+.edicion {
     margin: 5vh;
     padding: 30px;
-    
+
 }
+
 .form-group {
     margin-bottom: 25px;
     display: flex;
-    flex-direction: row; 
+    flex-direction: row;
     align-items: center;
 }
+
 label {
     margin-right: 10px;
     flex: 1;
     font-size: 20px;
 }
+
 input[type="text"],
 input[type="email"],
-input[type=date]{
+input[type=date] {
     flex: 2;
     padding: 10px;
     font-size: 16px;
@@ -116,10 +133,12 @@ input[type=date]{
     border-radius: 6px;
     box-sizing: border-box;
 }
+
 .boton-guardado {
     display: flex;
     justify-content: center;
 }
+
 .boton-guardar {
     background-color: #FA7F4B;
     color: white;
@@ -129,28 +148,31 @@ input[type=date]{
     border-radius: 6px;
     cursor: pointer;
 }
-.boton-guardar:hover{
+
+.boton-guardar:hover {
     background-color: #ffa927;
-    
-    
-    
+
+
+
 }
 
 /*Estilos para el footer*/
-footer{
-    background-color: #63997A; 
+footer {
+    background-color: #63997A;
     padding: 20px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
 }
-.botones-footer{
+
+.botones-footer {
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
-.boton-footer{
+
+.boton-footer {
     width: 110px;
     height: 30px;
     padding: 12px;
@@ -158,58 +180,70 @@ footer{
     background-color: #efbc9b;
     border: 1px solid #fa7f4b;
     border-radius: 15px;
-    color: 1px  #444444;
+    color: 1px #444444;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.boton-footer:hover{
+
+.boton-footer:hover {
     background-color: #4F6F52;
     color: white;
     border: 1px solid #232323;
 
 }
-.info{
+
+.info {
     text-align: center;
-    
-    
+
+
 }
-.info h3{
+
+.info h3 {
     margin-bottom: 10px;
 }
-.info p{
+
+.info p {
     margin: 8px 0;
 }
-@media screen and (max-width:900px){
-    .Principal{
+
+@media screen and (max-width:900px) {
+    .Principal {
         flex-direction: column;
     }
 }
-@media screen and (max-width:600px){
-.botones{
-    flex-direction: column;
-}
-.Principal{
-    margin: 5vh;
-    flex-direction: column;
-}
-.form-group{
-    flex-direction: column;
-}
-label{
-    margin-right: 0;
-    margin-bottom: 5px;
-    flex: unset;
-}
-input[type="text"],
-input[type="email"],
-input[type="password"] {
-    flex: unset;
-}
-.botones-footer{
-    align-items: center;
-}
-.info{
-    flex: 1;
-}
+
+@media screen and (max-width:600px) {
+    .botones {
+        flex-direction: column;
+    }
+
+    .Principal {
+        margin: 5vh;
+        flex-direction: column;
+    }
+
+    .form-group {
+        flex-direction: column;
+    }
+
+    label {
+        margin-right: 0;
+        margin-bottom: 5px;
+        flex: unset;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+        flex: unset;
+    }
+
+    .botones-footer {
+        align-items: center;
+    }
+
+    .info {
+        flex: 1;
+    }
 }
