@@ -4,7 +4,7 @@ body {
     padding: 0;
     background-color: #b5c0d0;
 }
-/* Estilos para el header*/
+/* Estilos para el header*/ 
 header {
     background-color: #63997A; 
     width: 100%;
@@ -53,6 +53,14 @@ a:hover {
 .Principal{
     display: flex;
     flex-direction: row;
+    margin: 20px;
+    margin-left: 25vh;
+    margin-right: 25vh;
+    padding: 20px;
+    background-color: #63997a;
+    color: white;
+    border: 1px solid #ccc;
+    border-radius: 10px;
 }
 .profile{
     display: flex;
@@ -60,8 +68,8 @@ a:hover {
     align-items: center;
     
     margin-top: 50px;
-    margin-left: 80px;
-    margin-right: 50px;
+    margin-left: 7vh;
+    margin-right: 7vh;
     position: relative;
     width: 150px;
     height: 150px;
@@ -130,3 +138,52 @@ footer{
 .info p{
     margin: 8px 0;
 }
+
+@media screen and (max-width:950px){
+    .Principal {
+        flex-direction: column;
+        margin-left: 15vh;
+        margin-right: 15vh;
+    }
+    .datos-perfil{
+        font-size: 25px;
+    }
+
+}
+
+@media screen and (max-width:600px){
+    .botones{
+        flex-direction: column;
+    }
+    .Principal{
+        margin: 5vh;
+        flex-direction: column;
+        justify-content: center;
+        
+    }
+    .profile{
+        margin: 3vh;
+    }
+    .datos-perfil{
+        font-size: 18px;
+    }
+    .form-group{
+        flex-direction: column;
+    }
+    label{
+        margin-right: 0;
+        margin-bottom: 5px;
+        flex: unset;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+        flex: unset;
+    }
+    .botones-footer{
+        align-items: center;
+    }
+    .info{
+        flex: 1;
+    }
+    }

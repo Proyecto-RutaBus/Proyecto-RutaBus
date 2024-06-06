@@ -45,19 +45,29 @@ button:hover {
     
 }
 a:hover {
-    color: #1e0fa1;
+    color: #8f185d;
 }
 
 /*Estilos para el main*/
-.Principal{
+.Principal {
+    margin: 20px;
+    margin-left: 20vh;
+    margin-right: 20vh;
+    padding: 20px;
+    background-color: #63997A;
+    color: white;
+    border: 1px solid #ccc;
+    border-radius: 10px;
     display: flex;
-    flex-direction: row;
+    justify-content: center;
 }
 .profile{
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 50px;
+    margin-left: 7vh;
+    margin-right: 7vh;
 }
 .profile-avatar-container{
     position: relative;
@@ -75,9 +85,55 @@ a:hover {
     bottom: 10px;
     right: 10px;
     background-color: white;
+    color: #000;
     border-radius: 50%;
     padding: 5px;
     cursor: pointer;
+}
+.edicion{
+    margin: 5vh;
+    padding: 30px;
+    
+}
+.form-group {
+    margin-bottom: 25px;
+    display: flex;
+    flex-direction: row; 
+    align-items: center;
+}
+label {
+    margin-right: 10px;
+    flex: 1;
+    font-size: 20px;
+}
+input[type="text"],
+input[type="email"],
+input[type=date]{
+    flex: 2;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+.boton-guardado {
+    display: flex;
+    justify-content: center;
+}
+.boton-guardar {
+    background-color: #FA7F4B;
+    color: white;
+    padding: 10px 20px;
+    font-size: 20px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.boton-guardar:hover{
+    background-color: #ffa927;
+    
+    
+    
 }
 
 /*Estilos para el footer*/
@@ -123,4 +179,37 @@ footer{
 }
 .info p{
     margin: 8px 0;
+}
+@media screen and (max-width:900px){
+    .Principal{
+        flex-direction: column;
+    }
+}
+@media screen and (max-width:600px){
+.botones{
+    flex-direction: column;
+}
+.Principal{
+    margin: 5vh;
+    flex-direction: column;
+}
+.form-group{
+    flex-direction: column;
+}
+label{
+    margin-right: 0;
+    margin-bottom: 5px;
+    flex: unset;
+}
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    flex: unset;
+}
+.botones-footer{
+    align-items: center;
+}
+.info{
+    flex: 1;
+}
 }
