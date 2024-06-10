@@ -31,3 +31,24 @@
     color: black;
 }
 
+
+.navbar{
+    background-color: var(--nav-footer);
+}
+
+.container{
+    display: flex;
+    justify-content: space-between;
+}
+
+body{
+    background-color: var(--fondo);
+}
+
+main{
+    padding: 20px;
+}
+
+.contenedorbtn{
+    
+}

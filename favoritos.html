@@ -23,22 +23,22 @@
     <body>
         <header>
                 
-            <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <nav class="navbar navbar-expand-lg">
                 <!-- Container wrapper -->
                 <div class="container">
                     <!-- Navbar brand -->
                     <a class="navbar-brand me-2" href="https://mdbgo.com/">
                     <img
-                        src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp"
-                        height="16"
-                        alt="MDB Logo"
+                        src="src/logoRutaBus.png"
+                        height="70"
+                        alt="logoRutaBus"
                         loading="lazy"
                         style="margin-top: -1px;"
                     />
                     </a>
 
                     <div class="d-flex align-items-center">
-                        <button data-mdb-ripple-init type="button" class="btn btn-primary me-3 ">
+                        <button data-mdb-ripple-init type="button" class="btn btn-primary me-3">
                         Inicio
                         </button>
                         <a
@@ -56,7 +56,25 @@
             </nav>
             <!-- Navbar -->
         </header>
-        <main></main>
+        <main>
+            <div class="d-flex justify-content-evenly">
+                <div>
+                    <button type="button" class="btn btn-primary btn-floating" data-mdb-ripple-init style="background-color: rgb(190, 190, 190); border-color: black; color: black;" disabled>
+                        <i class="fas fa-1"></i>
+                    </button>
+                </div>
+                <div>
+                    <div class="card">
+                        <div class="card-body">This is some text within a card body.</div>
+                    </div>
+                </div>
+                <div class="contenedorbtn">
+                    <button type="button" class="btn btn-primary btn-floating" data-mdb-ripple-init style="background-color: rgb(190, 190, 190); border-color: black; color: black;">
+                        <i class="fas fa-bus"></i>
+                    </button>
+                </div>
+            </div>
+        </main>
         <footer>
             <!-- place footer here -->
         </footer>
