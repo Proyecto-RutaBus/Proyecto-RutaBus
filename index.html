@@ -16,6 +16,35 @@
             margin-left: 30px;
             margin-right: 30px ;
         }
+        #lineas {
+            margin-left: 85%;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #63997a;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+        .boton-lineas{
+            background-color: #fa7f4b;
+            border: 1px solid #4444;
+            color: white;
+            width: 160px;
+            height: 30px;
+            font-size: 14px;
+        }
+        .linea-item {
+    
+            cursor: pointer;
+            padding: 5px 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        .linea-item:hover {
+            background-color: #f0f0f0;
+        }
     </style>
 </head>
 
@@ -79,7 +108,12 @@
 
 
     <div id="mapa">
-
+    <div id="lineas">
+        <button class= "boton-lineas" onclick="toggleLineas()">Mostrar/Ocultar Líneas</button>
+        <div id="lista-lineas" style="display:none;">
+            <!-- Aquí se añadirán las líneas de autobús -->
+        </div>
+    </div>
     </div>
     
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
