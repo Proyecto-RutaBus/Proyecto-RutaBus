@@ -71,6 +71,8 @@ h2{
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+.seccion p{
     text-align: justify;
 }
 .seccion h3{
@@ -126,8 +128,8 @@ footer{
 }
 
 
-@media screen and (max-width: 600px){
-    .seccion{
+@media screen and (max-width: 900px){
+    .secciones{
         flex-direction: column;
     }
     .botones-footer{
