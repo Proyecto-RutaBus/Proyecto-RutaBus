@@ -5,6 +5,8 @@
     --fondo-form: #F1EFEF;
     --botones-footer: #efbc9b;
     --hover-primario: #faa47f;
+    --letras-favs: #d3fc63;
+
 }
 
 .btn-primary{
@@ -48,7 +50,8 @@ body{
 main{
     padding: 20px;
 }
-
-.contenedorbtn{
-    
+.card{
+    background-color: var(--nav-footer);
+    color: white;
 }
+
