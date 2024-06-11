@@ -22,7 +22,6 @@ nav {
 
 img {
     height: 100px;
-    ;
     margin-top: 5px;
 }
 
@@ -34,8 +33,7 @@ img {
 }
 
 .boton-nav {
-    border: solid 1px;
-    border-color: black;
+    border: solid 0px;
     border-radius: 5px;
     background-color: #FA7F4B;
     height: 40px;
@@ -49,12 +47,7 @@ button a {
 }
 
 button:hover {
-    background-color: #63997A;
-
-}
-
-a:hover {
-    color: #1e0fa1;
+    background-color: #ffdf61;
 }
 
 /*Estilos para el main */

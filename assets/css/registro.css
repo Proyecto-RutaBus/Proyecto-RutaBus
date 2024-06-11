@@ -50,13 +50,9 @@ button a {
 }
 
 button:hover {
-    background-color: #63997A;
-
+    background-color: #ffdf61;
 }
 
-a:hover {
-    color: #1e0fa1;
-}
 
 /* Estilos para el formulario */
 .Principal {

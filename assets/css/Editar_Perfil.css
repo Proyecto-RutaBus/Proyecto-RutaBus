@@ -49,13 +49,9 @@ button a {
 }
 
 button:hover {
-    background-color: #63997A;
-
+    background-color: #ffdf61;
 }
 
-a:hover {
-    color: #8f185d;
-}
 
 /*Estilos para el main*/
 .Principal {
