@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Reclamos</title>
+    <link rel="stylesheet" href="reclamos_peticiones.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Formulario de Reclamos</h1>
+        <form id="reclamoForm">
+            <label for="reclamo">Escriba su reclamo (máximo 300 palabras):</label>
+            <textarea id="reclamo" name="reclamo" rows="10" maxlength="3000" placeholder="Escriba su reclamo aquí..."></textarea>
+            <p id="wordCount">0 / 300 palabras</p>
+            <label for="archivo">Subir archivo:</label>
+            <input type="file" id="archivo" name="archivo">
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('reclamo').addEventListener('input', function () {
+            const wordCount = this.value.trim().split(/\s+/).length;
+            const wordCountDisplay = document.getElementById('wordCount');
+            if (wordCount > 300) {
+                wordCountDisplay.style.color = 'red';
+                wordCountDisplay.textContent = `300 palabras máximo alcanzado`;
+                this.value = this.value.split(/\s+/).slice(0, 300).join(" ");
+            } else {
+                wordCountDisplay.style.color = 'black';
+                wordCountDisplay.textContent = `${wordCount} / 300 palabras`;
+            }
+        });
+    </script>
+</body>
+</html>

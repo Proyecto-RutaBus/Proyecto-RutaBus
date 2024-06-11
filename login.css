@@ -1,7 +1,7 @@
 /*Estilos de la barra de navegación*/
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background-color: #b5c0d0;
+    background-color: #ECF2FF;
     margin: 0;
     padding: 0;
     height: 100%;
@@ -35,7 +35,6 @@ img {
 
 .boton-nav {
     border: solid 1px;
-    border-color: black;
     border-radius: 5px;
     background-color: #FA7F4B;
     height: 40px;
@@ -67,7 +66,8 @@ a:hover {
     color: white;
     border-radius: 10px;
     width: 600px;
-    border: solid white 1px;
+   
+    box-shadow: -1px -1px 6px 0 rgb(21, 83, 8), 4px 4px 16px 2px #0e345e; 
 }
 
 .form-iniciosesion {
@@ -82,6 +82,7 @@ a:hover {
 
 label {
     font-size: 20px;
+    
 }
 
 .boton-ingresar {
