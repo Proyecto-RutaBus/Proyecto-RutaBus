@@ -9,10 +9,11 @@ body {
 }
 
 .container {
-    background-color: #fff;
+    background-color: #63997A;
+    color: white;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: -1px -1px 6px 0 rgb(21, 83, 8), 4px 4px 16px 2px #0e345e;
     width: 90%;
     max-width: 500px;
     text-align: center;
@@ -32,9 +33,11 @@ form {
 label {
     margin-bottom: 10px;
     font-weight: bold;
+
 }
 
 textarea {
+    margin-top:10px ;
     width: 80%;
     
     padding: 10px;
@@ -52,20 +55,33 @@ button {
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
-    background-color: #007BFF;
+    background-color: #FA7F4B;
     color: white;
     cursor: pointer;
     font-size: 16px;
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #ffa927;
+}
+select {
+    margin-bottom: 10px;
+    width: 90px;
+    border: 1px solid #fff;
 }
 
-#wordCount {
+#wordCountReclamo, #wordCountPeticion {
     margin-bottom: 10px;
     font-size: 14px;
-    color: #555;
+    color: #000;
+}
+#notification {
+    margin-top: 20px;
+    background-color: #28a745;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    display: none;
 }
 
 /* Estilos Responsivos */
