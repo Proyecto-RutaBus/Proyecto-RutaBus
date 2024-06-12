@@ -14,12 +14,6 @@ body {
 header {
     background-color: #63997A;
     width: 100%;
-<<<<<<< HEAD
-=======
-}
-
-nav {
->>>>>>> dc270e1641e2f9e0c114f7d3d63bef47fab15978
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -72,12 +66,7 @@ a:hover {
     color: white;
     border-radius: 10px;
     width: 600px;
-<<<<<<< HEAD
-   
-    box-shadow: -1px -1px 6px 0 rgb(21, 83, 8), 4px 4px 16px 2px #0e345e; 
-=======
-    border: solid white 1px;
->>>>>>> dc270e1641e2f9e0c114f7d3d63bef47fab15978
+   box-shadow: -1px -1px 6px 0 rgb(21, 83, 8), 4px 4px 16px 2px #0e345e; 
 }
 
 .form-iniciosesion {
