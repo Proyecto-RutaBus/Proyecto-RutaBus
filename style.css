@@ -12,12 +12,6 @@ body {
 header {
     background-color: #63997A; 
     width: 100%;
-<<<<<<< HEAD
-=======
-}
-
-nav {
->>>>>>> dc270e1641e2f9e0c114f7d3d63bef47fab15978
     display: flex;
     flex-direction: row;
     justify-content: space-between;
