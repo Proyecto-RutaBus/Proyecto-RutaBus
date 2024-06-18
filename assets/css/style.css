@@ -1,18 +1,20 @@
 /* Estilos del Nav*/
 body {
+    font-family: Arial, Helvetica, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #b5c0d0;
+    background-color: #ecf2ff;
 }
 header {
     background-color: #63997A; 
-    display: flex;
+    width: 100%;
 }
 nav {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
 }
 img {
     height: 100px; ;
@@ -34,14 +36,13 @@ img {
 button a {
     text-decoration: none;
     color: white;
-    font-size: 18px
+    font-size: 20px
 }
-button:hover {
-    background-color: #63997A;
+.boton-nav:hover {
+    background-color: #ffdf61;
 }
-a:hover {
-    color: #1e0fa1;
-}
+
+
 
 
 /* Estilos para el main*/
@@ -56,19 +57,33 @@ h2{
     justify-content: center;
 }
 .secciones {
-    padding: 20px;
+    margin: 0;
+    gap: 15px;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     
 }
-.section{
-    margin: 10px;
+.seccion{
+    border: 4px solid hsl(0, 3%, 71%);
+    border-radius: 10px;
+    padding: 10px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    align-items: center;
 }
-
-
+.seccion p{
+    text-align: justify;
+}
+.seccion h3{
+    text-align: center;
+}
+.carousel-control-next:hover{
+    background-color: #63997A;
+}
+.carousel-control-prev:hover{
+    background-color: #63997A;
+}
 /*Estilos para el footer*/
 footer{
     background-color: #63997A; 
@@ -113,8 +128,8 @@ footer{
 }
 
 
-@media screen and (max-width: 600px){
-    .seccion{
+@media screen and (max-width: 900px){
+    .secciones{
         flex-direction: column;
     }
     .botones-footer{
