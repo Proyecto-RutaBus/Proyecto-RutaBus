@@ -1,0 +1,210 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #ECF2FF;
+}
+
+/* Estilos para el header*/
+header {
+    background-color: #63997A;
+    width: 100%;
+
+}
+
+nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap
+}
+
+img {
+    height: 100px;
+    margin-top: 5px;
+}
+
+.botones {
+    display: flex;
+    gap: 30px;
+    margin-left: 10px;
+    margin-right: 50px;
+}
+
+.boton-nav {
+    border: solid 0px;
+    border-radius: 5px;
+    background-color: #FA7F4B;
+    height: 40px;
+    width: 150px;
+}
+
+button a {
+    text-decoration: none;
+    color: white;
+    font-size: 20px
+}
+
+button:hover {
+    background-color: #ffdf61;
+}
+
+/*Estilos para el main */
+
+.Principal {
+    display: flex;
+    flex-direction: row;
+    margin: 20px;
+    margin-left: 25vh;
+    margin-right: 25vh;
+    padding: 20px;
+    background-color: #63997a;
+    color: white;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+.profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    margin-top: 50px;
+    margin-left: 7vh;
+    margin-right: 7vh;
+    position: relative;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+
+}
+
+.profile-avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.datos-perfil {
+    font-size: 30px;
+    margin: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+
+.datos-perfil p {
+    margin: 25px;
+    padding: 5px;
+}
+
+/*Estilos para el footer*/
+footer {
+    background-color: #63997A;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.botones-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.boton-footer {
+    width: 110px;
+    height: 30px;
+    padding: 12px;
+    text-align: center;
+    background-color: #efbc9b;
+    border: 1px solid #fa7f4b;
+    border-radius: 15px;
+    color: 1px #444444;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.boton-footer:hover {
+    background-color: #4F6F52;
+    color: white;
+    border: 1px solid #232323;
+
+}
+
+.info {
+    text-align: center;
+
+
+}
+
+.info h3 {
+    margin-bottom: 10px;
+}
+
+.info p {
+    margin: 8px 0;
+}
+
+@media screen and (max-width:950px) {
+    .Principal {
+        flex-direction: column;
+        margin-left: 15vh;
+        margin-right: 15vh;
+    }
+
+    .datos-perfil {
+        font-size: 25px;
+    }
+
+}
+
+@media screen and (max-width:600px) {
+    .botones {
+        flex-direction: column;
+    }
+
+    .Principal {
+        margin: 5vh;
+        flex-direction: column;
+        justify-content: center;
+
+    }
+
+    .profile {
+        margin: 3vh;
+    }
+
+    .datos-perfil {
+        font-size: 18px;
+    }
+
+    .form-group {
+        flex-direction: column;
+    }
+
+    label {
+        margin-right: 0;
+        margin-bottom: 5px;
+        flex: unset;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+        flex: unset;
+    }
+
+    .botones-footer {
+        align-items: center;
+    }
+
+    .info {
+        flex: 1;
+    }
+}
