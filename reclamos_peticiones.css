@@ -1,0 +1,106 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    background-color: #63997A;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: -1px -1px 6px 0 rgb(21, 83, 8), 4px 4px 16px 2px #0e345e;
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+label {
+    margin-bottom: 10px;
+    font-weight: bold;
+
+}
+
+textarea {
+    margin-top:10px ;
+    width: 80%;
+    
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    resize: none;
+}
+
+input[type="file"] {
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #FA7F4B;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #ffa927;
+}
+select {
+    margin-bottom: 10px;
+    width: 90px;
+    border: 1px solid #fff;
+}
+
+#wordCountReclamo, #wordCountPeticion {
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #000;
+}
+#notification {
+    margin-top: 20px;
+    background-color: #28a745;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    display: none;
+}
+
+/* Estilos Responsivos */
+@media (max-width: 600px) {
+    .container {
+        width: 100%;
+        padding: 15px;
+        box-shadow: none;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+
+    button {
+        font-size: 14px;
+    }
+
+    textarea {
+        font-size: 14px;
+    }
+}
