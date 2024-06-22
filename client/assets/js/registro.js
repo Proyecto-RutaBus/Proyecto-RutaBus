@@ -1,12 +1,13 @@
-document.getElementById('registroForm').addEventListener('submit', function(event) {
+document.getElementById('registroForm').addEventListener('submit', function(event){
     const nombre = document.getElementById('nombre').value;
     const apellido = document.getElementById('apellido').value;
+    const usuario = document.getElementById('usuario').value;
     const email = document.getElementById('email').value;
     const contraseña = document.getElementById('contraseña').value;
     const confirmarContraseña = document.getElementById('confirmar-contraseña').value;
 
     let errorMessage = '';
-    if (nombre === '' || apellido === '' || email === '' || contraseña === '' || confirmarContraseña === '') {
+    if (nombre === '' || apellido === '' || usuario === '' || email === '' || contraseña === '' || confirmarContraseña === '') {
         errorMessage = 'Todos los campos son obligatorios';
     } else if (contraseña.length < 6) {
         errorMessage = 'La contraseña debe tener al menos 6 caracteres';
@@ -51,3 +52,33 @@ function showAlert(message, success = false) {
     }
     alertBox.style.display = 'block';
 }
+
+// código que pasaron los profes
+
+ // Realizamos la peticion a nuestro servidor.
+ const peticion = await fetch('http://localhost:3000/register', {
+    method: 'POST',
+    body: JSON.stringify({nombre, apellido, usuario, email, contraseña}),
+    headers: {
+        'Content-type': 'application/json'
+    }
+})
+
+// Convertimos en json la respuesta.
+const respuesta = await peticion.json();
+
+// En caso de que falle la peticion, mostrar el mensaje de error.
+if(!peticion.ok){
+    alert(respuesta.msg)
+} else {
+
+    //Caso contrario, mostramos el mensaje.
+    alert(respuesta.msg)
+
+    // Redirigimos al usuario al login.
+    window.location.href = '/client/login.html'
+}
+
+
+
+form.addEventListener('submit', register);
