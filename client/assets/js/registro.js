@@ -52,33 +52,3 @@ function showAlert(message, success = false) {
     }
     alertBox.style.display = 'block';
 }
-
-// código que pasaron los profes
-
- // Realizamos la peticion a nuestro servidor.
- const peticion = await fetch('http://localhost:3000/register', {
-    method: 'POST',
-    body: JSON.stringify({nombre, apellido, usuario, email, contraseña}),
-    headers: {
-        'Content-type': 'application/json'
-    }
-})
-
-// Convertimos en json la respuesta.
-const respuesta = await peticion.json();
-
-// En caso de que falle la peticion, mostrar el mensaje de error.
-if(!peticion.ok){
-    alert(respuesta.msg)
-} else {
-
-    //Caso contrario, mostramos el mensaje.
-    alert(respuesta.msg)
-
-    // Redirigimos al usuario al login.
-    window.location.href = '/client/login.html'
-}
-
-
-
-form.addEventListener('submit', register);

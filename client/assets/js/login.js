@@ -14,7 +14,7 @@ const login = async (e) => {
     // Realizamos la peticion a nuestro servidor.
     const peticion = await fetch('http://localhost:3000/login', {
         method: 'POST',
-        body: JSON.stringify({usuario, contrasenia}),
+        body: JSON.stringify({correo, contrasenia}),
         headers: {
             'Content-type': 'application/json'
         }
