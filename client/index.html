@@ -8,59 +8,6 @@
     <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet" />
     <link rel="stylesheet" href="./assets/css/style.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <style>
-        #mapa {
-            border: 2px solid #4444;
-            height: 500px;
-            margin-left: 4vh;
-            margin-right: 4vh;
-            position: relative;
-        }
-        #lineas {
-            
-            position: absolute;
-            top: 2vh;
-            right: 2vh;
-            background: #63997a;
-            color: white;
-            padding: 5px;
-            border-radius: 5px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.2);
-            z-index: 1000;
-        }
-        .boton-lineas{
-            background-color: #fa7f4b;
-            border: 1px solid #4444;
-            color: white;
-            width: 160px;
-            height: 30px;
-            font-size: 14px;
-        }
-        .linea-item {
-            cursor: pointer;
-            padding: 5px 10px;
-            border-bottom: 1px solid #ccc;
-        }
-        .linea-item:hover {
-            background-color: #f0f0f0;
-            color: #000;
-        }
-        @media (max-width: 768px){
-            #lineas{
-                top: 1vh;
-                right: 1vh;
-                width: auto;
-                padding: 5px;
-            }
-            .boton-lineas{
-                width: auto;
-                font-size: 12px;
-                padding: 5px 10px;
-            }
-        }
-
-
-    </style>
 </head>
 <body>
     <header>
@@ -69,8 +16,18 @@
                 <img src="assets/img/Logo-nav.png" class="Logo" alt="">
             </div>
             <div class="botones">
-                <button class="boton-nav"><a href="./registro.html">Registrarse</a></button>
-                <button class="boton-nav"><a href="./login.html">Iniciar Sesion</a></button>
+                <button id="registerBtn" class="boton-nav"><a href="./registro.html">Registrarse</a></button>
+                <button id="loginBtn" class="boton-nav"><a href="./login.html">Iniciar Sesion</a></button>
+                <div id="userIcon" class="user-icon">
+                    <img src="assets/img/user-icon.png" alt="Usuario" onclick="toggleUserMenu()">
+                    <div id="userMenu" class="user-menu">
+                        <a href="./Ver_Perfil.html">Ver Perfil</a>
+                        <a href="./Editar_Perfil.html">Editar Perfil</a>
+                        <a href="./reclamos_peticiones.html">Reclamos/Peticiones</a>
+                        <a href="https://tarjetasube.sube.gob.ar/subeweb/webforms/account/views/login.aspx">Ver mi SUBE</a>
+                        <a href="#" onclick="logout()">Cerrar Sesión</a>
+                    </div>
+                </div>
             </div>
         </nav>
     </header>
@@ -137,6 +94,7 @@
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="assets/js/main.js"></script>
     
+    
     </main>
 
 
@@ -147,8 +105,8 @@
         </div>
         <div class="info">
             <h3>RutaBus</h3>
-            <p><a href="">Sobre Nosotros</a></p>
-            <p><a href="">Contacto</a></p>
+            <p><a href="./about.html">Sobre Nosotros</a></p>
+            <p><a href="./contacto.html">Contacto</a></p>
         </div>
     </footer>
 </body>

@@ -17,7 +17,7 @@ app.use(require('./routes/auth.routes'));
 
 
 
-const { newConnection } = require("./bd/database");
+const { newConnection } = require("./bd/BD");
 
 app.use(express.json());
 
@@ -38,7 +38,7 @@ app.get("/usuarios/:IdUsuario", async (request, response) => {
     connection.end();
 });
 
-// Crear un nuevo usuario
+/*/ Crear un nuevo usuario
 app.post("/usuarios", async (request, response) => {
     const connection = await newConnection();
     const { nombre, email, contrasenia, FecNac } = request.body;
@@ -50,18 +50,9 @@ app.post("/usuarios", async (request, response) => {
     await connection.query("INSERT INTO usuarios (nombre, email, contrasenia, FecNac) VALUES (?, ?, ?, ?)", [nombre, email, contrasenia, FecNac]);
     response.send("Usuario creado correctamente");
     connection.end();
-});
+}); */
 
-/*
-// Eliminar un usuario por su ID
-app.delete("/usuarios/:IdUsuario", async (request, response) => {
-    const connection = await newConnection();
-    const id = request.params.IdUsuario;
-    const results = await connection.query("DELETE FROM usuarios WHERE IdUsuario = ?", [id]);
-    response.json(results[0]);
-    connection.end();
-});
-*/
+
 
 app.listen(3000, () => {
     console.log("Servidor iniciado en el puerto 3000 http://localhost:3000");

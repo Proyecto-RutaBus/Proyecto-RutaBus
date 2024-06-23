@@ -106,3 +106,44 @@ const mapa = L.map('mapa').setView([-26.1849, -58.1731], 13);
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(mapa);
+
+
+// Logica para mostrar el icono de perfil una vez logeado
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Verificar el estado de inicio de sesión
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
+
+    const registerBtn = document.getElementById('registerBtn');
+    const loginBtn = document.getElementById('loginBtn');
+    const userIcon = document.getElementById('userIcon');
+
+    if (isLoggedIn) {
+        // Usuario ha iniciado sesión, ocultar botones de registro e inicio de sesión, mostrar icono de usuario
+        registerBtn.style.display = 'none';
+        loginBtn.style.display = 'none';
+        userIcon.style.display = 'block';
+    } else {
+        // Usuario no ha iniciado sesión, mostrar botones de registro e inicio de sesión, ocultar icono de usuario
+        registerBtn.style.display = 'block';
+        loginBtn.style.display = 'block';
+        userIcon.style.display = 'none';
+    }
+});
+
+function logout() {
+    // Al cerrar sesión, eliminamos el estado de inicio de sesión y recargamos la página
+    localStorage.removeItem('isLoggedIn');
+    location.reload();
+}
+
+function toggleUserMenu() {
+    const userMenu = document.getElementById('userMenu');
+    userMenu.style.display = userMenu.style.display === 'block' ? 'none' : 'block';
+}
+
+// Función de ejemplo para iniciar sesión (debería ser reemplazada por una llamada a tu API de autenticación)
+function login() {
+    localStorage.setItem('isLoggedIn', true);
+    location.reload();
+}

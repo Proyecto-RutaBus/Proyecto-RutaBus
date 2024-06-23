@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./assets/css/contacto.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div>
+                <a href="./index.html"><img src="./assets/img/Logo-nav.png" class="Logo" alt=""></a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="contact-section">
+            <h1>Contacto</h1>
+            <p>¿Tienes alguna pregunta o comentario? <br>Nos encantaría saber de ti. Completa el formulario a continuación y nos pondremos en contacto contigo lo antes posible.</p>
+
+            <div class="contact-form">
+                <form id="contactForm">
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="nombre" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Correo Electrónico</label>
+                        <input type="email" class="form-control" id="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="mensaje" class="form-label">Mensaje</label>
+                        <textarea class="form-control" id="mensaje" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="boton-enviar">Enviar</button>
+                </form>
+            </div>
+
+            <div class="contact-info">
+                <h2>Información de Contacto</h2>
+                <p>Email: contacto@rutabus.com</p>
+                <p>Teléfono: +123 456 7890</p>
+                <p>Dirección: Polo cientifico, Ciudad Formosa, País Argentina</p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const nombre = document.getElementById('nombre').value;
+            const email = document.getElementById('email').value;
+            const mensaje = document.getElementById('mensaje').value;
+
+            // Aquí puedes agregar la lógica para enviar el formulario al servidor
+            // utilizando Fetch API o AJAX.
+
+            alert('Gracias por contactarnos, ' + nombre + '. Hemos recibido tu mensaje.');
+        });
+    </script>
+
+</body>
+</html>

@@ -1,4 +1,4 @@
-document.getElementById('registroForm').addEventListener('submit', function(event){
+document.getElementById('registroForm').addEventListener('submit', async function(event){
     const nombre = document.getElementById('nombre').value;
     const apellido = document.getElementById('apellido').value;
     const usuario = document.getElementById('usuario').value;
@@ -19,9 +19,28 @@ document.getElementById('registroForm').addEventListener('submit', function(even
         event.preventDefault(); // Prevenir el envío del formulario si hay un error
         showAlert(errorMessage);
     } else {
-        // Aquí prevenimos el envío para mostrar la alerta y luego redirigimos
-        event.preventDefault();
-        showAlert('Formulario enviado correctamente', true);
+        event.preventDefault(); // Prevenir el envío del formulario mientras se realiza la petición
+        
+        // Realizamos la petición a nuestro servidor.
+        try {
+            const peticion = await fetch('http://localhost:3000/register', {
+                method: 'POST',
+                body: JSON.stringify({ nombre, apellido, usuario, correo: email, contrasenia: contraseña }),
+                headers: {
+                    'Content-type': 'application/json'
+                }
+            });
+
+            const respuesta = await peticion.json();
+
+            if (!peticion.ok) {
+                showAlert(respuesta.msg);
+            } else {
+                showAlert(respuesta.msg, true);
+            }
+        } catch (error) {
+            showAlert('Error en la conexión con el servidor');
+        }
     }
 });
 
