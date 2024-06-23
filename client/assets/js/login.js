@@ -8,7 +8,7 @@ const login = async (e) => {
     e.preventDefault();
 
     // Tomamos los valores de los inputs.
-    const correo = document.getElementById('correo').value;
+    const correo = document.getElementById('usuario').value;
     const contrasenia = document.getElementById('contraseña').value;
     
     // Realizamos la peticion a nuestro servidor.

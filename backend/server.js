@@ -17,7 +17,7 @@ app.use(require('./routes/auth.routes'));
 
 
 
-const { newConnection } = require("./bd/database");
+const { newConnection } = require("./bd/BD");
 
 app.use(express.json());
 
