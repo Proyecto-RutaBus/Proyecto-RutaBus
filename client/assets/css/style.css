@@ -72,6 +72,13 @@ h2{
     flex-direction: column;
     align-items: center;
 }
+.seccion:hover{
+    background-color: #63997A;
+    color: white;
+    border:none;
+    padding: 18px;
+    font-size: 18px;
+}
 .seccion p{
     text-align: justify;
 }
