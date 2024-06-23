@@ -1,4 +1,4 @@
-const { newConnection } = require("../db/BD");
+const { newConnection } = require("../bd/BD");
 const bcrypt = require('bcrypt');
 const generarJWT = require("../helpers/generarJWT");
 
