@@ -112,7 +112,7 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 document.addEventListener('DOMContentLoaded', () => {
     // Verificar el estado de inicio de sesión
-    const isLoggedIn = localStorage.getItem('isLoggedIn');
+    const isLoggedIn = localStorage.getItem('token');
 
     const registerBtn = document.getElementById('registerBtn');
     const loginBtn = document.getElementById('loginBtn');
@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function logout() {
     // Al cerrar sesión, eliminamos el estado de inicio de sesión y recargamos la página
-    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('token');
     location.reload();
 }
 

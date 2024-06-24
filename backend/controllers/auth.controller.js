@@ -15,13 +15,13 @@ ctrl.registro = async (req, res) =>{
     const connection = await newConnection();
 
     // Creamos la consulta.
-    const sql = 'INSERT INTO USUARIOS (nombre, apellido, usuario, correo, contrasenia) VALUES (?,?,?,?,?)';
+    const sql = 'INSERT INTO USUARIOS (nombre, email, contrasenia) VALUES (?,?,?)';
 
     // Encriptamos la contraseña utilizando la libreria bcrypt.
     const hashContrasenia = bcrypt.hashSync(contrasenia, 10); // El segundo parametro es el numero de veces que se ejecuta el algoritmo de encriptación.
 
     // Ejecutamos la consulta.
-    await connection.query(sql, [nombre, apellido, usuario, correo, hashContrasenia]);
+    await connection.query(sql, [nombre, correo, hashContrasenia]);
 
     // Respondemos a nuestro cliente
     res.json({
@@ -36,7 +36,7 @@ ctrl.login = async (req, res) => {
     const connection = await newConnection();
 
     // Buscamos el usuario en la bd.
-    const sql = 'SELECT * FROM USUARIOS WHERE CORREO=? LIMIT 1';
+    const sql = 'SELECT * FROM USUARIOS WHERE EMAIL=? LIMIT 1';
 
     const [buscarUsuario] = await connection.query(sql, correo);
     
@@ -58,7 +58,7 @@ ctrl.login = async (req, res) => {
     }
 
     // Hacemos uso del helper para generar el token y le pasamos el id.
-    const token = await generarJWT({id: buscarUsuario[0].id});
+    const token = await generarJWT({id: buscarUsuario[0].IdUsuario});
 
     //Retornamos el token con un mensaje al cliente.
     return res.json({
