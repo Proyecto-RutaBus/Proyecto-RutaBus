@@ -202,7 +202,7 @@ footer{
 /* Estilos para el icono del perfil */
 .user-icon {
     display: none; /* Oculto por defecto */
-    position: relative;
+    position:absolute;
 }
 .user-menu {
     display: none; /* Oculto por defecto */
@@ -223,3 +223,4 @@ footer{
 .user-menu a:hover {
     background-color: #ddd;
 }
+
