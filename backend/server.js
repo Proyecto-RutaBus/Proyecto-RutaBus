@@ -38,7 +38,7 @@ app.get("/usuarios/:IdUsuario", async (request, response) => {
     connection.end();
 });
 
-/*/ Crear un nuevo usuario
+/* / Crear un nuevo usuario
 app.post("/usuarios", async (request, response) => {
     const connection = await newConnection();
     const { nombre, email, contrasenia, FecNac } = request.body;
