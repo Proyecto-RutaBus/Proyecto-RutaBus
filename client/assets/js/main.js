@@ -113,12 +113,12 @@ function mostrarLinea(linea) {
     linea.paradas.forEach(parada => {
         let contenidoPopup = `
             <div style="display: flex; align-items: center;">
-                <img src="./assets/img/icono-favorito.png" alt="Estrella-favorito" style="width: 20px; height: 20px; margin-right: 5px;">
+                <img src="./assets/img/icono-favorito.png" alt="Estrella-favorito" style="width: 30px; height: 30px; margin-right: 5px;">
                 <div>
                     ${parada.nombre}
                     ${parada.info ? `<br>${parada.info}` : ''}
                 </div>
-                <img src="./assets/img/icono-colectivo.png" alt="Colectivo" style="width: 20px; height: 20px; margin-left: 5px;">
+                <img src="./assets/img/icono-colectivo.png" alt="Colectivo" style="width: 30px; height: 30px; margin-left: 5px;">
             </div>
         `;
         let marker = L.marker(parada.coordenadas).bindPopup(contenidoPopup);
