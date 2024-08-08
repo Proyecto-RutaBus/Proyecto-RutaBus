@@ -1,21 +1,21 @@
 // Ejemplo de líneas de autobús
 const lineas = [
     {
-        "nombre": "Línea 60",
-        "paradas": [
-            { "nombre": "Parada 1", "coordenadas": [-26.150057, -58.156032] },
-            { "nombre": "Parada 2", "coordenadas": [-26.151816, -58.161610] },
-            { "nombre": "Parada 3", "coordenadas": [-26.154955, -58.171390] },
-            { "nombre": "Parada 4", "coordenadas": [-26.157726, -58.180089] },
-            { "nombre": "Parada 5", "coordenadas": [-26.159407, -58.184959] },
-            { "nombre": "Parada 6", "coordenadas": [-26.168623, -58.183210] },
-            { "nombre": "Parada 7", "coordenadas": [-26.171480, -58.190590] },
-            { "nombre": "Parada 8", "coordenadas": [-26.174704, -58.189294] },
-            { "nombre": "Parada 9", "coordenadas": [-26.180525, -58.189448] },
-            { "nombre": "Parada 10", "coordenadas": [-26.184292, -58.200978] },
-            { "nombre": "Parada 11", "coordenadas": [-26.190323, -58.219654] }
+        nombre: "Línea 60",
+        paradas:  [
+            { "nombre": "Parada 1", "coordenadas": [-26.150057, -58.156032], "info": "Avenida 1 - Avenida 2" },
+            { "nombre": "Parada 2", "coordenadas": [-26.151816, -58.161610], "info": "Avenida 3 - Avenida 4" },
+            { "nombre": "Parada 3", "coordenadas": [-26.154955, -58.171390], "info": "Avenida 5 - Avenida 6" },
+            { "nombre": "Parada 4", "coordenadas": [-26.157726, -58.180089], "info": "Avenida 7 - Avenida 8" },
+            { "nombre": "Parada 5", "coordenadas": [-26.159407, -58.184959], "info": "Avenida 9 - Avenida 10" },
+            { "nombre": "Parada 6", "coordenadas": [-26.168623, -58.183210], "info": "Avenida 11 - Avenida 12" },
+            { "nombre": "Parada 7", "coordenadas": [-26.171480, -58.190590], "info": "Avenida 13 - Avenida 14" },
+            { "nombre": "Parada 8", "coordenadas": [-26.174704, -58.189294], "info": "Avenida 15 - Avenida 16" },
+            { "nombre": "Parada 9", "coordenadas": [-26.180525, -58.189448], "info": "Avenida 17 - Avenida 18" },
+            { "nombre": "Parada 10", "coordenadas": [-26.184292, -58.200978], "info": "Avenida 19 - Avenida 20" },
+            { "nombre": "Parada 11", "coordenadas": [-26.190323, -58.219654], "info": "Avenida 21 - Avenida 22" }
         ],
-        "recorrido": [
+        recorrido: [
             [-26.150057, -58.156032], [-26.151066, -58.159243], [-26.151816, -58.161610],
             [-26.152676, -58.164412], [-26.154955, -58.171390], [-26.156330, -58.175737],
             [-26.157726, -58.180089], [-26.158867, -58.183588], [-26.159097, -58.184017],
@@ -36,18 +36,18 @@ const lineas = [
     { 
         nombre: "Línea 25", 
         paradas: [
-            { nombre: "Parada 1", coordenadas: [-26.214845, -58.232006] },
-            { nombre: "Parada 2", coordenadas: [-26.210972, -58.229451] },
-            { nombre: "Parada 3", coordenadas: [-26.206852, -58.226795] },
-            { nombre: "Parada 4", coordenadas: [-26.197964, -58.212417] },
-            { nombre: "Parada 5", coordenadas: [-26.196692, -58.208571] },
-            { nombre: "Parada 6", coordenadas: [-26.195757, -58.205719] },
-            { nombre: "Parada 7", coordenadas: [-26.194366, -58.201958] },
-            { nombre: "Parada 8", coordenadas: [-26.186808, -58.178743] },
-            { nombre: "Parada 9", coordenadas: [-26.186026, -58.172935] },
-            { nombre: "Parada 10", coordenadas: [-26.183273, -58.168049] },
-            { nombre: "Parada 11", coordenadas: [-26.180086, -58.164836] },
-            { nombre: "Parada 12", coordenadas: [-26.173209, -58.1667] }
+            { "nombre": "Parada 1", "coordenadas": [-26.214845, -58.232006], "info": "Avenida 1 - Avenida 2" },
+            { "nombre": "Parada 2", "coordenadas": [-26.210972, -58.229451], "info": "Avenida 3 - Avenida 4" },
+            { "nombre": "Parada 3", "coordenadas": [-26.206852, -58.226795], "info": "Avenida 5 - Avenida 6" },
+            { "nombre": "Parada 4", "coordenadas": [-26.197964, -58.212417], "info": "Avenida 7 - Avenida 8" },
+            { "nombre": "Parada 5", "coordenadas": [-26.196692, -58.208571], "info": "Avenida 9 - Avenida 10" },
+            { "nombre": "Parada 6", "coordenadas": [-26.195757, -58.205719], "info": "Avenida 11 - Avenida 12" },
+            { "nombre": "Parada 7", "coordenadas": [-26.194366, -58.201958], "info": "Avenida 13 - Avenida 14" },
+            { "nombre": "Parada 8", "coordenadas": [-26.186808, -58.178743], "info": "Avenida 15 - Avenida 16" },
+            { "nombre": "Parada 9", "coordenadas": [-26.186026, -58.172935], "info": "Avenida 17 - Avenida 18" },
+            { "nombre": "Parada 10", "coordenadas": [-26.183273, -58.168049], "info": "Avenida 19 - Avenida 20" },
+            { "nombre": "Parada 11", "coordenadas": [-26.180086, -58.164836], "info": "Avenida 21 - Avenida 22" },
+            { "nombre": "Parada 12", "coordenadas": [-26.173209, -58.1667], "info": "Avenida 23 - Avenida 24" }
         ],
         recorrido: [
             [-26.214845, -58.232006], [-26.214325, -58.231691], [-26.213607, -58.231379], 
@@ -111,13 +111,24 @@ function mostrarLinea(linea) {
     markers = [];
     
     linea.paradas.forEach(parada => {
-        let marker = L.marker(parada.coordenadas).bindPopup(parada.nombre);
+        let contenidoPopup = `
+            <div style="display: flex; align-items: center;">
+                <img src="./assets/img/icono-favorito.png" alt="Estrella-favorito" style="width: 20px; height: 20px; margin-right: 5px;">
+                <div>
+                    ${parada.nombre}
+                    ${parada.info ? `<br>${parada.info}` : ''}
+                </div>
+                <img src="./assets/img/icono-colectivo.png" alt="Colectivo" style="width: 20px; height: 20px; margin-left: 5px;">
+            </div>
+        `;
+        let marker = L.marker(parada.coordenadas).bindPopup(contenidoPopup);
         if (document.getElementById('toggle-paradas').checked) {
             marker.addTo(map);
         }
         markers.push(marker);
     });
 }
+
 
 // Mostrar la lista de líneas de autobús
 function mostrarListaLineas() {
