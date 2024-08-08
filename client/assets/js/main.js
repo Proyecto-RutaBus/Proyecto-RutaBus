@@ -1,104 +1,151 @@
 // Ejemplo de líneas de autobús
 const lineas = [
-    { 
-        nombre: "Línea 1", 
-        paradas: [
-            { nombre: "Parada 1", coordenadas: [-26.173486, -58.197993] },
-            { nombre: "Parada 2", coordenadas: [-26.172010, -58.193524] },
-            { nombre: "Parada 3", coordenadas: [-26.171198, -58.191105] },
-            { nombre: "Parada 4", coordenadas: [-26.170016, -58.187554] },
-            { nombre: "Parada 5", coordenadas: [-26.169016, -58.184624] }, 
-            { nombre: "Parada 6", coordenadas: [-26.168482, -58.182715] }, 
-            { nombre: "Parada 7", coordenadas: [-26.168700, -58.182459] }, 
-            { nombre: "Parada 8", coordenadas: [-26.172643, -58.180862] } 
+    {
+        "nombre": "Línea 60",
+        "paradas": [
+            { "nombre": "Parada 1", "coordenadas": [-26.150057, -58.156032] },
+            { "nombre": "Parada 2", "coordenadas": [-26.151816, -58.161610] },
+            { "nombre": "Parada 3", "coordenadas": [-26.154955, -58.171390] },
+            { "nombre": "Parada 4", "coordenadas": [-26.157726, -58.180089] },
+            { "nombre": "Parada 5", "coordenadas": [-26.159407, -58.184959] },
+            { "nombre": "Parada 6", "coordenadas": [-26.168623, -58.183210] },
+            { "nombre": "Parada 7", "coordenadas": [-26.171480, -58.190590] },
+            { "nombre": "Parada 8", "coordenadas": [-26.174704, -58.189294] },
+            { "nombre": "Parada 9", "coordenadas": [-26.180525, -58.189448] },
+            { "nombre": "Parada 10", "coordenadas": [-26.184292, -58.200978] },
+            { "nombre": "Parada 11", "coordenadas": [-26.190323, -58.219654] }
+        ],
+        "recorrido": [
+            [-26.150057, -58.156032], [-26.151066, -58.159243], [-26.151816, -58.161610],
+            [-26.152676, -58.164412], [-26.154955, -58.171390], [-26.156330, -58.175737],
+            [-26.157726, -58.180089], [-26.158867, -58.183588], [-26.159097, -58.184017],
+            [-26.157774, -58.184597], [-26.157393, -58.184717], [-26.156839, -58.185141],
+            [-26.156554, -58.185384], [-26.156589, -58.185684], [-26.156982, -58.185787],
+            [-26.157584, -58.185450], [-26.157976, -58.185335], [-26.158341, -58.185353],
+            [-26.159407, -58.184959], [-26.160946, -58.184290], [-26.164458, -58.182901],
+            [-26.166742, -58.182010], [-26.167417, -58.181729], [-26.168189, -58.181831],
+            [-26.168240, -58.181827], [-26.168623, -58.183210], [-26.169995, -58.187292],
+            [-26.171011, -58.190354], [-26.171156, -58.190773], [-26.171480, -58.190590],
+            [-26.172926, -58.190003], [-26.174704, -58.189294], [-26.178351, -58.187855],
+            [-26.179779, -58.187261], [-26.180525, -58.189448], [-26.181406, -58.192071],
+            [-26.182879, -58.196575], [-26.184292, -58.200978], [-26.188523, -58.213969],
+            [-26.188730, -58.215529], [-26.189151, -58.216226], [-26.190323, -58.219654],
+            [-26.193668, -58.229904]
         ]
     },
     { 
-        nombre: "Línea 2", 
+        nombre: "Línea 25", 
         paradas: [
-            { nombre: "Parada 1", coordenadas: [-26.167472, -58.192312] },
-            { nombre: "Parada 2", coordenadas: [-26.168799, -58.191826] },
-            { nombre: "Parada 3", coordenadas: [-26.170475, -58.191139] },
-            { nombre: "Parada 4", coordenadas: [-26.171746, -58.190581] },
-            { nombre: "Parada 5", coordenadas: [-26.173372, -58.189864] }, 
-            { nombre: "Parada 6", coordenadas: [-26.176290, -58.188732] }, 
-            { nombre: "Parada 7", coordenadas: [-26.179121, -58.187600] }, 
-            { nombre: "Parada 8", coordenadas: [-26.180224, -58.188672] }, 
-            { nombre: "Parada 9", coordenadas: [-26.180710, -58.190214] }
+            { nombre: "Parada 1", coordenadas: [-26.214845, -58.232006] },
+            { nombre: "Parada 2", coordenadas: [-26.210972, -58.229451] },
+            { nombre: "Parada 3", coordenadas: [-26.206852, -58.226795] },
+            { nombre: "Parada 4", coordenadas: [-26.197964, -58.212417] },
+            { nombre: "Parada 5", coordenadas: [-26.196692, -58.208571] },
+            { nombre: "Parada 6", coordenadas: [-26.195757, -58.205719] },
+            { nombre: "Parada 7", coordenadas: [-26.194366, -58.201958] },
+            { nombre: "Parada 8", coordenadas: [-26.186808, -58.178743] },
+            { nombre: "Parada 9", coordenadas: [-26.186026, -58.172935] },
+            { nombre: "Parada 10", coordenadas: [-26.183273, -58.168049] },
+            { nombre: "Parada 11", coordenadas: [-26.180086, -58.164836] },
+            { nombre: "Parada 12", coordenadas: [-26.173209, -58.1667] }
+        ],
+        recorrido: [
+            [-26.214845, -58.232006], [-26.214325, -58.231691], [-26.213607, -58.231379], 
+            [-26.213324, -58.231428], [-26.213060, -58.231287], [-26.212946, -58.231097], 
+            [-26.212694, -58.230971], [-26.212510, -58.230913], [-26.212227, -58.230576], 
+            [-26.212072, -58.230275], [-26.211815, -58.230020], [-26.211450, -58.229766], 
+            [-26.210972, -58.229451], [-26.210119, -58.228884], [-26.209070, -58.228197], 
+            [-26.207891, -58.227487], [-26.207362, -58.227132], [-26.206852, -58.226795], 
+            [-26.206852, -58.226795], [-26.202981, -58.224281], [-26.202259, -58.223763], 
+            [-26.200891, -58.221865], [-26.200405, -58.220706], [-26.199964, -58.219562], 
+            [-26.199674, -58.218658], [-26.199110, -58.216899], [-26.198664, -58.215505], 
+            [-26.198389, -58.214711], [-26.198226, -58.214101], [-26.198209, -58.213793], 
+            [-26.198262, -58.213483], [-26.198205, -58.213228], [-26.198055, -58.212756], 
+            [-26.197964, -58.212417], [-26.197839, -58.212155], [-26.197795, -58.211955], 
+            [-26.197694, -58.211773], [-26.197584, -58.211385], [-26.197503, -58.211061], 
+            [-26.197186, -58.210102], [-26.196692, -58.208571], [-26.196311, -58.207400], 
+            [-26.195757, -58.205719], [-26.195435, -58.204737], [-26.194976, -58.203340], 
+            [-26.194759, -58.202913], [-26.194572, -58.202577], [-26.194366, -58.201958], 
+            [-26.192507, -58.196795], [-26.191465, -58.193489], [-26.190829, -58.191427], 
+            [-26.190305, -58.189753], [-26.190263, -58.189441], [-26.189718, -58.187862], 
+            [-26.188703, -58.184739], [-26.188053, -58.182577], [-26.186808, -58.178743], 
+            [-26.185966, -58.176198], [-26.185731, -58.175590], [-26.186785, -58.175133], 
+            [-26.186026, -58.172935], [-26.185913, -58.172682], [-26.184972, -58.173054], 
+            [-26.184342, -58.171405], [-26.183910, -58.169968], [-26.183273, -58.168049], 
+            [-26.182172, -58.164751], [-26.181945, -58.164008], [-26.180086, -58.164836], 
+            [-26.178022, -58.165648], [-26.173921, -58.167263], [-26.173561, -58.167438], 
+            [-26.173209, -58.166794], [-26.172765, -58.166665], [-26.170092, -58.166467]
         ]
     }
 ];
 
-let marcadores = [];
-let polilineas = [];
+let map = L.map('mapa').setView([-26.173486, -58.197993], 13);
 
-// Función para alternar la visibilidad de las líneas
-function toggleLineas() {
-    const listaLineas = document.getElementById("lista-lineas");
-    if (listaLineas.style.display === "none") {
-        listaLineas.style.display = "block";
+// Añadir el mapa base de Leaflet
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors'
+}).addTo(map);
+
+let markers = [];
+let polyline = null;
+
+// Función para mostrar u ocultar las paradas
+function toggleParadas() {
+    let checkbox = document.getElementById('toggle-paradas');
+    if (checkbox.checked) {
+        markers.forEach(marker => marker.addTo(map));
     } else {
-        listaLineas.style.display = "none";
-        // Limpiar los marcadores y polilíneas del mapa al ocultar las líneas
-        limpiarMapa();
+        markers.forEach(marker => marker.remove());
     }
 }
 
-// Función para limpiar los marcadores y polilíneas del mapa
-function limpiarMapa() {
-    marcadores.forEach(marker => mapa.removeLayer(marker));
-    marcadores = [];
+// Función para mostrar una línea específica
+function mostrarLinea(linea) {
+    if (polyline) {
+        map.removeLayer(polyline);
+    }
+    polyline = L.polyline(linea.recorrido, {color: 'red'}).addTo(map);
+    map.fitBounds(polyline.getBounds());
 
-    polilineas.forEach(polyline => mapa.removeLayer(polyline));
-    polilineas = [];
+    markers.forEach(marker => map.removeLayer(marker));
+    markers = [];
+    
+    linea.paradas.forEach(parada => {
+        let marker = L.marker(parada.coordenadas).bindPopup(parada.nombre);
+        if (document.getElementById('toggle-paradas').checked) {
+            marker.addTo(map);
+        }
+        markers.push(marker);
+    });
 }
 
-// Función para mostrar las paradas y recorrido de una línea seleccionada
-function mostrarParadasYRecorrido(lineaSeleccionada) {
-    // Limpiar marcadores y polilíneas anteriores
-    limpiarMapa();
+// Mostrar la lista de líneas de autobús
+function mostrarListaLineas() {
+    let listaLineas = document.getElementById('lista-lineas');
+    listaLineas.innerHTML = '';
+    lineas.forEach((linea, index) => {
+        let item = document.createElement('div');
+        item.className = 'linea-item';
+        item.textContent = linea.nombre;
+        item.addEventListener('click', () => mostrarLinea(linea));
+        listaLineas.appendChild(item);
+    });
+}
 
-    // Buscar la línea seleccionada
-    const linea = lineas.find(l => l.nombre === lineaSeleccionada);
-    if (linea) {
-        // Añadir marcadores para cada parada de la línea
-        linea.paradas.forEach((parada, index) => {
-            const marker = L.marker(parada.coordenadas).addTo(mapa)
-                .bindPopup(`${parada.nombre} - ${linea.nombre}`)
-                .openPopup();
-            marcadores.push(marker);
-
-            // Si hay más de una parada, trazar una polilínea entre ellas
-            if (index > 0) {
-                const coordsAnterior = linea.paradas[index - 1].coordenadas;
-                const coordsActual = parada.coordenadas;
-                const polyline = L.polyline([coordsAnterior, coordsActual], { color: 'blue' }).addTo(mapa);
-                polilineas.push(polyline);
-            }
-        });
+function toggleLineas() {
+    let listaLineas = document.getElementById('lista-lineas');
+    if (listaLineas.style.display === 'none') {
+        listaLineas.style.display = 'block';
+    } else {
+        listaLineas.style.display = 'none';
     }
 }
 
-// Añadir líneas de autobús a la lista y configurar el evento onclick
-const listaLineas = document.getElementById("lista-lineas");
-lineas.forEach(linea => {
-    const item = document.createElement("div");
-    item.className = "linea-item";
-    item.innerText = linea.nombre;
-    item.onclick = () => {
-        // Deseleccionar todas las líneas
-        document.querySelectorAll('.linea-item').forEach(item => {
-            item.classList.remove('selected');
-        });
+// Event listener para el checkbox de paradas
+document.getElementById('toggle-paradas').addEventListener('change', toggleParadas);
 
-        // Seleccionar la línea actual
-        item.classList.add('selected');
+mostrarListaLineas();
 
-        // Mostrar las paradas y recorrido de la línea seleccionada
-        mostrarParadasYRecorrido(linea.nombre);
-    };
-    listaLineas.appendChild(item);
-});
 
 // Inicializar el mapa con Leaflet
 const mapa = L.map('mapa').setView([-26.1849, -58.1731], 13);
