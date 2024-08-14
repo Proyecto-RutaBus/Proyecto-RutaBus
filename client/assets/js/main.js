@@ -154,7 +154,9 @@ function mostrarLinea(linea) {
     linea.paradas.forEach(parada => {
         let contenidoPopup = `
             <div style="display: flex; align-items: center;">
-                <img src="./assets/img/icono-favorito.png" alt="Estrella-favorito" style="width: 30px; height: 30px; margin-right: 5px;">
+            <button style="background: none; border: none; padding: 0; margin-right: 5px; cursor: pointer;">
+                 <img src="./assets/img/icono-favorito.png" alt="Estrella-favorito" style="width: 30px; height: 30px;">
+            </button>
                 <div>
                     ${parada.nombre}
                     ${parada.info ? `<br>${parada.info}` : ''}
