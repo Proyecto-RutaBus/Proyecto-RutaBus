@@ -155,7 +155,7 @@ function mostrarLinea(linea) {
         let contenidoPopup = `
             <div style="display: flex; align-items: center;">
             <button style="background: none; border: none; padding: 0; margin-right: 5px; cursor: pointer;">
-                 <img src="./assets/img/icono-favorito.png" alt="Estrella-favorito" style="width: 30px; height: 30px;">
+                <img src="./assets/img/icono-favorito.png" alt="Estrella-favorito" style="width: 30px; height: 30px;">
             </button>
                 <div>
                     ${parada.nombre}
@@ -207,5 +207,4 @@ const mapa = L.map('mapa').setView([-26.1849, -58.1731], 13);
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(mapa);
-
 
