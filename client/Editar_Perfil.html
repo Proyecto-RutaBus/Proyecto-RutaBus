@@ -1,78 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Editar Perfil</title>
-    <link rel="stylesheet" href="./assets/css/Editar_Perfil.css">
-</head>
+    <link rel="stylesheet" href="./assets/css/Editar_Perfil.css" />
+  </head>
 
-<body>
-
+  <body>
     <header>
-        <nav>
-            <div>
-                <a href="./index.html"><img src="./assets/img/Logo-nav.png" class="Logo" alt=""></a>
-            </div>
-            <div class="botones">
-                <button class="boton-nav"><a href="./registro.html">Registrarse</a></button>
-                <button class="boton-nav"><a href="./login.html">Iniciar Sesion</a></button>
-            </div>
-        </nav>
+      <nav>
+        <div>
+          <a href="./index.html"
+            ><img src="./assets/img/Logo-nav.png" class="Logo" alt=""
+          /></a>
+        </div>
+        <div class="botones">
+          <button class="boton-nav">
+            <a href="./registro.html">Registrarse</a>
+          </button>
+          <button class="boton-nav">
+            <a href="./login.html">Iniciar Sesion</a>
+          </button>
+        </div>
+      </nav>
     </header>
 
     <main class="Principal">
-        <div class="profile">
-            <div class="profile-avatar-container">
-                <img src="./assets/img/avatar.png" alt="" class="profile-avatar">
-                <div class="edit-icon">
-                    ✎
-                </div>
-            </div>
+      <div class="profile">
+        <div class="profile-avatar-container">
+          <img src="./assets/img/avatar.png" alt="" class="profile-avatar" />
+          <div class="edit-icon">✎</div>
         </div>
-        <div class="edicion">
-            <form action="#">
-                <h1>Editar Perfil</h1>
-                <div class="form-group">
-                    <label for="nombre">Nombre</label>
-                    <input type="text" id="nombre" placeholder="Carlos" required>
-                </div>
-                <div class="form-group">
-                    <label for="apellido">Apellido</label>
-                    <input type="text" placeholder="Rodriguez" id="apellido" required>
-                </div>
+      </div>
+      <div class="edicion">
+        <form action="#">
+          <h1>Editar Perfil</h1>
+          <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" placeholder="Carlos" required />
+          </div>
+          <div class="form-group">
+            <label for="apellido">Apellido</label>
+            <input type="text" placeholder="Rodriguez" id="apellido" required />
+          </div>
 
-                <div class="form-group">
-                    <label for="fecha-nacimiento">Fecha de Nacimiento</label>
-                    <input type="date" id="fecha-nacimiento">
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" placeholder="user@gmail.com" id="email" required>
-                </div>
-                <div class="boton-guardado">
-                    <button class="boton-guardar" type="submit">Guardar</button>
-                </div>
-
-            </form>
-
-        </div>
-
-
+          <div class="form-group">
+            <label for="fecha-nacimiento">Fecha de Nacimiento</label>
+            <input type="date" id="fecha-nacimiento" />
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input
+              type="email"
+              placeholder="user@gmail.com"
+              id="email"
+              required
+            />
+          </div>
+          <div class="boton-guardado">
+            <button class="boton-guardar" type="submit">Guardar</button>
+          </div>
+        </form>
+      </div>
     </main>
 
     <footer>
-        <div class="botones-footer">
-            <button class="boton-footer">Play Store</button>
-            <button class="boton-footer">App Store</button>
-        </div>
-        <div class="info">
-            <h3>RutaBus</h3>
-            <p><a href="">Sobre Nosotros</a></p>
-            <p><a href="">Contacto</a></p>
-        </div>
+      <div class="botones-footer">
+        <button class="boton-footer">Play Store</button>
+        <button class="boton-footer">App Store</button>
+      </div>
+      <div class="info">
+        <h3>RutaBus</h3>
+        <p><a href="">Sobre Nosotros</a></p>
+        <p><a href="">Contacto</a></p>
+      </div>
     </footer>
-</body>
-
+  </body>
 </html>

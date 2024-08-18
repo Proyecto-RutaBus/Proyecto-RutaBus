@@ -1,205 +1,206 @@
 /*Estilos de la barra de navegación*/
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    background-color: #ECF2FF;
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #ecf2ff;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 header {
-    background-color: #63997A;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
+  background-color: #63997a;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 img {
-    height: 100px;
-    margin-top: 5px;
+  height: 100px;
+  margin-top: 5px;
 }
 
 .botones {
-    display: flex;
-    gap: 30px;
-    margin-left: 10px;
-    margin-right: 50px;
+  display: flex;
+  gap: 30px;
+  margin-left: 10px;
+  margin-right: 50px;
 }
 
 .boton-nav {
-    border: solid 1px;
-    border-radius: 5px;
-    background-color: #FA7F4B;
-    height: 40px;
-    width: 150px;
+  border: solid 1px;
+  border-radius: 5px;
+  background-color: #fa7f4b;
+  height: 40px;
+  width: 150px;
 }
 
 button a {
-    text-decoration: none;
-    color: white;
-    font-size: 20px;
+  text-decoration: none;
+  color: white;
+  font-size: 20px;
 }
 
 button:hover {
-    background-color: #63997A;
+  background-color: #63997a;
 }
 
 a:hover {
-    color: #1e0fa1;
+  color: #1e0fa1;
 }
 
 /*Estilos del formulario*/
 .contenedor-form {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    text-align: center;
-    margin: 100px;
-    background-color: #63997A;
-    color: white;
-    border-radius: 10px;
-    width: 600px;
-   box-shadow: -1px -1px 6px 0 rgb(21, 83, 8), 4px 4px 16px 2px #0e345e; 
-   
-    box-shadow: -1px -1px 6px 0 rgb(21, 83, 8), 4px 4px 16px 2px #0e345e; 
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  margin: 100px;
+  background-color: #63997a;
+  color: white;
+  border-radius: 10px;
+  width: 600px;
+  box-shadow: -1px -1px 6px 0 rgb(21, 83, 8), 4px 4px 16px 2px #0e345e;
+
+  box-shadow: -1px -1px 6px 0 rgb(21, 83, 8), 4px 4px 16px 2px #0e345e;
 }
 
 .form-iniciosesion {
-    display: flex;
-    flex-direction: column;
-    margin-left: 80px;
-    margin-right: 80px;
-    margin-top: 10px;
-    margin-bottom: 40px;
-    font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  margin-left: 80px;
+  margin-right: 80px;
+  margin-top: 10px;
+  margin-bottom: 40px;
+  font-size: 20px;
 }
 
 label {
-    font-size: 20px;
-    
+  font-size: 20px;
 }
 
 .boton-ingresar {
-    margin-top: 10px;
-    background-color: #FA7F4B;
-    color: white;
-    font-size: 20px;
-    border: solid 1px;
-    border-radius: 10px;
-    border-color: #ccc;
-    padding: 5px;
-    cursor: pointer;
+  margin-top: 10px;
+  background-color: #fa7f4b;
+  color: white;
+  font-size: 20px;
+  border: solid 1px;
+  border-radius: 10px;
+  border-color: #ccc;
+  padding: 5px;
+  cursor: pointer;
 }
 
 input {
-    border-radius: 5px;
-    border: solid 1px #ccc;
-    color: black;
-    padding: 10px;
-    font-size: 16px;
+  border-radius: 5px;
+  border: solid 1px #ccc;
+  color: black;
+  padding: 10px;
+  font-size: 16px;
 }
 
 .boton-ingresar:hover {
-    background-color: #ffa927;
+  background-color: #ffa927;
 }
 
 h5 {
-    font-size: 20px;
+  font-size: 20px;
 }
 
 h5 a {
-    color: #055a47;
-    font-size: 20px;
+  color: #055a47;
+  font-size: 20px;
 }
 
 /* Media queries for responsiveness */
 @media (max-width: 1024px) {
-    .botones {
-        margin-right: 20px;
-    }
+  .botones {
+    margin-right: 20px;
+  }
 
-    img {
-        height: 80px;
-    }
+  img {
+    height: 80px;
+  }
 
-    .contenedor-form {
-        width: 80%;
-        margin: 50px;
-    }
+  .contenedor-form {
+    width: 80%;
+    margin: 50px;
+  }
 
-    .form-iniciosesion {
-        margin-left: 40px;
-        margin-right: 40px;
-    }
+  .form-iniciosesion {
+    margin-left: 40px;
+    margin-right: 40px;
+  }
 }
 
 @media (max-width: 768px) {
-    nav {
-        flex-direction: column;
-        align-items: center;
-    }
+  nav {
+    flex-direction: column;
+    align-items: center;
+  }
 
-    .botones {
-        flex-direction: column;
-        margin-left: 0;
-        margin-right: 0;
-        gap: 10px;
-        align-items: center;
-    }
+  .botones {
+    flex-direction: column;
+    margin-left: 0;
+    margin-right: 0;
+    gap: 10px;
+    align-items: center;
+  }
 
-    .boton-nav {
-        width: 200px;
-    }
+  .boton-nav {
+    width: 200px;
+  }
 
-    img {
-        height: 60px;
-    }
+  img {
+    height: 60px;
+  }
 
-    .contenedor-form {
-        width: 90%;
-        margin: 20px;
-    }
+  .contenedor-form {
+    width: 90%;
+    margin: 20px;
+  }
 
-    .form-iniciosesion {
-        margin-left: 20px;
-        margin-right: 20px;
-    }
+  .form-iniciosesion {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
 }
 
 @media (max-width: 480px) {
-    img {
-        height: 50px;
-    }
+  img {
+    height: 50px;
+  }
 
-    .boton-nav {
-        height: 35px;
-        font-size: 16px;
-        width: 180px;
-    }
+  .boton-nav {
+    height: 35px;
+    font-size: 16px;
+    width: 180px;
+  }
 
-    button a {
-        font-size: 16px;
-    }
+  button a {
+    font-size: 16px;
+  }
 
-    .contenedor-form {
-        width: 100%;
-        margin: 10px;
-    }
+  .contenedor-form {
+    width: 100%;
+    margin: 10px;
+  }
 
-    .form-iniciosesion {
-        margin-left: 10px;
-        margin-right: 10px;
-    }
+  .form-iniciosesion {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
 
-    label, .boton-ingresar, h5, h5 a {
-        font-size: 18px;
-    }
+  label,
+  .boton-ingresar,
+  h5,
+  h5 a {
+    font-size: 18px;
+  }
 }
-

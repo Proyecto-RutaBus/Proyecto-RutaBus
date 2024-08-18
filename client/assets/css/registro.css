@@ -1,271 +1,257 @@
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #ECF2FF;
-    height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #ecf2ff;
+  height: 100%;
 }
 
 /* Estilos para el header*/
 header {
-    background-color: #63997A;
-    width: 100%;
-
+  background-color: #63997a;
+  width: 100%;
 }
 
 nav {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 img {
-    height: 100px;
-    margin-top: 5px;
+  height: 100px;
+  margin-top: 5px;
 }
 
 .botones {
-    display: flex;
-    gap: 30px;
-    margin-left: 10px;
-    margin-right: 50px;
+  display: flex;
+  gap: 30px;
+  margin-left: 10px;
+  margin-right: 50px;
 }
 
 .boton-nav {
-    border: solid 1px;
-    border-color: black;
-    border-radius: 5px;
-    background-color: #FA7F4B;
-    height: 40px;
-    width: 150px;
+  border: solid 1px;
+  border-color: black;
+  border-radius: 5px;
+  background-color: #fa7f4b;
+  height: 40px;
+  width: 150px;
 }
 
 button a {
-    text-decoration: none;
-    color: white;
-    font-size: 20px
+  text-decoration: none;
+  color: white;
+  font-size: 20px;
 }
 
 button:hover {
-    background-color: #ffdf61;
+  background-color: #ffdf61;
 }
-
 
 /* Estilos para el formulario */
 .Principal {
-    margin: 20px;
-    margin-left: 25vh;
-    margin-right: 25vh;
-    padding: 20px;
-    background-color: #63997a;
-    color: white;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  margin: 20px;
+  margin-left: 25vh;
+  margin-right: 25vh;
+  padding: 20px;
+  background-color: #63997a;
+  color: white;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .Principal h1 {
-    text-align: center;
+  text-align: center;
 }
 
 .form-group {
-    margin-bottom: 25px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+  margin-bottom: 25px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 label {
-    margin-right: 10px;
-    flex: 1;
-    font-size: 20px;
+  margin-right: 10px;
+  flex: 1;
+  font-size: 20px;
 }
 
 input[type="text"],
 input[type="email"],
 input[type="password"] {
-    flex: 2;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    box-sizing: border-box;
+  flex: 2;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
 }
 
 .boton-registrarse {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .boton-registro {
-    background-color: #FA7F4B;
-    color: white;
-    padding: 10px 20px;
-    font-size: 20px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    cursor: pointer;
+  background-color: #fa7f4b;
+  color: white;
+  padding: 10px 20px;
+  font-size: 20px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  cursor: pointer;
 }
 
 .boton-registro:hover {
-    background-color: #ffa927;
-    color: white;
-
-
+  background-color: #ffa927;
+  color: white;
 }
-
 
 /*Estilos para el footer*/
 footer {
-    background-color: #63997A;
-    padding: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    align-items: center;
+  background-color: #63997a;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .botones-footer {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .boton-footer {
-    width: 110px;
-    height: 30px;
-    padding: 12px;
-    text-align: center;
-    background-color: #efbc9b;
-    border: 1px solid #fa7f4b;
-    border-radius: 15px;
-    color: 1px #444444;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  width: 110px;
+  height: 30px;
+  padding: 12px;
+  text-align: center;
+  background-color: #efbc9b;
+  border: 1px solid #fa7f4b;
+  border-radius: 15px;
+  color: 1px #444444;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .boton-footer:hover {
-    background-color: #4F6F52;
-    color: white;
-    border: 1px solid #232323;
-
+  background-color: #4f6f52;
+  color: white;
+  border: 1px solid #232323;
 }
 
 .info {
-    text-align: center;
-
-
+  text-align: center;
 }
 
 .info h3 {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .info p {
-    margin: 8px 0;
+  margin: 8px 0;
 }
 
-
-@media screen and (max-width:900px) {
-    .Principal {
-        margin-left: 10vh;
-        margin-right: 10vh;
-    }
-
+@media screen and (max-width: 900px) {
+  .Principal {
+    margin-left: 10vh;
+    margin-right: 10vh;
+  }
 }
 
-@media screen and (max-width:700px) {
-    .botones {
-        flex-direction: column;
-        gap: 10px;
-    }
+@media screen and (max-width: 700px) {
+  .botones {
+    flex-direction: column;
+    gap: 10px;
+  }
 
-    nav {
-        justify-content: center;
-    }
+  nav {
+    justify-content: center;
+  }
 
-    .Principal {
-        margin: 6vh;
+  .Principal {
+    margin: 6vh;
+  }
 
-    }
+  .form-group {
+    flex-direction: column;
+  }
 
-    .form-group {
-        flex-direction: column;
-    }
+  label {
+    margin-right: 0;
+    margin-bottom: 5px;
+    flex: unset;
+  }
 
-    label {
-        margin-right: 0;
-        margin-bottom: 5px;
-        flex: unset;
-    }
+  input[type="text"],
+  input[type="email"],
+  input[type="password"] {
+    flex: unset;
+  }
 
-    input[type="text"],
-    input[type="email"],
-    input[type="password"] {
-        flex: unset;
-    }
+  .botones-footer {
+    align-items: center;
+  }
 
-    .botones-footer {
-        align-items: center;
-    }
-
-    .info {
-        flex: 1;
-    }
+  .info {
+    flex: 1;
+  }
 }
-
-
-
 
 /* Estilos para la alerta personalizada */
 .custom-alert {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100vh;
-    padding: 40px;
-    border: 1px solid #4444;
-    border-radius: 10px;
-    background-color: #63997A;
-    color: white;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    text-align: center;
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100vh;
+  padding: 40px;
+  border: 1px solid #4444;
+  border-radius: 10px;
+  background-color: #63997a;
+  color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  text-align: center;
 }
 
 .custom-alert h2 {
-    margin: 0;
-    margin-bottom: 20px;
-    font-size: 50px;
+  margin: 0;
+  margin-bottom: 20px;
+  font-size: 50px;
 }
 
 .custom-alert p {
-    margin: 0;
-    margin-bottom: 20px;
-    font-size: 20px;
+  margin: 0;
+  margin-bottom: 20px;
+  font-size: 20px;
 }
 
 .custom-alert button {
-    background-color: #fa7f4b;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 20px;
+  background-color: #fa7f4b;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 20px;
 }
 .blur {
-    filter: blur(5px);
-    pointer-events: none; /* Evita la interacción con los elementos detrás del desenfoque */
+  filter: blur(5px);
+  pointer-events: none; /* Evita la interacción con los elementos detrás del desenfoque */
 }
 /* Asegurar que la alerta esté por encima del fondo */
 body.alert-active .custom-alert {
-    display: block;
+  display: block;
 }

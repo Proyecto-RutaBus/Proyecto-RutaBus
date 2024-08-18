@@ -1,21 +1,18 @@
 // Requerimos las dependencias.
 const express = require("express");
-const cors = require('cors');
-const morgan = require('morgan');
+const cors = require("cors");
+const morgan = require("morgan");
 
 // Inicializamos express
 const app = express();
 
-
 //Aplicamos los middlewares.
 app.use(cors()); // cors para que nos permita realizar peticiones desde cualquier cliente.
-app.use(morgan('dev')); // morgan para mostrar informacion acerca de las peticiones que llegan a nuestro servidor.
+app.use(morgan("dev")); // morgan para mostrar informacion acerca de las peticiones que llegan a nuestro servidor.
 app.use(express.json()); // express.json para que nuestro servidor pueda reconocer los json que recibimos por el body.
 
 //Requerimos nuestras rutas.
-app.use(require('./routes/auth.routes'));
-
-
+app.use(require("./routes/auth.routes"));
 
 const { newConnection } = require("./bd/BD");
 
@@ -23,19 +20,22 @@ app.use(express.json());
 
 // Obtener todos los usuarios
 app.get("/", async (request, response) => {
-    const connection = await newConnection();
-    const [results] = await connection.query("SELECT * FROM usuarios");
-    response.json(results);
-    connection.end();
+  const connection = await newConnection();
+  const [results] = await connection.query("SELECT * FROM usuarios");
+  response.json(results);
+  connection.end();
 });
 
 // Obtener un usuario por ID
 app.get("/usuarios/:IdUsuario", async (request, response) => {
-    const connection = await newConnection();
-    const id = request.params.IdUsuario;
-    const [results] = await connection.query("SELECT * FROM usuarios WHERE IdUsuario = ?", [id]);
-    response.json(results[0]);
-    connection.end();
+  const connection = await newConnection();
+  const id = request.params.IdUsuario;
+  const [results] = await connection.query(
+    "SELECT * FROM usuarios WHERE IdUsuario = ?",
+    [id]
+  );
+  response.json(results[0]);
+  connection.end();
 });
 
 /* / Crear un nuevo usuario
@@ -52,8 +52,6 @@ app.post("/usuarios", async (request, response) => {
     connection.end();
 }); */
 
-
-
 app.listen(3000, () => {
-    console.log("Servidor iniciado en el puerto 3000 http://localhost:3000");
+  console.log("Servidor iniciado en el puerto 3000 http://localhost:3000");
 });
