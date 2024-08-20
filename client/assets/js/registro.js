@@ -1,13 +1,13 @@
 document.getElementById('registroForm').addEventListener('submit', async function(event){
     const nombre = document.getElementById('nombre').value;
-    const apellido = document.getElementById('apellido').value;
-    const usuario = document.getElementById('usuario').value;
+
+
     const email = document.getElementById('email').value;
     const contraseña = document.getElementById('contraseña').value;
     const confirmarContraseña = document.getElementById('confirmar-contraseña').value;
 
     let errorMessage = '';
-    if (nombre === '' || apellido === '' || usuario === '' || email === '' || contraseña === '' || confirmarContraseña === '') {
+    if (nombre === '' || email === '' || contraseña === '' || confirmarContraseña === '') {
         errorMessage = 'Todos los campos son obligatorios';
     } else if (contraseña.length < 6) {
         errorMessage = 'La contraseña debe tener al menos 6 caracteres';
@@ -25,7 +25,7 @@ document.getElementById('registroForm').addEventListener('submit', async functio
         try {
             const peticion = await fetch('http://localhost:3000/register', {
                 method: 'POST',
-                body: JSON.stringify({ nombre, apellido, usuario, correo: email, contrasenia: contraseña }),
+                body: JSON.stringify({ nombre, correo: email, contrasenia: contraseña }),
                 headers: {
                     'Content-type': 'application/json'
                 }
@@ -54,9 +54,9 @@ function showAlert(message, success = false) {
 
     if (success) {
         document.getElementById('alertTitle').textContent = 'Éxito';
-        document.getElementById('alertButton').textContent = 'Volver al inicio';
+        document.getElementById('alertButton').textContent = 'Iniciar sesión';
         document.getElementById('alertButton').onclick = function() {
-            window.location.href = 'index.html';
+            window.location.href = 'login.html';
         };
     } else {
         document.getElementById('alertTitle').textContent = 'Error';
