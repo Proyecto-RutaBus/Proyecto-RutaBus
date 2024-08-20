@@ -64,6 +64,7 @@ body {
     color: white;
     padding: 20px;
     margin-top: 20px;
+    margin-bottom: 20px;
     border-radius: 10px;
     box-shadow: -1px -1px 6px 0 rgb(21, 83, 8), 4px 4px 16px 2px #0e345e;
     width: 90%;
