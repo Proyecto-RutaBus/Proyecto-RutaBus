@@ -2,6 +2,7 @@
 header {
     background-color: #63997A;
     width: 100%;
+    height: 150px;
 
 }
 
@@ -15,7 +16,6 @@ nav {
 
 img {
     height: 100px;
-    ;
     margin-top: 5px;
 }
 
@@ -31,8 +31,9 @@ img {
     border-color: black;
     border-radius: 5px;
     background-color: #FA7F4B;
-    height: 40px;
-    width: 150px;
+    height: 50px;
+    width: 100px;
+    margin-top: 20px;
 }
 
 button a {
