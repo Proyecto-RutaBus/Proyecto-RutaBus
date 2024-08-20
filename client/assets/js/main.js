@@ -9,16 +9,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const loginBtn = document.getElementById('loginBtn');
     const userIcon = document.getElementById('userIcon');
 
+    const carousel = document.getElementById('carouselExampleFade');
+    const informacionSeccion = document.getElementById('informacionSeccion');
+
     if (isLoggedIn) {
         // Usuario ha iniciado sesión, ocultar botones de registro e inicio de sesión, mostrar icono de usuario
         registerBtn.style.display = 'none';
         loginBtn.style.display = 'none';
         userIcon.style.display = 'block';
+
+        // Ocultar carrusel y sección de información
+        carousel.style.display = 'none';
+        informacionSeccion.style.display = 'none';
+
     } else {
         // Usuario no ha iniciado sesión, mostrar botones de registro e inicio de sesión, ocultar icono de usuario
         registerBtn.style.display = 'block';
         loginBtn.style.display = 'block';
         userIcon.style.display = 'none';
+
+
+        // Mostrar carrusel y sección de información
+        carousel.style.display = 'block';
+        informacionSeccion.style.display = 'block';
     }
 });
 
