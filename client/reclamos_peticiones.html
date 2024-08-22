@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Formulario de Reclamos y Peticiones</title>
-    <link rel="stylesheet" href="assets/css/reclamos_peticiones.css">
-    <link rel="stylesheet" href="assets/js/reclamos_peticiones.js">
-</head>
-<body>
+    <link rel="stylesheet" href="assets/css/reclamos_peticiones.css" />
+    <link rel="stylesheet" href="assets/js/reclamos_peticiones.js" />
+  </head>
+  <body>
     <header>
         <nav>
             <div>
@@ -20,33 +20,47 @@
     </header>
 <main>
     <div class="container">
-        <h1>Formulario de Reclamos y Peticiones</h1>
-        <form id="solicitudForm">
-            <label for="tipo">Seleccione el tipo de solicitud:</label>
-            <select id="tipo" name="tipo">
-                <option value="reclamo">Reclamo</option>
-                <option value="peticion">Petición</option>
-            </select>
-            
-            <div id="reclamoSection">
-                <label for="reclamo">Escriba su reclamo (máximo 300 palabras):</label>
-                <textarea id="reclamo" name="reclamo" rows="10" maxlength="3000" placeholder="Escriba su reclamo aquí..."></textarea>
-                <p id="wordCountReclamo">0 / 300 palabras</p>
-            </div>
+      <h1>Formulario de Reclamos y Peticiones</h1>
+      <form id="solicitudForm">
+        <label for="tipo">Seleccione el tipo de solicitud:</label>
+        <select id="tipo" name="tipo">
+          <option value="reclamo">Reclamo</option>
+          <option value="peticion">Petición</option>
+        </select>
 
-            <div id="peticionSection" style="display:none;">
-                <label for="peticion">Escriba su petición (máximo 300 palabras):</label>
-                <textarea id="peticion" name="peticion" rows="10" maxlength="3000" placeholder="Escriba su petición aquí..."></textarea>
-                <p id="wordCountPeticion">0 / 300 palabras</p>
-            </div>
-            
-            <label for="archivo">Subir archivo:</label>
-            <input type="file" id="archivo" name="archivo">
-            <button type="submit">Enviar</button>
-        </form>
-        <div id="notification" style="display:none;">
-            <p>Su solicitud ha sido enviada con éxito.</p>
+        <div id="reclamoSection">
+          <label for="reclamo">Escriba su reclamo (máximo 300 palabras):</label>
+          <textarea
+            id="reclamo"
+            name="reclamo"
+            rows="10"
+            maxlength="3000"
+            placeholder="Escriba su reclamo aquí..."
+          ></textarea>
+          <p id="wordCountReclamo">0 / 300 palabras</p>
         </div>
+
+        <div id="peticionSection" style="display: none">
+          <label for="peticion"
+            >Escriba su petición (máximo 300 palabras):</label
+          >
+          <textarea
+            id="peticion"
+            name="peticion"
+            rows="10"
+            maxlength="3000"
+            placeholder="Escriba su petición aquí..."
+          ></textarea>
+          <p id="wordCountPeticion">0 / 300 palabras</p>
+        </div>
+
+        <label for="archivo">Subir archivo:</label>
+        <input type="file" id="archivo" name="archivo" />
+        <button type="submit">Enviar</button>
+      </form>
+      <div id="notification" style="display: none">
+        <p>Su solicitud ha sido enviada con éxito.</p>
+      </div>
     </div>
 </main>
 

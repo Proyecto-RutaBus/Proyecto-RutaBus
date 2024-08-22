@@ -10,14 +10,14 @@ document.getElementById('registroForm').addEventListener('submit', async functio
     if (nombre === '' || email === '' || contraseña === '' || confirmarContraseña === '') {
         errorMessage = 'Todos los campos son obligatorios';
     } else if (contraseña.length < 6) {
-        errorMessage = 'La contraseña debe tener al menos 6 caracteres';
+      errorMessage = "La contraseña debe tener al menos 6 caracteres";
     } else if (contraseña !== confirmarContraseña) {
-        errorMessage = 'Las contraseñas no coinciden';
+      errorMessage = "Las contraseñas no coinciden";
     }
 
     if (errorMessage) {
-        event.preventDefault(); // Prevenir el envío del formulario si hay un error
-        showAlert(errorMessage);
+      event.preventDefault(); // Prevenir el envío del formulario si hay un error
+      showAlert(errorMessage);
     } else {
         event.preventDefault(); // Prevenir el envío del formulario mientras se realiza la petición
         
@@ -31,26 +31,26 @@ document.getElementById('registroForm').addEventListener('submit', async functio
                 }
             });
 
-            const respuesta = await peticion.json();
+        const respuesta = await peticion.json();
 
-            if (!peticion.ok) {
-                showAlert(respuesta.msg);
-            } else {
-                showAlert(respuesta.msg, true);
-            }
-        } catch (error) {
-            showAlert('Error en la conexión con el servidor');
+        if (!peticion.ok) {
+          showAlert(respuesta.msg);
+        } else {
+          showAlert(respuesta.msg, true);
         }
+      } catch (error) {
+        showAlert("Error en la conexión con el servidor");
+      }
     }
-});
+  });
 
 function showAlert(message, success = false) {
-    const alertBox = document.getElementById('customAlert');
-    document.getElementById('alertMessage').textContent = message;
-    document.body.classList.add('alert-active');
-    document.querySelector('.Principal').classList.add('blur');
-    document.querySelector('header').classList.add('blur');
-    document.querySelector('footer').classList.add('blur');
+  const alertBox = document.getElementById("customAlert");
+  document.getElementById("alertMessage").textContent = message;
+  document.body.classList.add("alert-active");
+  document.querySelector(".Principal").classList.add("blur");
+  document.querySelector("header").classList.add("blur");
+  document.querySelector("footer").classList.add("blur");
 
     if (success) {
         document.getElementById('alertTitle').textContent = 'Éxito';

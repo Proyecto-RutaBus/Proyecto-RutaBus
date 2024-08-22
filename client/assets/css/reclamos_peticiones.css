@@ -7,11 +7,11 @@ header {
 }
 
 nav {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 img {
@@ -20,10 +20,10 @@ img {
 }
 
 .botones {
-    display: flex;
-    gap: 30px;
-    margin-left: 10px;
-    margin-right: 50px;
+  display: flex;
+  gap: 30px;
+  margin-left: 10px;
+  margin-right: 50px;
 }
 
 .boton-nav {
@@ -37,26 +37,24 @@ img {
 }
 
 button a {
-    text-decoration: none;
-    color: white;
-    font-size: 20px
+  text-decoration: none;
+  color: white;
+  font-size: 20px;
 }
 
 button:hover {
-    background-color: #ffdf61;
+  background-color: #ffdf61;
 }
 
-
-
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
 }
 
 .container {
@@ -73,87 +71,87 @@ body {
 }
 
 h1 {
-    margin-bottom: 20px;
-    font-size: 24px;
+  margin-bottom: 20px;
+  font-size: 24px;
 }
 
 form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 label {
-    margin-bottom: 10px;
-    font-weight: bold;
-
+  margin-bottom: 10px;
+  font-weight: bold;
 }
 
 textarea {
-    margin-top:10px ;
-    width: 80%;
-    
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    resize: none;
+  margin-top: 10px;
+  width: 80%;
+
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  resize: none;
 }
 
 input[type="file"] {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: #FA7F4B;
-    color: white;
-    cursor: pointer;
-    font-size: 16px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #fa7f4b;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
 }
 
 button:hover {
-    background-color: #ffa927;
+  background-color: #ffa927;
 }
 select {
-    margin-bottom: 10px;
-    width: 90px;
-    border: 1px solid #fff;
+  margin-bottom: 10px;
+  width: 90px;
+  border: 1px solid #fff;
 }
 
-#wordCountReclamo, #wordCountPeticion {
-    margin-bottom: 10px;
-    font-size: 14px;
-    color: #000;
+#wordCountReclamo,
+#wordCountPeticion {
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #000;
 }
 #notification {
-    margin-top: 20px;
-    background-color: #28a745;
-    color: white;
-    padding: 10px;
-    border-radius: 5px;
-    display: none;
+  margin-top: 20px;
+  background-color: #28a745;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  display: none;
 }
 
 /* Estilos Responsivos */
 @media (max-width: 600px) {
-    .container {
-        width: 100%;
-        padding: 15px;
-        box-shadow: none;
-    }
+  .container {
+    width: 100%;
+    padding: 15px;
+    box-shadow: none;
+  }
 
-    h1 {
-        font-size: 20px;
-    }
+  h1 {
+    font-size: 20px;
+  }
 
-    button {
-        font-size: 14px;
-    }
+  button {
+    font-size: 14px;
+  }
 
-    textarea {
-        font-size: 14px;
-    }
+  textarea {
+    font-size: 14px;
+  }
 }
