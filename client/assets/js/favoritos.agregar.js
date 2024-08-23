@@ -6,8 +6,7 @@ document.addEventListener("DOMContentLoaded", function() {
         let favoritoDiv = document.createElement("div");
         favoritoDiv.className = "favorito";
         favoritoDiv.innerHTML = `
-            <strong>${favorito.nombre}</strong><br>
-            <span class="coordenadas">Coordenadas: ${favorito.coordenadas.lat}, ${favorito.coordenadas.lng}</span>
+            <strong>${favorito.info}</strong>
             <button class="eliminar-btn"><i class="fa-regular fa-trash-can"></i></button>
         `;
 
@@ -15,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function() {
         let eliminarBtn = favoritoDiv.querySelector(".eliminar-btn");
         eliminarBtn.addEventListener("click", function() {
             // Buscar el índice del favorito en el array
-            let index = favoritos.findIndex(f => f.nombre === favorito.nombre && f.coordenadas.lat === favorito.coordenadas.lat && f.coordenadas.lng === favorito.coordenadas.lng);
+            let index = favoritos.findIndex(f => f.info === favorito.info && f.nombre === favorito.nombre);
             if (index !== -1) {
                 // Eliminar el favorito del array
                 favoritos.splice(index, 1);
