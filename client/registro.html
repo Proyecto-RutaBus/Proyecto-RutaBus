@@ -25,84 +25,76 @@
     </header>
 
     <main class="Principal">
-      <form action="/registro" id="registroForm">
-        <h1>Registro de Usuario</h1>
-        <div class="form-group">
-          <label for="nombre">Nombre</label>
-          <input
-            type="text"
-            id="nombre"
-            name="nombre"
-            placeholder="Carlos"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label for="apellido">Apellido</label>
-          <input
-            type="text"
-            id="apellido"
-            name="apellido"
-            placeholder="Rodriguez"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label for="usuario">Nombre de Usuario</label>
-          <input
-            type="text"
-            id="usuario"
-            name="usuario"
-            placeholder="carlitos23"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input
-            type="email"
-            placeholder="user@gmail.com"
-            id="email"
-            name="email"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label for="contraseña">Contraseña</label>
-          <input
-            type="password"
-            placeholder="********"
-            id="contraseña"
-            name="contraseña"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label for="confirmar-contraseña">Confirmar contraseña</label>
-          <input
-            type="password"
-            placeholder="********"
-            id="confirmar-contraseña"
-            name="confirmar-contraseña"
-            required
-          />
-        </div>
-        <div class="boton-registrarse">
-          <button class="boton-registro" type="submit">Registrarse</button>
-        </div>
-      </form>
+
+        <form action="/registro" id="registroForm">
+            <h1>Registro de Usuario</h1>
+            <div class="form-group">
+                <label for="nombre">Nombre y Apellido</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Carlos" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" placeholder="user@gmail.com" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="contraseña">Contraseña</label>
+                <input type="password" placeholder="********" id="contraseña" name="contraseña" required>
+            </div>
+            <div class="form-group">
+                <label for="confirmar-contraseña">Confirmar contraseña</label>
+                <input type="password" placeholder="********" id="confirmar-contraseña" name="confirmar-contraseña" required>
+            </div>
+            <div class="boton-registrarse">
+                <button class="boton-registro" type="submit">Registrarse</button>
+            </div>
+
+        </form>
     </main>
 
-    <footer>
-      <div class="botones-footer">
-        <button class="boton-footer">Play Store</button>
-        <button class="boton-footer">App Store</button>
-      </div>
-      <div class="info">
-        <h3>RutaBus</h3>
-        <p><a href="./about.html">Sobre Nosotros</a></p>
-        <p><a href="./contacto.html">Contacto</a></p>
-      </div>
+    <footer class="footer-distributed">
+
+        <div class="footer-left">
+  
+          <img src="assets/img/Logo-nav.png" alt="">
+  
+          <p class="footer-links">
+            <a href="index.html" class="link-1">Home</a>
+          
+            <a href="about.html">About</a>
+
+            
+            <a href="contacto.html">Contact</a>
+          </p>
+  
+          <p class="footer-company-name">RutaBus ©2024</p>
+        </div>
+  
+        <div class="footer-center">
+  
+          <div>
+            <i class="fa fa-map-marker"></i>
+            <p><span>Polo Cientifico</span> Ruta 81, km 2134</p>
+          </div>
+  
+          <div>
+            <i class="fa fa-phone"></i>
+            <p>+54-3704-122334</p>
+          </div>
+  
+          <div>
+            <i class="fa fa-envelope"></i>
+            <p><a href="mailto:support@company.com">support@RutaBus.com</a></p>
+          </div>
+  
+        </div>
+  
+        <div class="footer-right">
+  
+          <p class="footer-company-about">
+            <span>Sobre RutaBus</span>
+            En RutaBus, estamos dedicados a transformar la experiencia del transporte público. Nuestro objetivo es proporcionar a los usuarios una plataforma fácil de usar para explorar rutas de autobús, hacer seguimiento en tiempo real y gestionar sus trayectos de manera eficiente.
+          </p>
+  
     </footer>
 
     <!-- Alerta personalizada -->

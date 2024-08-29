@@ -284,69 +284,72 @@ h2 {
 /* Estilos para el mapa*/
 
 #mapa {
-  border: 2px solid #4444;
-  height: 500px;
-  margin-left: 4vh;
-  margin-right: 4vh;
-  position: relative;
-}
-#lineas {
-  position: absolute;
-  top: 2vh;
-  right: 2vh;
-  background: #63997a;
-  color: white;
-  padding: 5px;
-  border-radius: 5px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-}
-.boton-lineas {
-  background-color: #fa7f4b;
-  border: 1px solid #4444;
-  color: white;
-  width: 160px;
-  height: 30px;
-  font-size: 14px;
-}
-.linea-item {
-  cursor: pointer;
-  padding: 5px 10px;
-  border-bottom: 1px solid #ccc;
-}
-.linea-item:hover {
-  background-color: #f0f0f0;
-  color: #000;
-}
-@media (max-width: 768px) {
-  #lineas {
-    top: 1vh;
-    right: 1vh;
-    width: auto;
-    padding: 5px;
-  }
-  .boton-lineas {
-    width: auto;
-    font-size: 12px;
-    padding: 5px 10px;
-  }
-}
+            border: 2px solid #4444;
+            height: 550px;
+            margin-left: 4vh;
+            margin-right: 4vh;
+            position: relative;
+            z-index: 1000;
+        }
+        #lineas {
+            
+            position: absolute;
+            top: 2vh;
+            right: 2vh;
+            background: #63997a;
+            color: white;
+            padding: 5px;
+            border-radius: 5px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+        .boton-lineas{
+            background-color: #fa7f4b;
+            border: 1px solid #4444;
+            color: white;
+            width: 160px;
+            height: 30px;
+            font-size: 14px;
+        }
+        .linea-item {
+            cursor: pointer;
+            padding: 5px 10px;
+            border-bottom: 1px solid #ccc;
+            height: 30px;
+        }
+        .linea-item:hover {
+            background-color: #f0f0f0;
+            color: #000;
+        }
+        @media (max-width: 768px){
+            #lineas{
+                top: 1vh;
+                right: 1vh;
+                width: auto;
+                padding: 5px;
+            }
+            .boton-lineas{
+                width: auto;
+                font-size: 12px;
+                padding: 5px 10px;
+            }
+        }
 
 /* Estilos para el icono del perfil */
 .user-icon {
-  display: none; /* Oculto por defecto */
-  position: relative;
-  z-index: 101;
+    display: none; /* Oculto por defecto */
+    position: relative;
+    z-index: 2000;
 }
 .user-menu {
-  display: none; /* Oculto por defecto */
-  position: absolute;
-  top: 90px;
-  right: 0;
-  background-color: white;
-  border: 1px solid #ccc;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  z-index: 1;
+    display: none; /* Oculto por defecto */
+    position: absolute;
+    top: 90px;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 2000;
 }
 .user-menu a {
   color: black;

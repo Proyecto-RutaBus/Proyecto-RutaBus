@@ -1,7 +1,9 @@
 /* Estilos para el header*/
 header {
-  background-color: #63997a;
-  width: 100%;
+    background-color: #63997A;
+    width: 100%;
+    height: 150px;
+
 }
 
 nav {
@@ -13,8 +15,8 @@ nav {
 }
 
 img {
-  height: 100px;
-  margin-top: 5px;
+    height: 100px;
+    margin-top: 5px;
 }
 
 .botones {
@@ -25,12 +27,13 @@ img {
 }
 
 .boton-nav {
-  border: solid 1px;
-  border-color: black;
-  border-radius: 5px;
-  background-color: #fa7f4b;
-  height: 40px;
-  width: 150px;
+    border: solid 1px;
+    border-color: black;
+    border-radius: 5px;
+    background-color: #FA7F4B;
+    height: 50px;
+    width: 100px;
+    margin-top: 20px;
 }
 
 button a {
@@ -55,15 +58,16 @@ body {
 }
 
 .container {
-  background-color: #63997a;
-  color: white;
-  padding: 20px;
-  margin-top: 20px;
-  border-radius: 10px;
-  box-shadow: -1px -1px 6px 0 rgb(21, 83, 8), 4px 4px 16px 2px #0e345e;
-  width: 90%;
-  max-width: 500px;
-  text-align: center;
+    background-color: #63997A;
+    color: white;
+    padding: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: -1px -1px 6px 0 rgb(21, 83, 8), 4px 4px 16px 2px #0e345e;
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
 }
 
 h1 {
