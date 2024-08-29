@@ -15,7 +15,8 @@ document.addEventListener("DOMContentLoaded", function () {
     let favoritoDiv = document.createElement("div");
     favoritoDiv.className = "favorito";
     favoritoDiv.innerHTML = `
-            <strong>${favorito.info}</strong>
+            <div><strong>${favorito.nombre}</strong></div>
+            <div>${favorito.info}</div>
             <button class="eliminar-btn"><i class="fa-regular fa-trash-can"></i></button>
         `;
 

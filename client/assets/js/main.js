@@ -402,10 +402,10 @@ function mostrarLinea(linea) {
 
         // Obtener la información de la parada
         let paradaInfo = {
-          nombre: popup.getElement().querySelector("div > div:first-child")
-            .innerText,
-          info: popup.getElement().querySelector("div > div:nth-child(2)")
-            .innerText,
+          nombre: popup.querySelector("div > div:first-child")
+            .innerText.trim(),
+          info: popup.querySelector("div > div:nth-child(2)")
+            .innerText.trim(),
         };
 
         // Guardar la información en localStorage
