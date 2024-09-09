@@ -5,6 +5,12 @@
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
+import path from "path";
+import { fileURLToPath } from "url";
+
+// Obtener el directorio del archivo actual
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Inicializamos express
 const app = express();
@@ -19,44 +25,14 @@ app.use(express.json()); // express.json para que nuestro servidor pueda reconoc
 import router from "./routes/auth.routes.js"
 app.use(router);
 
-//const { newConnection } = require("./bd/BD");
-import { newConnection } from "./bd/BD.js"
+// Servir archivos estáticos desde la carpeta client
+app.use(express.static(path.join(__dirname, "../client")));
 
-app.use(express.json());
-
-// Obtener todos los usuarios
-app.get("/", async (request, response) => {
-  const connection = await newConnection();
-  const [results] = await connection.query("SELECT * FROM usuarios");
-  response.json(results);
-  connection.end();
+// Ruta para servir el archivo index.html
+app.get("/", (req, res) => {
+  res.sendFile(patch.join(__dirname, "../client", "index.html"));
 });
 
-// Obtener un usuario por ID
-app.get("/usuarios/:IdUsuario", async (request, response) => {
-  const connection = await newConnection();
-  const id = request.params.IdUsuario;
-  const [results] = await connection.query(
-    "SELECT * FROM usuarios WHERE IdUsuario = ?",
-    [id]
-  );
-  response.json(results[0]);
-  connection.end();
-});
-
-/* / Crear un nuevo usuario
-app.post("/usuarios", async (request, response) => {
-    const connection = await newConnection();
-    const { nombre, email, contrasenia, FecNac } = request.body;
-
-    if (!nombre || !email || !contrasenia || !FecNac) {
-        return response.status(400).send('Faltan datos.');
-    }
-
-    await connection.query("INSERT INTO usuarios (nombre, email, contrasenia, FecNac) VALUES (?, ?, ?, ?)", [nombre, email, contrasenia, FecNac]);
-    response.send("Usuario creado correctamente");
-    connection.end();
-}); */
 
 app.listen(3000, () => {
   console.log("Servidor iniciado en el puerto 3000 http://localhost:3000");
