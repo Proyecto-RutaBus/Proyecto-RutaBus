@@ -3,6 +3,10 @@ const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
 
+//IMPORT
+import { routerPeticiones } from "./routes/peticiones.routes.js";
+import { routerReclamos } from "./routes/reclamos.routes.js";
+
 // Inicializamos express
 const app = express();
 
@@ -10,12 +14,15 @@ const app = express();
 app.use(cors()); // cors para que nos permita realizar peticiones desde cualquier cliente.
 app.use(morgan("dev")); // morgan para mostrar informacion acerca de las peticiones que llegan a nuestro servidor.
 app.use(express.json()); // express.json para que nuestro servidor pueda reconocer los json que recibimos por el body.
-
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 //Requerimos nuestras rutas.
 app.use(require("./routes/auth.routes"));
 
 const { newConnection } = require("./bd/BD");
 
+app.use("/comunicaciones", routerPeticiones);
+app.use("/comunicaciones", routerReclamos);
 app.use(express.json());
 
 // Obtener todos los usuarios

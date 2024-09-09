@@ -49,3 +49,39 @@ document
     document.getElementById("reclamoSection").style.display = "none";
     document.getElementById("peticionSection").style.display = "none";
   });
+
+document
+  .getElementById("solicitudForm")
+  .addEventListener("submit", async function (event) {
+    event.preventDefault();
+
+    const tipo = document.getElementById("tipo").value;
+    const descripcion =
+      tipo === "reclamo"
+        ? document.getElementById("reclamo").value
+        : document.getElementById("peticion").value;
+    const anonimo = document.getElementById("anonimo").checked;
+
+    const formData = new FormData();
+    formData.append("tipo", tipo);
+    formData.append("descripcion", descripcion);
+    formData.append("anonimo", anonimo);
+    const archivo = document.getElementById("archivo").files[0];
+    if (archivo) {
+      formData.append("archivo", archivo);
+    }
+
+    try {
+      const response = await fetch("http://localhost:4000/solicitudes", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (response.ok) {
+        document.getElementById("notification").style.display = "block";
+        this.reset();
+      }
+    } catch (error) {
+      console.error("Error al enviar la solicitud:", error);
+    }
+  });
