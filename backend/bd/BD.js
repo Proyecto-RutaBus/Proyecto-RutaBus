@@ -1,5 +1,6 @@
 // Requerimos mysql
-const mysql = require("mysql2/promise");
+import mysql from "mysql2/promise";
+
 
 // Función para crear la base de datos si no existe
 const createDatabaseIfNotExists = async () => {
@@ -42,6 +43,4 @@ const newConnection = async () => {
 };
 
 // Exportamos la función para realizar la conexión desde cualquier archivo.
-module.exports = {
-  newConnection,
-};
+export { newConnection };

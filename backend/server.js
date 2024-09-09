@@ -1,7 +1,16 @@
 // Requerimos las dependencias.
-const express = require("express");
-const cors = require("cors");
-const morgan = require("morgan");
+// const express = require("express");
+// const cors = require("cors");
+// const morgan = require("morgan");
+import express from "express";
+import cors from "cors";
+import morgan from "morgan";
+import path from "path";
+import { fileURLToPath } from "url";
+
+// Obtener el directorio del archivo actual
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 //IMPORT
 import { routerPeticiones } from "./routes/peticiones.routes.js";
@@ -17,9 +26,12 @@ app.use(express.json()); // express.json para que nuestro servidor pueda reconoc
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 //Requerimos nuestras rutas.
-app.use(require("./routes/auth.routes"));
+//app.use(require("./routes/auth.routes"));
+import router from "./routes/auth.routes.js"
+app.use(router);
 
-const { newConnection } = require("./bd/BD");
+// Servir archivos estáticos desde la carpeta client
+app.use(express.static(path.join(__dirname, "../client")));
 
 app.use("/comunicaciones", routerPeticiones);
 app.use("/comunicaciones", routerReclamos);
@@ -33,31 +45,6 @@ app.get("/", async (request, response) => {
   connection.end();
 });
 
-// Obtener un usuario por ID
-app.get("/usuarios/:IdUsuario", async (request, response) => {
-  const connection = await newConnection();
-  const id = request.params.IdUsuario;
-  const [results] = await connection.query(
-    "SELECT * FROM usuarios WHERE IdUsuario = ?",
-    [id]
-  );
-  response.json(results[0]);
-  connection.end();
-});
-
-/* / Crear un nuevo usuario
-app.post("/usuarios", async (request, response) => {
-    const connection = await newConnection();
-    const { nombre, email, contrasenia, FecNac } = request.body;
-
-    if (!nombre || !email || !contrasenia || !FecNac) {
-        return response.status(400).send('Faltan datos.');
-    }
-
-    await connection.query("INSERT INTO usuarios (nombre, email, contrasenia, FecNac) VALUES (?, ?, ?, ?)", [nombre, email, contrasenia, FecNac]);
-    response.send("Usuario creado correctamente");
-    connection.end();
-}); */
 
 app.listen(3000, () => {
   console.log("Servidor iniciado en el puerto 3000 http://localhost:3000");

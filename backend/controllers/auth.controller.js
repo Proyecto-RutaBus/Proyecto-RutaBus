@@ -1,7 +1,10 @@
 // Requerimos la función de conexión y otras dependencias necesarias
-const { newConnection } = require("../bd/BD");
-const bcrypt = require("bcrypt");
-const generarJWT = require("../helpers/generarJWT");
+//const { newConnection } = require("../bd/BD.js");
+import { newConnection } from "../bd/BD.js"
+//const bcrypt = require("bcrypt");
+import bcrypt from 'bcrypt';
+//const generarJWT = require("../helpers/generarJWT");
+import { generarJWT } from "../helpers/generarJWT.js"
 
 // Definimos un objeto vacío con el nombre 'ctrl' (abreviatura de controller).
 const ctrl = {};
@@ -70,4 +73,5 @@ ctrl.login = async (req, res) => {
 };
 
 // Exportamos el objeto con los controladores.
-module.exports = ctrl;
+//module.exports = ctrl;
+export const { registro, login } = ctrl;
