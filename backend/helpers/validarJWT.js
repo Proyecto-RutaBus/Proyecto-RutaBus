@@ -1,5 +1,7 @@
-const jwt = require("jsonwebtoken");
-const { newConnection } = require("../bd/BD");
+//const jwt = require("jsonwebtoken");
+//const { newConnection } = require("../bd/BD");
+import jwt from "jsonwebtoken";
+import { newConnection } from "../bd/BD.js"
 
 const validarJWT = async (token) => {
   try {
@@ -29,4 +31,5 @@ const validarJWT = async (token) => {
   }
 };
 
-module.exports = validarJWT;
+//module.exports = validarJWT;
+export { validarJWT };

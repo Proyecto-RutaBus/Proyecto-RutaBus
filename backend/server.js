@@ -1,7 +1,10 @@
 // Requerimos las dependencias.
-const express = require("express");
-const cors = require("cors");
-const morgan = require("morgan");
+// const express = require("express");
+// const cors = require("cors");
+// const morgan = require("morgan");
+import express from "express";
+import cors from "cors";
+import morgan from "morgan";
 
 // Inicializamos express
 const app = express();
@@ -12,9 +15,12 @@ app.use(morgan("dev")); // morgan para mostrar informacion acerca de las peticio
 app.use(express.json()); // express.json para que nuestro servidor pueda reconocer los json que recibimos por el body.
 
 //Requerimos nuestras rutas.
-app.use(require("./routes/auth.routes"));
+//app.use(require("./routes/auth.routes"));
+import router from "./routes/auth.routes.js"
+app.use(router);
 
-const { newConnection } = require("./bd/BD");
+//const { newConnection } = require("./bd/BD");
+import { newConnection } from "./bd/BD.js"
 
 app.use(express.json());
 

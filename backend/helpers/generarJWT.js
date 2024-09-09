@@ -1,4 +1,5 @@
-const jwt = require("jsonwebtoken");
+// const jwt = require("jsonwebtoken");
+import jwt from "jsonwebtoken";
 
 const generarJWT = (id) => {
   return new Promise((resolve, reject) => {
@@ -18,4 +19,5 @@ const generarJWT = (id) => {
   });
 };
 
-module.exports = generarJWT;
+// module.exports = generarJWT;
+export { generarJWT };
