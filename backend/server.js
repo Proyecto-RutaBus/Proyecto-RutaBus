@@ -27,7 +27,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 //Requerimos nuestras rutas.
 //app.use(require("./routes/auth.routes"));
-import router from "./routes/auth.routes.js"
+import router from "./routes/auth.routes.js";
 app.use(router);
 
 // Servir archivos estáticos desde la carpeta client
@@ -44,7 +44,6 @@ app.get("/", async (request, response) => {
   response.json(results);
   connection.end();
 });
-
 
 app.listen(3000, () => {
   console.log("Servidor iniciado en el puerto 3000 http://localhost:3000");
