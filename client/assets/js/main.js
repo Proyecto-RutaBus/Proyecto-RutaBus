@@ -371,19 +371,23 @@ function mostrarLinea(linea) {
 
   linea.paradas.forEach((parada) => {
     let contenidoPopup = `
-  <div class="container" style="padding: 10px; display: flex; align-items: center;">
-    <button class="favoritoBtn" style="background: none; border: none; cursor: pointer;">
-      <img src="./assets/img/icono-favorito.png" alt="Estrella-favorito" style="width: 30px; height: 30px;">
-    </button>
-    <div style="flex: 1; text-align: center;">
-      <div style="font-weight: bold;">${parada.nombre}</div>
-      <div style="text-align: left;">${parada.info ? parada.info : ""}</div>
-    </div>
-    <button class="colectivoBtn" style="background: none; border: none; cursor: pointer;">
-      <img src="./assets/img/icono-colectivo.png" alt="Colectivo" style="width: 30px; height: 30px;">
-    </button>
-  </div>
-`;
+      <div class="container" style="padding: 10px; display: flex; align-items: center;">
+        <button class="favoritoBtn" style="background: none; border: none; cursor: pointer;">
+          <img src="./assets/img/icono-favorito.png" alt="Estrella-favorito" style="width: 30px; height: 30px;">
+        </button>
+        <div style="flex: 1; text-align: center;">
+          <div class="parada-nombre" style="font-weight: bold;">${
+            parada.nombre
+          }</div>
+          <div class="parada-info" style="text-align: left;">${
+            parada.info ? parada.info : ""
+          }</div>
+        </div>
+        <button class="colectivoBtn" style="background: none; border: none; cursor: pointer;">
+          <img src="./assets/img/icono-colectivo.png" alt="Colectivo" style="width: 30px; height: 30px;">
+        </button>
+      </div>
+    `;
 
     let marker = L.marker(parada.coordenadas).bindPopup(contenidoPopup);
     if (document.getElementById("toggle-paradas").checked) {
@@ -402,9 +406,13 @@ function mostrarLinea(linea) {
 
         // Obtener la información de la parada
         let paradaInfo = {
-          nombre: popup.querySelector("div > div:first-child")
+          nombre: popup
+            .getElement()
+            .querySelector(".parada-nombre")
             .innerText.trim(),
-          info: popup.querySelector("div > div:nth-child(2)")
+          info: popup
+            .getElement()
+            .querySelector(".parada-info")
             .innerText.trim(),
         };
 

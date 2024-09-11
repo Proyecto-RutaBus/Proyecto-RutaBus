@@ -15,28 +15,28 @@ document.addEventListener("DOMContentLoaded", function () {
     let favoritoDiv = document.createElement("div");
     favoritoDiv.className = "favorito";
     favoritoDiv.innerHTML = `
-            <div><strong>${favorito.nombre}</strong></div>
-            <div>${favorito.info}</div>
-            <button class="eliminar-btn"><i class="fa-regular fa-trash-can"></i></button>
-        `;
+    <div class="favorito-contenedor" style="display: flex; align-items: center; gap: 10px;">
+        <div class="favorito-nombre"><strong>${favorito.nombre}</strong></div>
+        <div class="favorito-info">${favorito.info}</div>
+        <button class="eliminar-btn"><i class="fa-regular fa-trash-can"></i></button>
+    </div>
+`;
 
     // Añadir evento de clic al botón de eliminación
     let eliminarBtn = favoritoDiv.querySelector(".eliminar-btn");
     eliminarBtn.addEventListener("click", function () {
       // Buscar el índice del favorito en el array
       let index = favoritos.findIndex(
-        (f) => f.info === favorito.info && f.nombre === favorito.nombre
+        (f) => f.nombre === favorito.nombre && f.info === favorito.info
       );
       if (index !== -1) {
-        // Eliminar el favorito del array
         favoritos.splice(index, 1);
-        // Actualizar el localStorage
         localStorage.setItem("favoritos", JSON.stringify(favoritos));
-        // Eliminar el elemento del DOM
         favoritoDiv.remove();
       }
     });
 
-    favoritosContainer.appendChild(favoritoDiv);
+    // Añadir el div al contenedor principal
+    document.getElementById("favoritos-container").appendChild(favoritoDiv);
   });
 });
