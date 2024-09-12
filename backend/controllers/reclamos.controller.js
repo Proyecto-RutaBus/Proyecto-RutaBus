@@ -1,11 +1,13 @@
-import { newConnection } from "../bd/BD";
+import { newConnection } from "../bd/BD.js";
 
 // Obtener todos los reclamos
-export const obtenerReclamos = (req, res) => {
-  newConnection.query("SELECT * FROM reclamos", (err, results) => {
+export const obtenerReclamos = async (req, res) => {
+  const connection = await newConnection();
+  connection.query("SELECT * FROM reclamos", (err, results) => {
     if (err) {
       console.error("Error al obtener los reclamos:", err);
       res.status(500).send("Error del servidor");
+      connection.end();
     } else {
       res.json(results);
     }
@@ -13,19 +15,13 @@ export const obtenerReclamos = (req, res) => {
 };
 
 // Crear un nuevo reclamo
-export const crearReclamo = (req, res) => {
-  const { descripcion, anonimo } = req.body;
-  const usuarioId = anonimo ? null : req.body.usuarioId;
-  newConnection.query(
-    "INSERT INTO reclamos (descripcion, usuarioId) VALUES (?, ?)",
-    [descripcion, usuarioId],
-    (err, result) => {
-      if (err) {
-        console.error("Error al crear el reclamo:", err);
-        res.status(500).send("Error del servidor");
-      } else {
-        res.status(201).send("Reclamo creado exitosamente");
-      }
-    }
+export const crearReclamo = async (req, res) => {
+  const connection = await newConnection();
+  const { descripción } = req.body;
+  const usuarioId = 1;
+  const consulta = connection.query(
+    "INSERT INTO reclamos (descripcion) VALUES (?)",
+    [descripción]
   );
+  res.send(consulta);
 };

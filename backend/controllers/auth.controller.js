@@ -1,10 +1,10 @@
 // Requerimos la función de conexión y otras dependencias necesarias
 //const { newConnection } = require("../bd/BD.js");
-import { newConnection } from "../bd/BD.js"
+import { newConnection } from "../bd/BD.js";
 //const bcrypt = require("bcrypt");
-import bcrypt from 'bcrypt';
+import bcrypt from "bcrypt";
 //const generarJWT = require("../helpers/generarJWT");
-import { generarJWT } from "../helpers/generarJWT.js"
+import { generarJWT } from "../helpers/generarJWT.js";
 
 // Definimos un objeto vacío con el nombre 'ctrl' (abreviatura de controller).
 const ctrl = {};

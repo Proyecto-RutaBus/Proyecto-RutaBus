@@ -23,8 +23,6 @@ const app = express();
 app.use(cors()); // cors para que nos permita realizar peticiones desde cualquier cliente.
 app.use(morgan("dev")); // morgan para mostrar informacion acerca de las peticiones que llegan a nuestro servidor.
 app.use(express.json()); // express.json para que nuestro servidor pueda reconocer los json que recibimos por el body.
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 //Requerimos nuestras rutas.
 //app.use(require("./routes/auth.routes"));
 import router from "./routes/auth.routes.js";
@@ -35,15 +33,14 @@ app.use(express.static(path.join(__dirname, "../client")));
 
 app.use("/comunicaciones", routerPeticiones);
 app.use("/comunicaciones", routerReclamos);
-app.use(express.json());
 
 // Obtener todos los usuarios
-app.get("/", async (request, response) => {
-  const connection = await newConnection();
-  const [results] = await connection.query("SELECT * FROM usuarios");
-  response.json(results);
-  connection.end();
-});
+// app.get("/", async (request, response) => {
+//   const connection = await newConnection();
+//   const [results] = await connection.query("SELECT * FROM usuarios");
+//   response.json(results);
+//   connection.end();
+// });
 
 app.listen(3000, () => {
   console.log("Servidor iniciado en el puerto 3000 http://localhost:3000");

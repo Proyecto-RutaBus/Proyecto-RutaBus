@@ -1,4 +1,4 @@
-import { newConnection } from "../bd/BD";
+import { newConnection } from "../bd/BD.js";
 
 // Obtener todas las peticiones
 export const obtenerPeticiones = (req, res) => {

@@ -3,11 +3,11 @@ import { Router } from "express";
 import {
   crearPeticion,
   obtenerPeticiones,
-} from "../controllers/peticiones.controller";
+} from "../controllers/peticiones.controller.js";
 
 const routerPeticiones = Router();
 
-routerPeticiones.post("/peticiones", crearPeticion);
-routerPeticiones.get("/peticiones", obtenerPeticiones);
+routerPeticiones.post("/peticion", crearPeticion);
+routerPeticiones.get("/peticion", obtenerPeticiones);
 
 export { routerPeticiones };

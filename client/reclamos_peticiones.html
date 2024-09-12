@@ -34,15 +34,17 @@
             <label for="reclamo"
               >Escriba su reclamo (máximo 300 palabras):</label
             >
-            <textarea
-              id="reclamo"
+            <input 
+            type="text"
+              id="Reclamo"
               name="reclamo"
               rows="10"
               maxlength="3000"
               placeholder="Escriba su reclamo aquí..."
-            ></textarea>
+            ></input> 
+            <!-- <input type="text" id="Reclamo" />
             <p id="wordCountReclamo">0 / 300 palabras</p>
-          </div>
+          </div>-->
 
           <div id="peticionSection" style="display: none">
             <label for="peticion"
@@ -66,7 +68,7 @@
             forma anónima
           </label>
 
-          <button type="submit">Enviar</button>
+          <button type="submit" id="submit">Enviar</button>
         </form>
         <div id="notification" style="display: none">
           <p>Su solicitud ha sido enviada con éxito.</p>
@@ -74,6 +76,6 @@
       </div>
     </main>
 
-    <script src="/client/assets/js/reclamos_peticiones.js"></script>
+    <script src="/client/assets/js/reclamo.js"></script>
   </body>
 </html>

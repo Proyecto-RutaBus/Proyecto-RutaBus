@@ -1,7 +1,6 @@
 // Requerimos mysql
 import mysql from "mysql2/promise";
 
-
 // Función para crear la base de datos si no existe
 const createDatabaseIfNotExists = async () => {
   // Conexión inicial sin especificar base de datos
