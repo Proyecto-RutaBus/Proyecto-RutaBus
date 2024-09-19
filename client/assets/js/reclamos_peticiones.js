@@ -49,3 +49,44 @@ document
     document.getElementById("reclamoSection").style.display = "none";
     document.getElementById("peticionSection").style.display = "none";
   });
+
+document.getElementById("tipo").addEventListener("change", function (e) {
+  localStorage.setItem("tipo", e.target.value);
+});
+
+document
+  .getElementById("solicitudForm")
+  .addEventListener("submit", async function (event) {
+    console.log(document.querySelector("#reclamo").value);
+    event.preventDefault();
+    console.log(localStorage.getItem("tipo"));
+    const anonimo = document.getElementById("anonimo").checked;
+    const form = {
+      tipo: localStorage.getItem("tipo"),
+      descripción: document.querySelector("#reclamo").value,
+    };
+    console.log(form);
+    const formData = new FormData();
+    formData.append("tipo", localStorage.getItem("tipo"));
+    // formData.append("descripcion", descripcion.value);
+    formData.append("anonimo", anonimo);
+    const archivo = document.getElementById("archivo").files[0];
+    console.log(formData);
+    if (archivo) {
+      formData.append("archivo", archivo);
+    }
+
+    try {
+      const response = await fetch("http://localhost:3000/comunicaciones", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (response.ok) {
+        document.getElementById("notification").style.display = "block";
+        this.reset();
+      }
+    } catch (error) {
+      console.error("Error al enviar la solicitud:", error);
+    }
+  });

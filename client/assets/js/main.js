@@ -4,12 +4,12 @@ document.addEventListener("DOMContentLoaded", () => {
   // Verificar el estado de inicio de sesión
   const isLoggedIn = localStorage.getItem("token");
 
-    const registerBtn = document.getElementById('registerBtn');
-    const loginBtn = document.getElementById('loginBtn');
-    const userIcon = document.getElementById('userIcon');
+  const registerBtn = document.getElementById("registerBtn");
+  const loginBtn = document.getElementById("loginBtn");
+  const userIcon = document.getElementById("userIcon");
 
-    const carousel = document.getElementById('carouselExampleFade');
-    const informacionSeccion = document.getElementById('informacionSeccion');
+  const carousel = document.getElementById("carouselExampleFade");
+  const informacionSeccion = document.getElementById("informacionSeccion");
 
   if (isLoggedIn) {
     // Usuario ha iniciado sesión, ocultar botones de registro e inicio de sesión, mostrar icono de usuario
@@ -17,10 +17,9 @@ document.addEventListener("DOMContentLoaded", () => {
     loginBtn.style.display = "none";
     userIcon.style.display = "block";
 
-        // Ocultar carrusel y sección de información
-        carousel.style.display = 'none';
-        informacionSeccion.style.display = 'none';
-
+    // Ocultar carrusel y sección de información
+    carousel.style.display = "none";
+    informacionSeccion.style.display = "none";
   } else {
     // Usuario no ha iniciado sesión, mostrar botones de registro e inicio de sesión, ocultar icono de usuario
     registerBtn.style.display = "block";
@@ -28,14 +27,13 @@ document.addEventListener("DOMContentLoaded", () => {
     userIcon.style.display = "none";
 
     // Mostrar carrusel y sección de información
-    carousel.style.display = 'block';
-    informacionSeccion.style.display = 'block';
+    carousel.style.display = "block";
+    informacionSeccion.style.display = "block";
   }
 
   document.body.addEventListener("click", function (event) {
     if (event.target && event.target.id === "favoritoBtn") {
       alert("Parada agregada a favoritos!");
-
     }
   });
 });
@@ -107,7 +105,7 @@ const lineas = [
         nombre: "Hospital Central",
         coordenadas: [-26.18815646284242, -58.16859784770887],
         info: "Fotheringham",
-      }
+      },
     ],
     recorrido: [
       [-26.273634023638834, -58.27394168484561],
@@ -173,9 +171,9 @@ const lineas = [
       [-26.187212787316582, -58.16575759807155],
       [-26.189412656566816, -58.17253409054112],
       [-26.19025737096254, -58.17508243936565],
-      [-26.18614415285038, -58.176735373738126]
-    ]
-  }, 
+      [-26.18614415285038, -58.176735373738126],
+    ],
+  },
   {
     nombre: "Línea B",
     paradas: [
@@ -187,34 +185,33 @@ const lineas = [
       {
         nombre: "Hospital 2 de Abril",
         coordenadas: [-26.17249600473017, -58.19487991679101],
-        info: "Av. Italia"
+        info: "Av. Italia",
       },
       {
         nombre: "Plaza Tematica",
         coordenadas: [-26.173521941424532, -58.179210438020874],
-        info: "Av. Juan Domingo Perón"
+        info: "Av. Juan Domingo Perón",
       },
       {
         nombre: "Plaza San Martin",
         coordenadas: [-26.185141103213006, -58.17584091289481],
-        info: "Sarmiento"
+        info: "Sarmiento",
       },
       {
         nombre: "Anfiteatro de la Juventud",
         coordenadas: [-26.19350130394575, -58.170241917314215],
-        info: "Av. Napoleón Uriburu"
+        info: "Av. Napoleón Uriburu",
       },
       {
         nombre: "Centro de Salud Bernardino Rivadavia",
         coordenadas: [-26.199329390025575, -58.15221749783382],
-        info: "D'augero"
+        info: "D'augero",
       },
       {
         nombre: "Club Caza Y Pesca ",
         coordenadas: [-26.202658317788746, -58.149746069776455],
-        info: "Patagonia"
-      }  
-      
+        info: "Patagonia",
+      },
     ],
     recorrido: [
       [-26.18272488358796, -58.196985414368385],
@@ -254,92 +251,92 @@ const lineas = [
       [-26.20150820865129, -58.150248141926824],
       [-26.20585724568135, -58.14844469473506],
       [-26.206040202441926, -58.14838735717798],
-      [-26.20673888893048, -58.15053014327603]
-  ],  
+      [-26.20673888893048, -58.15053014327603],
+    ],
   },
-    {
-      nombre : "Línea C",
-      paradas: [
-        {
-          nombre: "Namqom",
-          coordenadas: [-26.110758632923115, -58.216805450020416],
-          info: "S/C"
-        },
-        {
-          nombre: "Tiro Federal de Formosa",
-          coordenadas: [-26.127790435037774, -58.21091425290827],
-          info: "Ruta Nacional N°11"
-        },
-        {
-          nombre: "Rotonda- Monumento a la Virgen del Carmen",
-          coordenadas: [-26.15677798288015, -58.18579330907224],
-          info: "Ruta Nacional N°11"
-        },
-        {
-          nombre: "REFSA- Direccion de Arquitectura",
-          coordenadas: [-26.166833185761362, -58.17752809033921],
-          info: "Av. Tte. Aramburu"
-        },
-        {
-          nombre: "Casa de Gobierno",
-          coordenadas: [-26.183141264229178, -58.164822977685276],
-          info: "Belgrano"
-        },
-        {
-          nombre: "Aguas de Formosa",
-          coordenadas: [-26.1877650910549, -58.16740985469819],
-          info: "Fotheringham"
-        },
-        {
-          nombre: "Hospital Central",
-          coordenadas: [-26.18584414321449, -58.17561249718432],
-          info: "Fotheringham"
-        }
-      ],
-      recorrido: [
-        [-26.185857003728707, -58.175619041241546],
-        [-26.186193348860563, -58.176668519756745],
-        [-26.19019578139661, -58.17509430198395],
-        [-26.189104156237526, -58.17141959209586],
-        [-26.186447069620215, -58.16347354047927],
-        [-26.181132722731334, -58.16564742778513],
-        [-26.17025916502528, -58.16972890048402],
-        [-26.16643422796912, -58.17126322247208],
-        [-26.16501741147217, -58.171868101361625],
-        [-26.165514302686084, -58.173590484919615],
-        [-26.165521121557823, -58.173633514700725],
-        [-26.167315433211392, -58.17898520646865],
-        [-26.16690136374202, -58.181076672216875],
-        [-26.166266454366095, -58.181291970162306],
-        [-26.166432083232877, -58.181814836598974],
-        [-26.161007682289345, -58.183921654852114],
-        [-26.157860547244013, -58.18512117197264],
-        [-26.157612085598892, -58.18539798361553],
-        [-26.157363623423215, -58.185736308957445],
-        [-26.15697712565447, -58.185859336354724],
-        [-26.15661823372254, -58.18570555210833],
-        [-26.156038482884377, -58.18576706580657],
-        [-26.153816071180408, -58.18666156075594],
-        [-26.150475482318086, -58.18804561897123],
-        [-26.144787971854143, -58.19064767593433],
-        [-26.143370994464334, -58.19145075856204],
-        [-26.141183346471344, -58.193361541366926],
-        [-26.138622684591738, -58.19627603495479],
-        [-26.130261116990845, -58.20755901952289],
-        [-26.121982470818814, -58.21865790056911],
-        [-26.117407413248507, -58.22477794404479],
-        [-26.120565216700122, -58.22763027199895],
-        [-26.12195760685971, -58.231784147661116],
-        [-26.112566758384865, -58.235587891754875],
-        [-26.112256273140993, -58.23489633569859],
-        [-26.1116353001783, -58.23394999583216],
-        [-26.11116139753944, -58.23318564440467],
-        [-26.114534100925468, -58.22874662427371],
-        [-26.114230312810456, -58.227762405098616],
-        [-26.11064002983104, -58.21647464142636]
-      ],
-  }
-]  
+  {
+    nombre: "Línea C",
+    paradas: [
+      {
+        nombre: "Namqom",
+        coordenadas: [-26.110758632923115, -58.216805450020416],
+        info: "S/C",
+      },
+      {
+        nombre: "Tiro Federal de Formosa",
+        coordenadas: [-26.127790435037774, -58.21091425290827],
+        info: "Ruta Nacional N°11",
+      },
+      {
+        nombre: "Rotonda- Monumento a la Virgen del Carmen",
+        coordenadas: [-26.15677798288015, -58.18579330907224],
+        info: "Ruta Nacional N°11",
+      },
+      {
+        nombre: "REFSA- Direccion de Arquitectura",
+        coordenadas: [-26.166833185761362, -58.17752809033921],
+        info: "Av. Tte. Aramburu",
+      },
+      {
+        nombre: "Casa de Gobierno",
+        coordenadas: [-26.183141264229178, -58.164822977685276],
+        info: "Belgrano",
+      },
+      {
+        nombre: "Aguas de Formosa",
+        coordenadas: [-26.1877650910549, -58.16740985469819],
+        info: "Fotheringham",
+      },
+      {
+        nombre: "Hospital Central",
+        coordenadas: [-26.18584414321449, -58.17561249718432],
+        info: "Fotheringham",
+      },
+    ],
+    recorrido: [
+      [-26.185857003728707, -58.175619041241546],
+      [-26.186193348860563, -58.176668519756745],
+      [-26.19019578139661, -58.17509430198395],
+      [-26.189104156237526, -58.17141959209586],
+      [-26.186447069620215, -58.16347354047927],
+      [-26.181132722731334, -58.16564742778513],
+      [-26.17025916502528, -58.16972890048402],
+      [-26.16643422796912, -58.17126322247208],
+      [-26.16501741147217, -58.171868101361625],
+      [-26.165514302686084, -58.173590484919615],
+      [-26.165521121557823, -58.173633514700725],
+      [-26.167315433211392, -58.17898520646865],
+      [-26.16690136374202, -58.181076672216875],
+      [-26.166266454366095, -58.181291970162306],
+      [-26.166432083232877, -58.181814836598974],
+      [-26.161007682289345, -58.183921654852114],
+      [-26.157860547244013, -58.18512117197264],
+      [-26.157612085598892, -58.18539798361553],
+      [-26.157363623423215, -58.185736308957445],
+      [-26.15697712565447, -58.185859336354724],
+      [-26.15661823372254, -58.18570555210833],
+      [-26.156038482884377, -58.18576706580657],
+      [-26.153816071180408, -58.18666156075594],
+      [-26.150475482318086, -58.18804561897123],
+      [-26.144787971854143, -58.19064767593433],
+      [-26.143370994464334, -58.19145075856204],
+      [-26.141183346471344, -58.193361541366926],
+      [-26.138622684591738, -58.19627603495479],
+      [-26.130261116990845, -58.20755901952289],
+      [-26.121982470818814, -58.21865790056911],
+      [-26.117407413248507, -58.22477794404479],
+      [-26.120565216700122, -58.22763027199895],
+      [-26.12195760685971, -58.231784147661116],
+      [-26.112566758384865, -58.235587891754875],
+      [-26.112256273140993, -58.23489633569859],
+      [-26.1116353001783, -58.23394999583216],
+      [-26.11116139753944, -58.23318564440467],
+      [-26.114534100925468, -58.22874662427371],
+      [-26.114230312810456, -58.227762405098616],
+      [-26.11064002983104, -58.21647464142636],
+    ],
+  },
+];
 
 let map = L.map("mapa").setView([-26.173486, -58.197993], 13);
 
@@ -405,14 +402,16 @@ function mostrarLinea(linea) {
 
         // Obtener la información de la parada
         let paradaInfo = {
-          nombre: popup.getElement().querySelector(".info div").innerText,
-          coordenadas: popup.getLatLng(),
+          nombre: popup.getElement().querySelector("div > div:first-child")
+            .innerText,
+          info: popup.getElement().querySelector("div > div:nth-child(2)")
+            .innerText,
         };
 
         // Guardar la información en localStorage
-      let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
-      favoritos.push(paradaInfo);
-      localStorage.setItem("favoritos", JSON.stringify(favoritos));
+        let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+        favoritos.push(paradaInfo);
+        localStorage.setItem("favoritos", JSON.stringify(favoritos));
 
         popup._close();
       });
