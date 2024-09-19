@@ -38,6 +38,22 @@ const newConnection = async () => {
         contrasenia VARCHAR(255) NOT NULL
     )`);
 
+  // Crear la tabla Paradas si no existe
+  await connection.query(`CREATE TABLE IF NOT EXISTS Paradas (
+  IdParada INT PRIMARY KEY AUTO_INCREMENT,
+  Nombre VARCHAR(100),
+  Info TEXT
+)`);
+
+  // Crear la tabla ParadasFavoritas si no existe
+  await connection.query(`CREATE TABLE IF NOT EXISTS ParadasFavoritas (
+  IdUsuario INT,
+  IdParada INT,
+  PRIMARY KEY (IdUsuario, IdParada),
+  FOREIGN KEY (IdUsuario) REFERENCES USUARIOS(IdUsuario),
+  FOREIGN KEY (IdParada) REFERENCES Paradas(IdParada)
+)`);
+
   return connection; // Retornamos la conexión
 };
 

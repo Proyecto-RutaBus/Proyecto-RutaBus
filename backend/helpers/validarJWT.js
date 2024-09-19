@@ -1,35 +1,35 @@
-//const jwt = require("jsonwebtoken");
-//const { newConnection } = require("../bd/BD");
 import jwt from "jsonwebtoken";
-import { newConnection } from "../bd/BD.js"
+import { newConnection } from "../bd/BD.js";
 
 const validarJWT = async (token) => {
   try {
-    // Usamos el metodo verify para verificar el token.
-    // El primer parametro es el token que recibimos por el header, y el segun el secret con el que firmamos el token.
+    // Verificar el token usando el método verify.
     const { id } = jwt.verify(token, "mysecret");
 
+    // Establecer una nueva conexión a la base de datos.
     const connection = await newConnection();
 
-    // Buscamos el usuario por id.
+    // Buscar el usuario por ID.
     const [usuario] = await connection.query(
       "SELECT * FROM USUARIOS WHERE id=? LIMIT 1",
-      id
+      [id]
     );
 
-    // En caso de que no exista retornamos false.
-    if (!usuario) {
+    // Cerrar la conexión a la base de datos.
+    await connection.end();
+
+    // Si no se encuentra el usuario, retornar false.
+    if (!usuario.length) {
       return false;
     } else {
-      //Caso contrario retornamos el usuario.
+      // Si se encuentra el usuario, retornarlo.
       return usuario[0];
     }
   } catch (error) {
-    // Si ocurre un error lo mostramos por consola y retornamos false.
+    // Mostrar el error por consola y retornar false.
     console.log(error);
     return false;
   }
 };
 
-//module.exports = validarJWT;
 export { validarJWT };

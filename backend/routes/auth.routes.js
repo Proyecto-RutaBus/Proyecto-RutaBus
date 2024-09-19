@@ -12,6 +12,7 @@ router.post("/register", registro);
 // Lo mismo que el registro pero con el login.
 router.post("/login", login);
 
+
 // Exportamos las rutas
 //module.exports = router;
 export default router;

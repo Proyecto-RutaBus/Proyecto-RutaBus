@@ -39,4 +39,34 @@ document.addEventListener("DOMContentLoaded", function () {
     // Añadir el div al contenedor principal
     document.getElementById("favoritos-container").appendChild(favoritoDiv);
   });
+
+  // Función para agregar un nuevo favorito
+  async function agregarFavorito(nombre, info) {
+    const token = localStorage.getItem("token"); // Asumiendo que el token está almacenado en localStorage
+
+    const response = await fetch("/favoritos", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ nombre, info }),
+    });
+
+    if (response.ok) {
+      const nuevoFavorito = await response.json();
+      favoritos.push({ nombre, info });
+      localStorage.setItem("favoritos", JSON.stringify(favoritos));
+      location.reload(); // Recargar la página para mostrar el nuevo favorito
+    } else {
+      console.error("Error al agregar el favorito");
+    }
+  }
+
+  // Ejemplo de uso de la función agregarFavorito
+  document.getElementById("btnFavorito").addEventListener("click", function () {
+    const nombre = document.getElementById("nombreParada").value;
+    const info = document.getElementById("infoParada").value;
+    agregarFavorito(nombre, info);
+  });
 });

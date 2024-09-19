@@ -1,77 +1,67 @@
-// Requerimos la función de conexión y otras dependencias necesarias
-//const { newConnection } = require("../bd/BD.js");
 import { newConnection } from "../bd/BD.js";
-//const bcrypt = require("bcrypt");
 import bcrypt from "bcrypt";
-//const generarJWT = require("../helpers/generarJWT");
 import { generarJWT } from "../helpers/generarJWT.js";
 
-// Definimos un objeto vacío con el nombre 'ctrl' (abreviatura de controller).
 const ctrl = {};
 
-// Empezamos a ir agregando los controladores a dicho objeto.
+// Controlador para el registro de usuarios
 ctrl.registro = async (req, res) => {
-  // Desestructuramos los datos que vienen del cuerpo de la petición.
-  const { nombre, correo, contrasenia } = req.body;
+  try {
+    const { nombre, correo, contrasenia } = req.body;
+    const connection = await newConnection();
+    const sql =
+      "INSERT INTO USUARIOS (nombre, email, contrasenia) VALUES (?,?,?)";
+    const hashContrasenia = bcrypt.hashSync(contrasenia, 10);
+    await connection.query(sql, [nombre, correo, hashContrasenia]);
 
-  // Hacemos la conexión a la base de datos.
-  const connection = await newConnection();
+    // Obtener el ID del usuario recién registrado
+    const [usuario] = await connection.query(
+      "SELECT IdUsuario FROM USUARIOS WHERE email = ?",
+      [correo]
+    );
+    const token = await generarJWT({ id: usuario[0].IdUsuario });
 
-  // Creamos la consulta.
-  const sql =
-    "INSERT INTO USUARIOS (nombre, email, contrasenia) VALUES (?,?,?)";
-
-  // Encriptamos la contraseña utilizando la librería bcrypt.
-  const hashContrasenia = bcrypt.hashSync(contrasenia, 10); // El segundo parámetro es el número de veces que se ejecuta el algoritmo de encriptación.
-
-  // Ejecutamos la consulta.
-  await connection.query(sql, [nombre, correo, hashContrasenia]);
-
-  // Respondemos a nuestro cliente
-  res.json({
-    msg: "Registrado correctamente",
-  });
+    res.json({
+      msg: "Registrado correctamente",
+      token,
+    });
+  } catch (error) {
+    res.status(500).json({ msg: "Error en el registro", error });
+  }
 };
 
+// Controlador para el inicio de sesión de usuarios
 ctrl.login = async (req, res) => {
-  const { correo, contrasenia } = req.body;
+  try {
+    const { correo, contrasenia } = req.body;
+    const connection = await newConnection();
+    const sql = "SELECT * FROM USUARIOS WHERE EMAIL=? LIMIT 1";
+    const [buscarUsuario] = await connection.query(sql, correo);
 
-  const connection = await newConnection();
+    if (!buscarUsuario[0]) {
+      return res.status(400).json({ msg: "El usuario no existe" });
+    }
 
-  // Buscamos el usuario en la bd.
-  const sql = "SELECT * FROM USUARIOS WHERE EMAIL=? LIMIT 1";
-  const [buscarUsuario] = await connection.query(sql, correo);
+    const validarContrasenia = bcrypt.compareSync(
+      contrasenia,
+      buscarUsuario[0].contrasenia
+    );
 
-  // En caso de que no se encuentre ningún usuario, retornamos un error.
-  if (!buscarUsuario[0]) {
-    return res.status(400).json({
-      msg: "El usuario no existe",
+    if (!validarContrasenia) {
+      return res
+        .status(401)
+        .json({ msg: "El usuario o contraseña no coinciden" });
+    }
+
+    const token = await generarJWT({ id: buscarUsuario[0].IdUsuario });
+
+    return res.json({
+      msg: "Inicio de sesión exitoso",
+      token,
     });
+  } catch (error) {
+    res.status(500).json({ msg: "Error en el inicio de sesión", error });
   }
-
-  // Comparamos las contraseñas con el método compareSync que nos devolverá un true o false.
-  const validarContrasenia = bcrypt.compareSync(
-    contrasenia,
-    buscarUsuario[0].contrasenia
-  );
-
-  // En caso de que no coincidan, retornamos un error sin dar información específica de lo que falló.
-  if (!validarContrasenia) {
-    return res.status(401).json({
-      msg: "El usuario o contraseña no coinciden",
-    });
-  }
-
-  // Hacemos uso del helper para generar el token y le pasamos el id.
-  const token = await generarJWT({ id: buscarUsuario[0].IdUsuario });
-
-  // Retornamos el token con un mensaje al cliente.
-  return res.json({
-    msg: "Inicio de sesión exitoso",
-    token,
-  });
 };
 
-// Exportamos el objeto con los controladores.
-//module.exports = ctrl;
 export const { registro, login } = ctrl;
