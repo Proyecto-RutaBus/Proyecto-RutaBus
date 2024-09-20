@@ -14,7 +14,7 @@ const Header = () => {
           {!isLoggedIn && (
             <>
               <button id="loginBtn" className="bg-[#fa7f4b] h-[50px] w-[150px] rounded-md hover:bg-[#ffdf61]">
-                <a href="/Login" className="text-white text-lg">Ingresar</a>
+                <a href="/login" className="text-white text-lg">Ingresar</a>
               </button>
             </>
           )}

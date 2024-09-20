@@ -7,9 +7,9 @@ const Footer = () => {
         <div className="w-1/3">
           <img src="/assets/img/Logo-nav.png" alt="Logo" className="mb-4" />
           <p className="footer-links">
-            <a href="index.html" className="link-1 text-black">Home</a>
-            <a href="about.html" className="mx-4 text-black">About</a>
-            <a href="contacto.html" className='text-black'>Contact</a>
+            <a href="/" className="link-1 text-black">Home</a>
+            <a href="/about" className="mx-4 text-black">About</a>
+            <a href="/contact" className='text-black'>Contact</a>
           </p>
           <p className="footer-company-name">RutaBus ©2024</p>
         </div>

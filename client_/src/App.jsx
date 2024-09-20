@@ -1,23 +1,8 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import React from "react";
+import AppRouter from "./routes/AppRouter";
 import "./style.css";
-import Landing from "./views/Landing";
-import { ReclamosPeticiones } from "./views/ReclamosPeticiones";
 
-const App = () => {
-  return (
-    <div>
-      <Landing />
-    </div>
-  );
-};
-// function App() {
-//   return (
-//     <>
-//       <ReclamosPeticiones></ReclamosPeticiones>
-//     </>
-//   );
-// }
-
+function App() {
+  return <AppRouter />;
+}
 export default App;

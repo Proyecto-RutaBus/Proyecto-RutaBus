@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import Header from '../components/Header';
+import Footer from "../components/Footer";
 import "../style.css";
 
 export const ReclamosPeticiones = () => {
@@ -31,16 +33,7 @@ export const ReclamosPeticiones = () => {
 
   return (
     <div className="container mx-auto p-6">
-      <header className="mb-6">
-        <nav className="flex justify-between items-center bg-gray-800 p-4 rounded-md">
-          <a href="./index.html">
-            <img src="./assets/img/Logo-nav.png" className="w-32" alt="Logo" />
-          </a>
-          <button className="bg-orange-500 text-white py-2 px-4 rounded hover:bg-orange-600">
-            <a href="./index.html">Inicio</a>
-          </button>
-        </nav>
-      </header>
+      <Header /> {/* Se agregó el Header */} 
       <main className="bg-gray-100 p-6 rounded-md shadow-md">
         <h1 className="text-2xl font-bold text-gray-800 mb-4">
           Formulario de Reclamos y Peticiones
@@ -140,6 +133,7 @@ export const ReclamosPeticiones = () => {
         {/* Notificación condicional */}
         {/* Aquí podrías usar estado para mostrar la notificación si es necesario */}
       </main>
+      <Footer /> {/* Se agregó el Footer */}
     </div>
   );
 };
