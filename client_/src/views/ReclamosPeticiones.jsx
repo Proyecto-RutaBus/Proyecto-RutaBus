@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+import Header from "../components/Header.jsx";
+import Footer from "../components/Footer.jsx";
 import "../style.css";
 
 export default function ReclamosPeticiones() {
@@ -157,3 +157,5 @@ export default function ReclamosPeticiones() {
     </div>
   );
 }
+
+export { ReclamosPeticiones };
