@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import Header from "../components/Header.jsx";
 import Footer from "../components/Footer.jsx";
 import "../style.css";
@@ -8,19 +7,65 @@ export default function ReclamosPeticiones() {
   const [tipo, setTipo] = useState("reclamo");
   const [texto, setTexto] = useState("");
   const [isAnonimo, setIsAnonimo] = useState(false);
+  const [wordCount, setWordCount] = useState(0);
+  const [archivo, setArchivo] = useState(null);
 
-  const handleTipoChange = (e) => setTipo(e.target.value);
-  const handleTextoChange = (e) => setTexto(e.target.value);
+  const handleTipoChange = (e) => {
+    setTipo(e.target.value);
+    setTexto(""); // Resetear el texto al cambiar tipo
+    setWordCount(0); // Resetear contador de palabras al cambiar tipo
+  };
+
+  const handleTextoChange = (e) => {
+    const newText = e.target.value;
+    setTexto(newText);
+    const count = newText.trim().split(/\s+/).length;
+    if (count > 300) {
+      setTexto(newText.split(/\s+/).slice(0, 300).join(" ")); // Limitar a 300 palabras
+      setWordCount(300);
+    } else {
+      setWordCount(count);
+    }
+  };
+
   const handleAnonimoChange = () => setIsAnonimo(!isAnonimo);
-  const handleSubmit = (e) => {
+
+  const handleFileChange = (e) => setArchivo(e.target.files[0]);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted:", { tipo, texto, isAnonimo });
+
+    const formData = new FormData();
+    formData.append("tipo", tipo);
+    formData.append("descripcion", texto);
+    formData.append("anonimo", isAnonimo);
+    if (!isAnonimo) {
+      formData.append("usuarioId", userId); // Asegúrate de tener el ID del usuario disponible
+      formData.append("nombre", userName); // Si deseas guardar el nombre del usuario
+    }
+    const archivo = document.getElementById("archivo").files[0];
+    if (archivo) {
+      formData.append("archivo", archivo);
+    }
+
+    try {
+      const response = await fetch("http://localhost:3000/comunicaciones", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (response.ok) {
+        console.log("Solicitud enviada correctamente");
+        // Aquí puedes manejar la respuesta después del envío
+      }
+    } catch (error) {
+      console.error("Error al enviar la solicitud:", error);
+    }
   };
 
   return (
     <div className="min-h-screen flex flex-col bg-[#f3f7f5]">
       <Header />
-
       <main className="flex-grow container mx-auto px-4 py-8 flex items-center justify-center">
         <div className="w-full max-w-2xl bg-white rounded-xl shadow-xl overflow-hidden">
           <div className="bg-gradient-to-r from-[#63997a] to-[#fa7f4b] p-6">
@@ -48,14 +93,11 @@ export default function ReclamosPeticiones() {
                       className="sr-only"
                     />
                     <div
-                      className={`
-                      cursor-pointer text-center py-2 px-4 rounded-full transition-colors
-                      ${
+                      className={`cursor-pointer text-center py-2 px-4 rounded-full transition-colors ${
                         tipo === option
                           ? "bg-[#63997a] text-white"
                           : "bg-[#f3f7f5] text-[#63997a] hover:bg-[#e1e9e5]"
-                      }
-                    `}
+                      }`}
                     >
                       {option.charAt(0).toUpperCase() + option.slice(1)}
                     </div>
@@ -85,7 +127,7 @@ export default function ReclamosPeticiones() {
                 className="w-full p-3 border border-[#63997a] rounded-lg focus:ring-2 focus:ring-[#fa7f4b] focus:border-transparent transition-shadow"
               />
               <p className="text-sm text-[#63997a] mt-1">
-                {texto.length} / 300 palabras
+                {wordCount} / 300 palabras
               </p>
             </div>
 
@@ -117,16 +159,19 @@ export default function ReclamosPeticiones() {
                       />
                     </svg>
                     <p className="mb-2 text-sm text-[#63997a]">
-                      <span className="font-semibold">
-                        Haga clic para cargar
-                      </span>{" "}
-                      o arrastre y suelte
+                      {archivo ? archivo.name : "Arrastra y suelta un archivo"}
                     </p>
                     <p className="text-xs text-[#63997a]">
-                      PDF, DOC, JPG o PNG (MAX. 10MB)
+                      (PDF, DOC, JPG, PNG hasta 2MB)
                     </p>
                   </div>
-                  <input id="archivo" type="file" className="hidden" />
+                  <input
+                    id="archivo"
+                    type="file"
+                    accept=".pdf,.doc,.jpg,.png"
+                    onChange={handleFileChange}
+                    className="hidden"
+                  />
                 </label>
               </div>
             </div>
@@ -137,18 +182,18 @@ export default function ReclamosPeticiones() {
                 id="anonimo"
                 checked={isAnonimo}
                 onChange={handleAnonimoChange}
-                className="w-4 h-4 text-[#fa7f4b] border-[#63997a] rounded focus:ring-[#fa7f4b]"
+                className="mr-2"
               />
-              <label htmlFor="anonimo" className="ml-2 text-[#63997a]">
+              <label htmlFor="anonimo" className="text-[#63997a]">
                 Enviar de forma anónima
               </label>
             </div>
 
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-[#63997a] to-[#fa7f4b] text-white py-3 px-6 rounded-lg font-semibold text-lg shadow-md hover:from-[#568469] hover:to-[#e57243] transition-all duration-300"
+              className="w-full bg-[#63997a] text-white font-semibold py-2 rounded-lg hover:bg-[#fa7f4b] transition-colors"
             >
-              Enviar Solicitud
+              Enviar
             </button>
           </form>
         </div>
