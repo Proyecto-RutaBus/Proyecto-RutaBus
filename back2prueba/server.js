@@ -1,5 +1,6 @@
 // server.js
 import express from "express";
+import cors from "cors";
 import mongoose from "mongoose";
 import multer from "multer";
 import connectDB from "./db.js";
@@ -24,6 +25,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // Middleware para parsear JSON
+app.use(cors());
 app.use(express.json());
 app.use("/uploads", express.static("uploads")); // Servir archivos estáticos
 

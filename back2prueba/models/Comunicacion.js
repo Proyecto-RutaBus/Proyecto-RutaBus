@@ -21,7 +21,7 @@ const comunicacionSchema = new mongoose.Schema({
   },
   fecha: {
     type: Date,
-    default: Date.now,
+    default: () => new Date(), // Esto guarda la fecha y hora local
   },
   usuarioId: {
     type: String,

@@ -5,10 +5,7 @@ const uri = "mongodb+srv://RutaBus:1234@cluster0.hhodx.mongodb.net/RutaBus"; // 
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(uri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect(uri); // No necesitas las opciones obsoletas
     console.log("MongoDB connected successfully.");
   } catch (error) {
     console.error("MongoDB connection error:", error);
