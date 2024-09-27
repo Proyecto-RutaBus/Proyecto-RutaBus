@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Landing from "../views/Landing";
 import { ReclamosPeticiones } from "../views/ReclamosPeticiones.jsx";
 import { Login } from "../views/Login";
+import { MapPage } from "../views/Maps.jsx";
 
 const AppRouter = () => {
   return (
@@ -11,6 +12,7 @@ const AppRouter = () => {
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
         <Route path="/reclamos" element={<ReclamosPeticiones />} />
+        <Route path="/mapa" element={<MapPage />} />
       </Routes>
     </BrowserRouter>
   );
