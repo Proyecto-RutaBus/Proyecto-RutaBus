@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import React, { useEffect, useState } from "react";
 import { Clock, MapPin, MessageSquare, ChevronDown } from "lucide-react";
 import { motion } from "framer-motion";
+import Map from "../components/Map.jsx"; // Importa el componente del mapa
 
 export const LandingPage = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -15,7 +16,7 @@ export const LandingPage = () => {
     <div className="overflow-hidden font-sans">
       <Header />
       <main className="flex-grow">
-        <section className="relative py-20 text-center bg-[#63997a] text-white overflow-hidden">
+        <section className="relative py-19 text-center bg-[#63997a] text-white overflow-hidden">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 20 }}
@@ -61,11 +62,11 @@ export const LandingPage = () => {
                 className="md:w-1/2"
               >
                 <img
-                  src="/assets/img/Bus-stop.jpg"
+                  src="/assets/img/bus-portada.png"
                   alt="Personas esperando el colectivo"
                   width={600}
                   height={400}
-                  className="rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300"
+                  className=" transition-shadow duration-300"
                 />
               </motion.div>
             </div>
@@ -156,9 +157,7 @@ export const LandingPage = () => {
               viewport={{ once: true }}
               className="bg-[#63997a]/10 rounded-lg shadow-xl p-8 h-[500px] flex items-center justify-center hover:shadow-2xl transition-shadow duration-300"
             >
-              <p className="text-3xl font-light text-[#63997a]">
-                Explora el mapa interactivo de Formosa
-              </p>
+              <Map /> {/* Aquí se agrega el mapa de Leaflet */}
             </motion.div>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               {["Ver líneas", "Mostrar paradas", "Buscar ruta"].map(

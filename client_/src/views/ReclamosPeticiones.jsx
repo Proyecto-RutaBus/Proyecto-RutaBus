@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import Header from "../components/Header.jsx";
-import Footer from "../components/Footer.jsx";
 import "../style.css";
+import React, { useState } from "react";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 export default function ReclamosPeticiones() {
   const [tipo, setTipo] = useState("reclamo");
@@ -9,11 +9,12 @@ export default function ReclamosPeticiones() {
   const [isAnonimo, setIsAnonimo] = useState(false);
   const [wordCount, setWordCount] = useState(0);
   const [archivo, setArchivo] = useState(null);
+  const [message, setMessage] = useState({ text: "", type: "" });
 
   const handleTipoChange = (e) => {
     setTipo(e.target.value);
-    setTexto(""); // Resetear el texto al cambiar tipo
-    setWordCount(0); // Resetear contador de palabras al cambiar tipo
+    setTexto("");
+    setWordCount(0);
   };
 
   const handleTextoChange = (e) => {
@@ -21,7 +22,7 @@ export default function ReclamosPeticiones() {
     setTexto(newText);
     const count = newText.trim().split(/\s+/).length;
     if (count > 300) {
-      setTexto(newText.split(/\s+/).slice(0, 300).join(" ")); // Limitar a 300 palabras
+      setTexto(newText.split(/\s+/).slice(0, 300).join(" "));
       setWordCount(300);
     } else {
       setWordCount(count);
@@ -30,7 +31,21 @@ export default function ReclamosPeticiones() {
 
   const handleAnonimoChange = () => setIsAnonimo(!isAnonimo);
 
-  const handleFileChange = (e) => setArchivo(e.target.files[0]);
+  const handleFileChange = (e) => {
+    if (e.target.files) {
+      setArchivo(e.target.files[0]);
+    }
+  };
+
+  const clearForm = () => {
+    setTipo("reclamo");
+    setTexto("");
+    setIsAnonimo(false);
+    setWordCount(0);
+    setArchivo(null);
+    const fileInput = document.getElementById("archivo");
+    if (fileInput) fileInput.value = "";
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -38,12 +53,11 @@ export default function ReclamosPeticiones() {
     const formData = new FormData();
     formData.append("tipo", tipo);
     formData.append("descripcion", texto);
-    formData.append("anonimo", isAnonimo);
+    formData.append("anonimo", isAnonimo.toString());
     if (!isAnonimo) {
-      formData.append("usuarioId", userId); // Asegúrate de tener el ID del usuario disponible
-      formData.append("nombre", userName); // Si deseas guardar el nombre del usuario
+      formData.append("usuarioId", "userId"); // Asegúrate de tener el ID del usuario disponible
+      formData.append("nombre", "userName"); // Si deseas guardar el nombre del usuario
     }
-    const archivo = document.getElementById("archivo").files[0];
     if (archivo) {
       formData.append("archivo", archivo);
     }
@@ -55,11 +69,20 @@ export default function ReclamosPeticiones() {
       });
 
       if (response.ok) {
-        console.log("Solicitud enviada correctamente");
-        // Aquí puedes manejar la respuesta después del envío
+        setMessage({
+          text: "Su solicitud ha sido enviada correctamente.",
+          type: "success",
+        });
+        clearForm();
+      } else {
+        throw new Error("Error en la respuesta del servidor");
       }
     } catch (error) {
       console.error("Error al enviar la solicitud:", error);
+      setMessage({
+        text: "No se pudo enviar su solicitud. Por favor, intente nuevamente.",
+        type: "error",
+      });
     }
   };
 
@@ -73,6 +96,21 @@ export default function ReclamosPeticiones() {
               Formulario de Reclamos y Peticiones
             </h2>
           </div>
+          {message.text && (
+            <div
+              className={`p-4 mb-4 ${
+                message.type === "success"
+                  ? "bg-green-100 text-green-700"
+                  : "bg-red-100 text-red-700"
+              }`}
+              role="alert"
+            >
+              <p className="font-bold">
+                {message.type === "success" ? "Éxito" : "Error"}
+              </p>
+              <p>{message.text}</p>
+            </div>
+          )}
           <form onSubmit={handleSubmit} className="p-6 space-y-6">
             <div>
               <label

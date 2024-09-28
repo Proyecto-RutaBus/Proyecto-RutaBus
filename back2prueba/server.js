@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import multer from "multer";
 import connectDB from "./db.js";
 import Comunicacion from "./models/Comunicacion.js";
+import lineasRoutes from "./routes/lineas.routes.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -50,6 +51,8 @@ app.post("/comunicaciones", upload.single("archivo"), async (req, res) => {
     res.status(500).json({ message: "Error al guardar la solicitud." });
   }
 });
+
+app.use("/api", lineasRoutes);
 
 // Iniciar el servidor
 app.listen(PORT, () => {
