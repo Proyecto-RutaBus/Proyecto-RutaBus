@@ -11,6 +11,15 @@ export const MapPage = function () {
   const [markers, setMarkers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredStops, setFilteredStops] = useState([]);
+  const [favorites, setFavorites] = useState({});
+
+  const customIcon = L.icon({
+    iconUrl: "/custom-marker.png",
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41],
+  });
 
   const fetchLines = async () => {
     try {
@@ -53,6 +62,32 @@ export const MapPage = function () {
     }
   };
 
+  const createCustomPopup = (stop) => {
+    const popupContent = `
+      <div class="custom-popup">
+        <div class="popup-header">
+          <h3>${stop.nombre}</h3>
+          <div class="popup-subtitle">
+            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            Parada
+          </div>
+        </div>
+        <div class="popup-content">
+          <p>${stop.info}</p>
+          <div class="popup-footer">
+            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="2"></circle></svg>
+            Próximos buses: No disponible
+          </div>
+        </div>
+      </div>
+    `;
+
+    return L.popup({
+      maxWidth: 250,
+      className: "custom-popup-wrapper",
+    }).setContent(popupContent);
+  };
+
   const toggleStopOnMap = (stop) => {
     const existingMarker = markers.find(
       (marker) => marker.options.id === stop.nombre
@@ -64,9 +99,12 @@ export const MapPage = function () {
         prevMarkers.filter((marker) => marker.options.id !== stop.nombre)
       );
     } else {
-      const newMarker = L.marker(stop.coordenadas, { id: stop.nombre })
+      const newMarker = L.marker(stop.coordenadas, {
+        icon: customIcon,
+        id: stop.nombre,
+      })
         .addTo(map)
-        .bindPopup(stop.nombre)
+        .bindPopup(createCustomPopup(stop))
         .openPopup();
 
       setMarkers((prevMarkers) => [...prevMarkers, newMarker]);
@@ -85,6 +123,13 @@ export const MapPage = function () {
     } else {
       setFilteredStops(stops);
     }
+  };
+
+  const toggleFavorite = (stopName) => {
+    setFavorites((prevFavorites) => ({
+      ...prevFavorites,
+      [stopName]: !prevFavorites[stopName],
+    }));
   };
 
   useEffect(() => {
@@ -110,7 +155,7 @@ export const MapPage = function () {
     if (activeLine === line._id) {
       setActiveLine(null);
       setStops([]);
-      setFilteredStops([]); // Limpiar las paradas filtradas
+      setFilteredStops([]);
       if (polyline) {
         map.removeLayer(polyline);
         setPolyline(null);
@@ -174,13 +219,33 @@ export const MapPage = function () {
                   filteredStops.map((stop) => (
                     <div
                       key={stop.nombre}
-                      onClick={() => toggleStopOnMap(stop)} // Cambiado de showStopOnMap a toggleStopOnMap
-                      className="p-3 bg-gray-50 rounded-md shadow-sm border border-gray-200 cursor-pointer"
+                      className="p-3 bg-gray-50 rounded-md shadow-sm border border-gray-200 cursor-pointer flex justify-between items-center"
                     >
-                      <h3 className="font-semibold text-[#63997a] mb-1">
-                        {stop.nombre}
-                      </h3>
-                      <p className="text-sm text-gray-700">{stop.info}</p>
+                      <div onClick={() => toggleStopOnMap(stop)}>
+                        <h3 className="font-semibold text-[#63997a] mb-1">
+                          {stop.nombre}
+                        </h3>
+                        <p className="text-sm text-gray-700">{stop.info}</p>
+                      </div>
+                      <button
+                        onClick={() => toggleFavorite(stop.nombre)}
+                        className="ml-2 p-1 rounded-full hover:bg-gray-200 transition-colors duration-200"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill={favorites[stop.nombre] ? "black" : "none"}
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          className="w-6 h-6"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                          />
+                        </svg>
+                      </button>
                     </div>
                   ))
                 ) : (
