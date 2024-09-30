@@ -1,8 +1,6 @@
-// const { registro, login } = require("../controllers/auth.controller");
 import { registro, login } from "../controllers/auth.controller.js"
 
-//requerimos el metodo router de express y lo inicializamos.
-//const router = require("express").Router();
+
 import express from "express";
 const router = express.Router();
 
@@ -13,5 +11,4 @@ router.post("/register", registro);
 router.post("/login", login);
 
 // Exportamos las rutas
-//module.exports = router;
 export default router;
