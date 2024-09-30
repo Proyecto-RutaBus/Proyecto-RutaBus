@@ -58,5 +58,24 @@ ctrl.login = async (req, res) => {
   }
 };
 
+// Funcion para validar la sesion
+ctrl.validarSesion = async (req, res) => {
+  try {
+    // Obtener usuario desde el middleware de autenticación (asumo que el usuario se pasa al req)
+    const usuario = req.usuario;
+
+    // Comprobar si el usuario existe
+    if (!usuario) {
+      return res.status(404).json({ message: "Usuario no encontrado" });
+    }
+
+    // Enviar solo el nombre del usuario
+    res.json({ message: "Sesion valida", nombre: usuario.nombre });
+  } catch (error) {
+    res.status(500).json({ message: "Error al validar sesión" });
+  }
+};
+
+
 // Exportamos el objeto con los controladores.
-export const { registro, login } = ctrl;
+export const { registro, login, validarSesion } = ctrl;
