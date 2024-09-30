@@ -1,54 +1,90 @@
-"use client";
-
 import { useEffect, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
 export const MapPage = function () {
-  const [showLines, setShowLines] = useState(false);
-  const [showStops, setShowStops] = useState(false);
-  const [showFavorites, setShowFavorites] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [showAllStops, setShowAllStops] = useState(false);
-  const [activeLines, setActiveLines] = useState({});
   const [map, setMap] = useState(null);
+  const [lines, setLines] = useState([]);
+  const [stops, setStops] = useState([]);
+  const [activeLine, setActiveLine] = useState(null);
+  const [polyline, setPolyline] = useState(null);
+  const [markers, setMarkers] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredStops, setFilteredStops] = useState([]);
 
-  const lines = [
-    "A",
-    "B",
-    "C",
-    "D",
-    "E",
-    "F",
-    "G",
-    "H",
-    "I",
-    "J",
-    "K",
-    "L",
-    "M",
-    "N",
-    "O",
-    "P",
-    "Q",
-    "R",
-    "S",
-    "T",
-  ];
-
-  const toggleLines = () => setShowLines(!showLines);
-  const toggleStops = () => setShowStops(!showStops);
-  const toggleFavorites = () => setShowFavorites(!showFavorites);
-  const toggleAllStops = () => setShowAllStops(!showAllStops);
-
-  const handleSearch = (e) => {
-    e.preventDefault();
-    console.log("Searching for:", searchQuery);
-    // Implement search logic here
+  const fetchLines = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/api/lineas");
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      setLines(data);
+    } catch (error) {
+      console.error("Error fetching lines:", error);
+    }
   };
 
-  const toggleLine = (line) => {
-    setActiveLines((prev) => ({ ...prev, [line]: !prev[line] }));
+  const fetchStopsAndRoute = async (line) => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/api/lineas/${line._id}`
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+
+      setStops(data.paradas);
+      setFilteredStops(data.paradas);
+
+      if (polyline) {
+        map.removeLayer(polyline);
+      }
+
+      const newPolyline = L.polyline(
+        data.recorrido.map((coord) => [coord.lat, coord.lng]),
+        { color: "#63997a" }
+      ).addTo(map);
+
+      setPolyline(newPolyline);
+    } catch (error) {
+      console.error("Error fetching stops and route:", error);
+    }
+  };
+
+  const toggleStopOnMap = (stop) => {
+    const existingMarker = markers.find(
+      (marker) => marker.options.id === stop.nombre
+    );
+
+    if (existingMarker) {
+      map.removeLayer(existingMarker);
+      setMarkers((prevMarkers) =>
+        prevMarkers.filter((marker) => marker.options.id !== stop.nombre)
+      );
+    } else {
+      const newMarker = L.marker(stop.coordenadas, { id: stop.nombre })
+        .addTo(map)
+        .bindPopup(stop.nombre)
+        .openPopup();
+
+      setMarkers((prevMarkers) => [...prevMarkers, newMarker]);
+    }
+  };
+
+  const handleSearch = (event) => {
+    const term = event.target.value.toLowerCase();
+    setSearchTerm(term);
+
+    if (term) {
+      const filtered = stops.filter((stop) =>
+        stop.nombre.toLowerCase().includes(term)
+      );
+      setFilteredStops(filtered);
+    } else {
+      setFilteredStops(stops);
+    }
   };
 
   useEffect(() => {
@@ -61,11 +97,31 @@ export const MapPage = function () {
 
     setMap(mapInstance);
 
+    fetchLines();
+
     return () => {
       mapInstance.off();
       mapInstance.remove();
+      markers.forEach((marker) => mapInstance.removeLayer(marker));
     };
   }, []);
+
+  const toggleLine = (line) => {
+    if (activeLine === line._id) {
+      setActiveLine(null);
+      setStops([]);
+      setFilteredStops([]); // Limpiar las paradas filtradas
+      if (polyline) {
+        map.removeLayer(polyline);
+        setPolyline(null);
+      }
+      markers.forEach((marker) => map.removeLayer(marker));
+      setMarkers([]);
+    } else {
+      setActiveLine(line._id);
+      fetchStopsAndRoute(line);
+    }
+  };
 
   return (
     <div className="h-screen flex flex-col bg-gray-100">
@@ -83,103 +139,57 @@ export const MapPage = function () {
         </div>
 
         <aside className="w-80 bg-white border-l border-gray-200 overflow-y-auto shadow-lg">
-          <div className="p-4 space-y-4">
-            {[
-              {
-                title: "Líneas",
-                state: showLines,
-                toggle: toggleLines,
-                content: lines,
-              },
-              { title: "Paradas", state: showStops, toggle: toggleStops },
-              {
-                title: "Favoritos",
-                state: showFavorites,
-                toggle: toggleFavorites,
-              },
-            ].map((section) => (
-              <div key={section.title} className="space-y-2">
-                <button
-                  className="w-full px-4 py-2 text-left bg-[#63997a] text-white rounded-md hover:bg-[#528c6d] transition-colors duration-300 flex justify-between items-center font-semibold"
-                  onClick={section.toggle}
-                >
-                  <span>{section.title}</span>
-                  <span>{section.state ? "−" : "+"}</span>
-                </button>
-                {section.state && (
-                  <div className="mt-2 space-y-2 pl-2">
-                    {section.title === "Líneas" && (
-                      <div className="max-h-60 overflow-y-auto pr-2">
-                        {section.content.map((line) => (
-                          <button
-                            key={line}
-                            onClick={() => toggleLine(line)}
-                            className={`w-full p-2 mb-1 rounded-md flex items-center justify-between transition-colors duration-300 ${
-                              activeLines[line]
-                                ? "bg-[#fa7f4b] text-white"
-                                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                            }`}
-                          >
-                            <span>Línea {line}</span>
-                            <span>{activeLines[line] ? "✓" : ""}</span>
-                          </button>
-                        ))}
-                      </div>
-                    )}
-                    {section.title === "Paradas" && (
-                      <>
-                        <div className="flex items-center space-x-2">
-                          <input
-                            type="checkbox"
-                            id="show-all-stops"
-                            checked={showAllStops}
-                            onChange={toggleAllStops}
-                            className="rounded text-[#63997a] focus:ring-[#63997a]"
-                          />
-                          <label
-                            htmlFor="show-all-stops"
-                            className="text-gray-700"
-                          >
-                            Mostrar todas las paradas
-                          </label>
-                        </div>
-                        <input
-                          type="text"
-                          placeholder="Buscar parada..."
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#63997a] focus:border-transparent"
-                        />
-                      </>
-                    )}
-                    {section.title === "Favoritos" && (
-                      <>
-                        <button className="w-full px-4 py-2 bg-[#63997a] text-white rounded-md hover:bg-[#528c6d] transition-colors duration-300">
-                          Añadir ubicación actual
-                        </button>
-                        <div className="space-y-2 max-h-40 overflow-y-auto">
-                          {["Casa", "Trabajo", "Gimnasio"].map((fav) => (
-                            <div
-                              key={fav}
-                              className="flex items-center justify-between bg-gray-100 p-2 rounded-md hover:bg-gray-200 transition-colors duration-300"
-                            >
-                              <span className="text-gray-700">{fav}</span>
-                              <button className="text-[#fa7f4b] font-semibold hover:text-[#e86f3b] transition-colors duration-300">
-                                Favorito
-                              </button>
-                            </div>
-                          ))}
-                        </div>
-                      </>
-                    )}
-                  </div>
+          <div className="p-4 space-y-6">
+            <div className="space-y-2">
+              <h2 className="text-xl font-semibold text-[#63997a]">Líneas</h2>
+              <div className="max-h-60 overflow-y-auto pr-2 space-y-2">
+                {lines.map((line) => (
+                  <button
+                    key={line._id}
+                    onClick={() => toggleLine(line)}
+                    className={`w-full p-3 rounded-md flex items-center justify-between transition-colors duration-300 ${
+                      activeLine === line._id
+                        ? "bg-[#63997a] text-white"
+                        : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                    }`}
+                  >
+                    <span className="font-medium">{line.nombre}</span>
+                    <span>{activeLine === line._id ? "✓" : ""}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <h2 className="text-xl font-semibold text-[#63997a]">Paradas</h2>
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={handleSearch}
+                placeholder="Buscar parada..."
+                className="w-full p-2 border border-gray-300 rounded-md"
+              />
+              <div className="max-h-[calc(100vh-300px)] overflow-y-auto pr-2 space-y-3">
+                {filteredStops.length > 0 ? (
+                  filteredStops.map((stop) => (
+                    <div
+                      key={stop.nombre}
+                      onClick={() => toggleStopOnMap(stop)} // Cambiado de showStopOnMap a toggleStopOnMap
+                      className="p-3 bg-gray-50 rounded-md shadow-sm border border-gray-200 cursor-pointer"
+                    >
+                      <h3 className="font-semibold text-[#63997a] mb-1">
+                        {stop.nombre}
+                      </h3>
+                      <p className="text-sm text-gray-700">{stop.info}</p>
+                    </div>
+                  ))
+                ) : (
+                  <p className="text-gray-500 italic">
+                    No se encontraron paradas.
+                  </p>
                 )}
               </div>
-            ))}
-          </div>
-
-          <div className="p-4 border-t border-gray-200">
-            <button className="w-full px-4 py-2 bg-[#fa7f4b] text-white rounded-md hover:bg-[#e86f3b] transition-colors duration-300 font-semibold">
-              Planificar Ruta
-            </button>
+            </div>
           </div>
         </aside>
       </main>
