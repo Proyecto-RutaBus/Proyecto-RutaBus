@@ -5,11 +5,10 @@ import "leaflet/dist/leaflet.css";
 
 function App() {
   return (
-<AuthProvider>
-
-  <AppRouter />;
-
-</AuthProvider>
+    <>
+      <AppRouter />
+    </>
   );
 }
+
 export default App;
