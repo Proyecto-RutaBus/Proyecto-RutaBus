@@ -43,7 +43,7 @@ const Header = () => {
   const logout = () => {
     localStorage.removeItem("token"); // Eliminar el token para cerrar sesión
     setIsLoggedIn(false); // Cambiar el estado a no logueado
-    window.location.href = "/login"; // Redirigir al login
+    window.location.href = "/"; // Redirigir al login
   };
 
   // Función para alternar el menú del usuario
@@ -71,7 +71,7 @@ const Header = () => {
           ) : (
             <div className="relative">
               <img
-                src="/assets/img/avatar.png"
+                src="./assets/user-icon.jpg"
                 alt="Usuario"
                 className="cursor-pointer"
                 onClick={toggleUserMenu} // Función para mostrar el menú
