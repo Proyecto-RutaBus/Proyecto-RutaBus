@@ -1,8 +1,7 @@
-// const { registro, login } = require("../controllers/auth.controller");
-import { registro, login } from "../controllers/auth.controller.js"
+import { registro, login, validarSesion } from "../controllers/auth.controller.js"
+import { validarToken } from "../middleware/validarSesion.js"
 
-//requerimos el metodo router de express y lo inicializamos.
-//const router = require("express").Router();
+
 import express from "express";
 const router = express.Router();
 
@@ -12,6 +11,8 @@ router.post("/register", registro);
 // Lo mismo que el registro pero con el login.
 router.post("/login", login);
 
+// Ruta para validar la sesion.
+router.get("/validarSesion", validarToken, validarSesion);
+
 // Exportamos las rutas
-//module.exports = router;
 export default router;

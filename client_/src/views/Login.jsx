@@ -1,29 +1,48 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { loginUser, registerUser } from "../../services/auth.js";
+import { AuthContext } from "../../context/AuthContext";
 
 export const Login = function Login() {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
+  const [contrasenia, setContrasenia] = useState("");
+  const [nombre, setNombre] = useState("");
+  const [FecNac, setFecNac] = useState("");
+  const [error, setError] = useState("");
 
   const toggleForm = () => {
     setIsLogin(!isLogin);
     setEmail("");
-    setPassword("");
-    setName("");
+    setContrasenia("");
+    setNombre("");
+    setFecNac("");
+    setError("");
+  };
+const { iniciarSesion } = useContext(AuthContext);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      if (isLogin) {
+        // Lógica para iniciar sesión
+        const data = await loginUser(email, contrasenia);
+        console.log("Inicio de sesión exitoso", data);
+
+        iniciarSesion(data.token);
+      } else {
+        // Lógica para registrar usuario
+        const data = await registerUser(nombre, email, contrasenia, FecNac);
+        console.log("Registro exitoso", data);
+        // Después de registrar, puedes cambiar al formulario de login o iniciar sesión automáticamente
+        setIsLogin(true);
+      }
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Lógica para manejar el envío de formularios según el estado
-    console.log(isLogin ? "Iniciar sesión" : "Registro", {
-      email,
-      password,
-      name,
-    });
-  };
+
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
       <Header />
@@ -36,25 +55,48 @@ export const Login = function Login() {
               </h2>
             </div>
             <form onSubmit={handleSubmit} className="p-8 space-y-6">
+              {error && (
+                <div className="text-red-500 text-sm text-center">{error}</div>
+              )}
               {!isLogin && (
-                <div>
-                  <label
-                    htmlFor="name"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Nombre
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400
-                      focus:outline-none focus:border-[#63997a] focus:ring-1 focus:ring-[#63997a]"
-                    required
-                  />
-                </div>
+                <>
+                  <div>
+                    <label
+                      htmlFor="nombre"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Nombre
+                    </label>
+                    <input
+                      type="text"
+                      id="nombre"
+                      name="nombre"
+                      value={nombre}
+                      onChange={(e) => setNombre(e.target.value)}
+                      className="mt-1 block w-full px-3 py-2 text-gray-700 bg-white border border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400
+                          focus:outline-none focus:border-[#63997a] focus:ring-1 focus:ring-[#63997a]"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="FecNac"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Fecha de Nacimiento
+                    </label>
+                    <input
+                      type="date"
+                      id="FecNac"
+                      name="FecNac"
+                      value={FecNac}
+                      onChange={(e) => setFecNac(e.target.value)}
+                      className="mt-1 block w-full px-3 py-2 text-gray-700 bg-white border border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400
+                          focus:outline-none focus:border-[#63997a] focus:ring-1 focus:ring-[#63997a]"
+                      required
+                    />
+                  </div>
+                </>
               )}
               <div>
                 <label
@@ -69,25 +111,25 @@ export const Login = function Login() {
                   name="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400
+                  className="mt-1 block w-full px-3 py-2 text-gray-700 bg-white border border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400
                     focus:outline-none focus:border-[#63997a] focus:ring-1 focus:ring-[#63997a]"
                   required
                 />
               </div>
               <div>
                 <label
-                  htmlFor="password"
+                  htmlFor="contrasenia"
                   className="block text-sm font-medium text-gray-700"
                 >
                   Contraseña
                 </label>
                 <input
                   type="password"
-                  id="password"
-                  name="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400
+                  id="contrasenia"
+                  name="contrasenia"
+                  value={contrasenia}
+                  onChange={(e) => setContrasenia(e.target.value)}
+                  className="mt-1 block w-full px-3 py-2 text-gray-700 bg-white border border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400
                     focus:outline-none focus:border-[#63997a] focus:ring-1 focus:ring-[#63997a]"
                   required
                 />
