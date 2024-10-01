@@ -6,6 +6,7 @@ import multer from "multer";
 import connectDB from "./db.js";
 import Comunicacion from "./models/Comunicacion.js";
 import lineasRoutes from "./routes/lineas.routes.js";
+import favoritosRoutes from "./routes/favoritos.routes.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -53,6 +54,7 @@ app.post("/comunicaciones", upload.single("archivo"), async (req, res) => {
 });
 
 app.use("/api", lineasRoutes);
+app.use("/api", favoritosRoutes);
 
 // Iniciar el servidor
 app.listen(PORT, () => {

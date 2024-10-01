@@ -14,10 +14,10 @@ export const MapPage = function () {
   const [favorites, setFavorites] = useState({});
 
   const customIcon = L.icon({
-    iconUrl: "/custom-marker.png",
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
+    iconUrl: "./public/assets/img/autobus.png",
+    iconSize: [32, 32],
+    iconAnchor: [16, 32],
+    popupAnchor: [0, -32],
     shadowSize: [41, 41],
   });
 
