@@ -21,7 +21,7 @@ export const loginUser = async (email, contrasenia) => {
     localStorage.setItem("token", data.token);
 
     // Redirigir al usuario a la página principan
-    window.location.href = "/";
+    window.location.href = "/mapa";
     return data;
   } catch (error) {
     throw error;
