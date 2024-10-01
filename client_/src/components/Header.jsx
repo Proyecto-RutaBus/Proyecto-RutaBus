@@ -71,7 +71,7 @@ const Header = () => {
           ) : (
             <div className="relative">
               <img
-                src="./assets/user-icon.jpg"
+                src="../assets/user-icon.jpg"
                 alt="Usuario"
                 className="cursor-pointer"
                 onClick={toggleUserMenu} // Función para mostrar el menú
