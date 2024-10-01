@@ -78,7 +78,7 @@ const Header = () => {
               />
               <span className="ml-2 text-white">{userName}</span>
               {isMenuOpen && (
-                <div className="absolute top-14 right-0 bg-white border border-gray-300 shadow-lg rounded-md overflow-hidden">
+                <div className="absolute z-50 top-14 right-0 bg-white border border-gray-300 shadow-lg rounded-md overflow-hidden">
                   <a
                     href="/ver-perfil"
                     className="block px-4 py-2 text-black hover:bg-gray-200 transition-colors duration-300"
