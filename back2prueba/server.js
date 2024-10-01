@@ -3,7 +3,7 @@ import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import multer from "multer";
-import connectDB from "./db.js";
+import connectDB from "./db/database.js";
 import Comunicacion from "./models/Comunicacion.js";
 import lineasRoutes from "./routes/lineas.routes.js";
 import favoritosRoutes from "./routes/favoritos.routes.js";
@@ -52,6 +52,9 @@ app.post("/comunicaciones", upload.single("archivo"), async (req, res) => {
     res.status(500).json({ message: "Error al guardar la solicitud." });
   }
 });
+
+import router from "./routes/auth.routes.js";
+app.use(router);
 
 app.use("/api", lineasRoutes);
 app.use("/api", favoritosRoutes);
