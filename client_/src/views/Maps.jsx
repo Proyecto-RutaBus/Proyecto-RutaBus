@@ -53,10 +53,14 @@ export const MapPage = function () {
 
       const newPolyline = L.polyline(
         data.recorrido.map((coord) => [coord.lat, coord.lng]),
-        { color: "#63997a" }
+        { color: "#DC001A" }
       ).addTo(map);
 
       setPolyline(newPolyline);
+
+      // Zoom y centra el mapa en la ruta
+      const bounds = newPolyline.getBounds();
+      map.fitBounds(bounds, { padding: [40, 40] });
     } catch (error) {
       console.error("Error fetching stops and route:", error);
     }
@@ -108,6 +112,9 @@ export const MapPage = function () {
         .openPopup();
 
       setMarkers((prevMarkers) => [...prevMarkers, newMarker]);
+
+      // Zoom y centra el mapa en la parada seleccionada
+      map.setView(stop.coordenadas, 16);
     }
   };
 
@@ -212,7 +219,7 @@ export const MapPage = function () {
                 value={searchTerm}
                 onChange={handleSearch}
                 placeholder="Buscar parada..."
-                className="w-full p-2 border border-gray-300 rounded-md"
+                className="w-full p-2 bg-gray-700 border border-gray-300 rounded-md"
               />
               <div className="max-h-[calc(100vh-300px)] overflow-y-auto pr-2 space-y-3">
                 {filteredStops.length > 0 ? (
