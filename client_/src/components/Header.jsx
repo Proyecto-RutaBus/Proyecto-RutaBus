@@ -16,7 +16,7 @@ const Header = () => {
       // Simular obtener el nombre del usuario con una petición al backend
       const getUserData = async () => {
         try {
-          const response = await fetch("/validarSesion", {
+          const response = await fetch("http://localhost:3000/validarSesion", {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
