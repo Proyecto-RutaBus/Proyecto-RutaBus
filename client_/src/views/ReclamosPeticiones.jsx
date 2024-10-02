@@ -30,6 +30,7 @@ export default function ReclamosPeticiones() {
           if (response.ok) {
             setUsuarioId(data.usuarioId); // Obtener ID del usuario
             setNombre(data.nombre); // Obtener nombre del usuario
+            console.log("Usuario ID:", data.usuarioId, "Nombre:", data.nombre); // Para verificar
           } else {
             console.error("Error en la validación de sesión:", data.message);
           }
@@ -115,7 +116,13 @@ export default function ReclamosPeticiones() {
         });
         clearForm();
       } else {
-        throw new Error("Error en la respuesta del servidor");
+        const errorData = await response.json(); // Obtener el mensaje de error del servidor
+        setMessage({
+          text:
+            errorData.message ||
+            "No se pudo enviar su solicitud. Por favor, intente nuevamente.",
+          type: "error",
+        });
       }
     } catch (error) {
       console.error("Error al enviar la solicitud:", error);
@@ -236,16 +243,16 @@ export default function ReclamosPeticiones() {
                         d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
                       />
                     </svg>
-                    <p className="mb-2 text-sm text-[#63997a]">
+                    <p className="text-sm text-[#63997a]">
                       {archivo
                         ? archivo.name
-                        : "Arrastra y suelta un archivo aquí o haz clic para seleccionar"}
+                        : "Arrastra y suelta un archivo o haz clic para seleccionar"}
                     </p>
                   </div>
                   <input
                     id="archivo"
                     type="file"
-                    accept=".pdf,.doc,.docx,.jpg,.png"
+                    accept=".jpg, .jpeg, .png, .pdf"
                     onChange={handleFileChange}
                     className="hidden"
                   />
@@ -261,14 +268,14 @@ export default function ReclamosPeticiones() {
                 onChange={handleAnonimoChange}
                 className="mr-2"
               />
-              <label htmlFor="anonimo" className="text-[#63997a] font-semibold">
-                Hacer reclamo/petición de forma anónima
+              <label htmlFor="anonimo" className="text-[#63997a]">
+                Deseo enviar de manera anónima
               </label>
             </div>
 
             <button
               type="submit"
-              className="w-full bg-[#63997a] text-white py-3 rounded-lg hover:bg-[#fa7f4b] transition-colors"
+              className="w-full bg-[#63997a] text-white font-semibold py-2 rounded-lg hover:bg-[#fa7f4b] transition-colors"
             >
               Enviar
             </button>
