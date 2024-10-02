@@ -177,12 +177,8 @@ export const MapPage = function () {
 
   return (
     <div className="h-screen flex flex-col bg-gray-100">
-      <header className="bg-[#63997a] text-white p-4 shadow-md">
-        <h1 className="text-2xl font-bold">Mapa Interactivo</h1>
-      </header>
-
       <main className="flex-1 flex">
-        <div id="mapa" className="flex-1 bg-white relative">
+        <div id="mapa" className="flex-1 bg-white relative z-40">
           {map ? null : (
             <div className="h-full flex items-center justify-center text-gray-400 text-2xl font-bold">
               Cargando mapa...
