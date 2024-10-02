@@ -1,35 +1,31 @@
-//const jwt = require("jsonwebtoken");
-//const { newConnection } = require("../bd/BD");
 import jwt from "jsonwebtoken";
-import { newConnection } from "../bd/BD.js"
+import Usuario from "../models/Usuarios.js";
+import mongoose from "mongoose";
 
 const validarJWT = async (token) => {
   try {
-    // Usamos el metodo verify para verificar el token.
-    // El primer parametro es el token que recibimos por el header, y el segun el secret con el que firmamos el token.
-    const { id } = jwt.verify(token, "mysecret");
+    const secret = process.env.JWT_SECRET || "mysecret";
 
-    const connection = await newConnection();
+    // Verificar el token
+    const { id } = jwt.verify(token, secret);
 
-    // Buscamos el usuario por id.
-    const [usuario] = await connection.query(
-      "SELECT * FROM USUARIOS WHERE id=? LIMIT 1",
-      id
-    );
+    // Verificar que el ID sea válido como string y no un objeto
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      throw new Error("ID inválido");
+    }
 
-    // En caso de que no exista retornamos false.
+    // Buscar al usuario por su ID en MongoDB usando Mongoose
+    const usuario = await Usuario.findById(id).select("-contrasenia");
+
     if (!usuario) {
       return false;
-    } else {
-      //Caso contrario retornamos el usuario.
-      return usuario[0];
     }
+
+    return usuario;
   } catch (error) {
-    // Si ocurre un error lo mostramos por consola y retornamos false.
-    console.log(error);
+    console.log("Error verificando el token:", error.message);
     return false;
   }
 };
 
-//module.exports = validarJWT;
 export { validarJWT };

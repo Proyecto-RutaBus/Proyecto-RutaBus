@@ -49,7 +49,10 @@ ctrl.login = async (req, res) => {
     }
 
     // Acá generaramos un token JWT
-    const token = await generarJWT({ id: usuario._id });
+    // Generar un token JWT pasando solo el ID como string
+    const token = await generarJWT(usuario._id.toString());
+
+
 
     res.json({ message: "Inicio de sesión exitoso", token });
   } catch (error) {

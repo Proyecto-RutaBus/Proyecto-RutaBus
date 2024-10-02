@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { loginUser, registerUser } from "../../services/auth.js";
@@ -20,7 +20,7 @@ export const Login = function Login() {
     setFecNac("");
     setError("");
   };
-const { iniciarSesion } = useContext(AuthContext);
+  const { iniciarSesion } = useContext(AuthContext);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -41,7 +41,22 @@ const { iniciarSesion } = useContext(AuthContext);
       setError(err.message);
     }
   };
+  
+  // Ocultar el boton de ingresar cuando esté en login
+  useEffect(() => {
+    // Seleccionar el botón por su ID y ocultarlo
+    const button = document.getElementById("botonIngresar");
+    if (button) {
+      button.style.display = "none"; // Ocultar el botón
+    }
 
+    // Restablecer el estado cuando se desmonta el componente
+    return () => {
+      if (button) {
+        button.style.display = "block"; // Mostrar el botón nuevamente
+      }
+    };
+  }, []);
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">

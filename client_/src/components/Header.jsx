@@ -25,8 +25,10 @@ const Header = () => {
           });
 
           const data = await response.json();
+          
           if (response.ok) {
             setUserName(data.nombre); // Acceder al campo nombre
+            
           } else {
             console.error("Error en la validación de sesión:", data.message);
           }
@@ -43,7 +45,7 @@ const Header = () => {
   const logout = () => {
     localStorage.removeItem("token"); // Eliminar el token para cerrar sesión
     setIsLoggedIn(false); // Cambiar el estado a no logueado
-    window.location.href = "/"; // Redirigir al login
+    window.location.href = "/"; // Redirigir al landing
   };
 
   // Función para alternar el menú del usuario
@@ -64,19 +66,21 @@ const Header = () => {
         <div className="flex gap-8 ml-2 mr-12">
           {!isLoggedIn ? (
             <a href="/login">
-              <button className="bg-[#fa7f4b] h-[50px] w-[150px] rounded-md hover:bg-[#ffdf61] transition-colors duration-300">
+              <button id="botonIngresar" className="bg-[#fa7f4b] h-[50px] w-[150px] rounded-md hover:bg-[#ffdf61] transition-colors duration-300">
                 <span className="text-white text-lg">Ingresar</span>
               </button>
             </a>
           ) : (
             <div className="relative">
-              <img
-                src="../assets/user-icon.jpg"
-                alt="Usuario"
-                className="cursor-pointer"
-                onClick={toggleUserMenu} // Función para mostrar el menú
-              />
-              <span className="ml-2 text-white">{userName}</span>
+              {/* Botón que muestra el nombre del usuario */}
+              <button
+                onClick={toggleUserMenu}
+                className="bg-[#fa7f4b] text-white py-2 px-4 rounded-md hover:bg-[#ffdf61] transition-colors duration-300"
+              >
+                {userName} {/* Muestra el nombre del usuario */}
+              </button>
+
+              {/* Menú desplegable */}
               {isMenuOpen && (
                 <div className="absolute z-50 top-14 right-0 bg-white border border-gray-300 shadow-lg rounded-md overflow-hidden">
                   <a
@@ -96,12 +100,6 @@ const Header = () => {
                     className="block px-4 py-2 text-black hover:bg-gray-200 transition-colors duration-300"
                   >
                     Reclamos/Peticiones
-                  </a>
-                  <a
-                    href="/favoritos"
-                    className="block px-4 py-2 text-black hover:bg-gray-200 transition-colors duration-300"
-                  >
-                    Favoritos
                   </a>
                   <a
                     href="https://tarjetasube.sube.gob.ar/subeweb/webforms/account/views/login.aspx"
