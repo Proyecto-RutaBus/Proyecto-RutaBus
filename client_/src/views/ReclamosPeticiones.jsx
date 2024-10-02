@@ -1,5 +1,5 @@
 import "../style.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
@@ -10,6 +10,36 @@ export default function ReclamosPeticiones() {
   const [wordCount, setWordCount] = useState(0);
   const [archivo, setArchivo] = useState(null);
   const [message, setMessage] = useState({ text: "", type: "" });
+  const [usuarioId, setUsuarioId] = useState(null); // Estado para el ID del usuario
+  const [nombre, setNombre] = useState(""); // Estado para el nombre del usuario
+
+  // useEffect para obtener el usuario
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const getUserData = async () => {
+        try {
+          const response = await fetch("http://localhost:3000/validarSesion", {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          const data = await response.json();
+          if (response.ok) {
+            setUsuarioId(data.usuarioId); // Obtener ID del usuario
+            setNombre(data.nombre); // Obtener nombre del usuario
+          } else {
+            console.error("Error en la validación de sesión:", data.message);
+          }
+        } catch (error) {
+          console.error("Error obteniendo datos del usuario:", error);
+        }
+      };
+      getUserData();
+    }
+  }, []);
 
   const handleTipoChange = (e) => {
     setTipo(e.target.value);
@@ -54,17 +84,27 @@ export default function ReclamosPeticiones() {
     formData.append("tipo", tipo);
     formData.append("descripcion", texto);
     formData.append("anonimo", isAnonimo.toString());
-    if (!isAnonimo) {
-      formData.append("usuarioId", "userId"); // Asegúrate de tener el ID del usuario disponible
-      formData.append("nombre", "userName"); // Si deseas guardar el nombre del usuario
+
+    // Agregar usuarioId y nombre al FormData
+    if (usuarioId) {
+      formData.append("usuarioId", usuarioId);
     }
+    if (nombre) {
+      formData.append("nombre", nombre);
+    }
+
     if (archivo) {
       formData.append("archivo", archivo);
     }
 
+    const token = localStorage.getItem("token"); // Asegúrate de que el token esté almacenado correctamente
+
     try {
-      const response = await fetch("http://localhost:3000/comunicaciones", {
+      const response = await fetch("http://localhost:3000/api/comunicaciones", {
         method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`, // Agregar el token a las cabeceras
+        },
         body: formData,
       });
 
@@ -197,16 +237,15 @@ export default function ReclamosPeticiones() {
                       />
                     </svg>
                     <p className="mb-2 text-sm text-[#63997a]">
-                      {archivo ? archivo.name : "Arrastra y suelta un archivo"}
-                    </p>
-                    <p className="text-xs text-[#63997a]">
-                      (PDF, DOC, JPG, PNG hasta 2MB)
+                      {archivo
+                        ? archivo.name
+                        : "Arrastra y suelta un archivo aquí o haz clic para seleccionar"}
                     </p>
                   </div>
                   <input
                     id="archivo"
                     type="file"
-                    accept=".pdf,.doc,.jpg,.png"
+                    accept=".pdf,.doc,.docx,.jpg,.png"
                     onChange={handleFileChange}
                     className="hidden"
                   />
@@ -222,14 +261,14 @@ export default function ReclamosPeticiones() {
                 onChange={handleAnonimoChange}
                 className="mr-2"
               />
-              <label htmlFor="anonimo" className="text-[#63997a]">
-                Enviar de forma anónima
+              <label htmlFor="anonimo" className="text-[#63997a] font-semibold">
+                Hacer reclamo/petición de forma anónima
               </label>
             </div>
 
             <button
               type="submit"
-              className="w-full bg-[#63997a] text-white font-semibold py-2 rounded-lg hover:bg-[#fa7f4b] transition-colors"
+              className="w-full bg-[#63997a] text-white py-3 rounded-lg hover:bg-[#fa7f4b] transition-colors"
             >
               Enviar
             </button>
@@ -240,5 +279,4 @@ export default function ReclamosPeticiones() {
     </div>
   );
 }
-
 export { ReclamosPeticiones };
