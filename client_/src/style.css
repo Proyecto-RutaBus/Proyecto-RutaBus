@@ -1,3 +1,72 @@
+@import 'leaflet/dist/leaflet.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.custom-popup-wrapper .leaflet-popup-content-wrapper {
+  padding: 0;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.custom-popup-wrapper .leaflet-popup-content {
+  margin: 0;
+  width: 250px !important;
+}
+
+.custom-popup-wrapper .leaflet-popup-tip-container {
+  margin-top: -1px;
+}
+
+.custom-popup {
+  font-family: Arial, sans-serif;
+}
+
+.custom-popup .popup-header {
+  background-color: #fa7f4b;
+  color: white;
+  padding: 12px;
+}
+
+.custom-popup .popup-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.custom-popup .popup-subtitle {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.custom-popup .popup-subtitle svg {
+  margin-right: 4px;
+}
+
+.custom-popup .popup-content {
+  padding: 12px;
+  background-color: white;
+}
+
+.custom-popup .popup-content p {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  color: #333;
+}
+
+.custom-popup .popup-footer {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #666;
+  border-top: 1px solid #eee;
+  padding-top: 8px;
+  margin-top: 8px;
+}
+
+.custom-popup .popup-footer svg {
+  margin-right: 4px;
+}

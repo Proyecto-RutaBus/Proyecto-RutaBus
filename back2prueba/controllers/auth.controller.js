@@ -2,8 +2,8 @@ import Usuario from "../models/Usuarios.js";
 import bcrypt from "bcrypt";
 import { generarJWT } from "../helpers/generarJWT.js";
 
+// Definimos un objeto vacío con el nombre 'ctrl' (abreviatura de controller).
 const ctrl = {};
-
 
 ctrl.registro = async (req, res) => {
   const { nombre, email, contrasenia, FecNac } = req.body;
@@ -48,8 +48,11 @@ ctrl.login = async (req, res) => {
         .json({ mensaje: "Usuario o contraseña incorrectos." });
     }
 
-    // Acá generaramos un token JWT 
-    const token = await generarJWT({ id: usuario._id });
+    // Acá generaramos un token JWT
+    // Generar un token JWT pasando solo el ID como string
+    const token = await generarJWT(usuario._id.toString());
+
+
 
     res.json({ message: "Inicio de sesión exitoso", token });
   } catch (error) {
@@ -74,7 +77,6 @@ ctrl.validarSesion = async (req, res) => {
     res.status(500).json({ message: "Error al validar sesión" });
   }
 };
-
 
 // Exportamos el objeto con los controladores.
 export const { registro, login, validarSesion } = ctrl;
