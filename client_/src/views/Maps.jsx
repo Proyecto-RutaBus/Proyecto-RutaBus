@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { React, ReactDOMServer, useEffect, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
@@ -69,17 +69,31 @@ export const MapPage = function () {
   const createCustomPopup = (stop) => {
     const popupContent = `
       <div class="custom-popup">
-        <div class="popup-header">
-          <h3>${stop.nombre}</h3>
-          <div class="popup-subtitle">
-            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-            Parada
+        <div class="popup-header" style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <h3 style="margin: 0;">${stop.nombre}</h3>
+            <div class="popup-subtitle" style="display: flex; align-items: center;">
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+              Parada
+            </div>
           </div>
+          <button class="popup-heart" style="background: none; border: none; cursor: pointer; margin-right: 10%;" onclick="toggleHeartFill(this)">
+            <svg class="heart-icon" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
+            </svg>
+          </button>
         </div>
         <div class="popup-content">
           <p>${stop.info}</p>
           <div class="popup-footer">
-            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="2"></circle></svg>
+            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 11a9 9 0 0 1 9 9"></path>
+              <path d="M4 4a16 16 0 0 1 16 16"></path>
+              <circle cx="5" cy="19" r="2"></circle>
+            </svg>
             Próximos buses: No disponible
           </div>
         </div>
@@ -91,6 +105,7 @@ export const MapPage = function () {
       className: "custom-popup-wrapper",
     }).setContent(popupContent);
   };
+
 
   const toggleStopOnMap = (stop) => {
     const existingMarker = markers.find(
