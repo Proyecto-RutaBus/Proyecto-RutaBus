@@ -52,8 +52,6 @@ ctrl.login = async (req, res) => {
     // Generar un token JWT pasando solo el ID como string
     const token = await generarJWT(usuario._id.toString());
 
-
-
     res.json({ message: "Inicio de sesión exitoso", token });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -72,7 +70,11 @@ ctrl.validarSesion = async (req, res) => {
     }
 
     // Enviar solo el nombre del usuario
-    res.json({ message: "Sesion valida", nombre: usuario.nombre });
+    res.json({
+      message: "Sesion valida",
+      id: usuario._id,
+      nombre: usuario.nombre,
+    });
   } catch (error) {
     res.status(500).json({ message: "Error al validar sesión" });
   }
