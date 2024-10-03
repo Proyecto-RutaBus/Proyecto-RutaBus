@@ -46,11 +46,13 @@ export default function Header() {
     <header className="bg-[#63997a] w-full z-50">
       <nav className="flex justify-between items-center p-4">
         <div>
+          <a href="/home">
           <img
             src="/assets/img/Logo-nav.png"
             className="h-[100px] mt-1"
             alt="Logo"
           />
+          </a>
         </div>
         <div className="flex gap-8 ml-2 mr-12">
           {!isLoggedIn ? (
@@ -94,7 +96,7 @@ export default function Header() {
                   </div>
                   <div className="py-3">
                     <MenuItem
-                      href="/ver-perfil"
+                      href="/profile"
                       iconPath="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
                       text="Ver Perfil"
                     />

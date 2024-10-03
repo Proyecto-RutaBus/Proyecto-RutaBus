@@ -6,6 +6,7 @@ import { Login } from "../views/Login";
 import Home from "../views/Home.jsx";
 import About from "../views/About.jsx";
 import Contact from "../views/Contact.jsx";
+import Profile from "../views/Profile.jsx";
 
 const AppRouter = () => {
   // Almacenar el token
@@ -21,6 +22,7 @@ const AppRouter = () => {
         <Route path="/reclamos" element={<ReclamosPeticiones />} />
         {/* Si hay token, mostrar Home, de lo contrario, redirigir a Login */}
         <Route path="/home" element={token ? <Home /> : <Navigate to="/login" />} />
+        <Route path="/profile" element={token ? <Profile /> : <Navigate to="/" />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
       </Routes>
