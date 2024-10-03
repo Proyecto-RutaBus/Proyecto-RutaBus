@@ -15,7 +15,6 @@ export const validarToken = async (req, res, next) => {
 
     // Buscar el usuario por su ID en MongoDB usando Mongoose
     const usuario = await Usuario.findById(decoded.id).select("-contrasenia");
-
     // Si el usuario no existe, retornamos un error
     if (!usuario) {
       return res.status(404).json({ message: "Usuario no encontrado" });

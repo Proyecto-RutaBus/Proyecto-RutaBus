@@ -10,7 +10,7 @@ export default function ReclamosPeticiones() {
   const [wordCount, setWordCount] = useState(0);
   const [archivo, setArchivo] = useState(null);
   const [message, setMessage] = useState({ text: "", type: "" });
-  const [usuarioId, setUsuarioId] = useState(null); // Estado para el ID del usuario
+  const [usuarioId, setUsuarioId] = useState(); // Estado para el ID del usuario
   const [nombre, setNombre] = useState(""); // Estado para el nombre del usuario
 
   // useEffect para obtener el usuario
@@ -28,9 +28,9 @@ export default function ReclamosPeticiones() {
           });
           const data = await response.json();
           if (response.ok) {
-            setUsuarioId(data.usuarioId); // Obtener ID del usuario
+            setUsuarioId(data.id); // Obtener ID del usuario
             setNombre(data.nombre); // Obtener nombre del usuario
-            console.log("Usuario ID:", data.usuarioId, "Nombre:", data.nombre); // Para verificar
+            //console.log("Usuario ID:", data.id, "Nombre:", data.nombre); // Para verificar
           } else {
             console.error("Error en la validación de sesión:", data.message);
           }
@@ -99,7 +99,6 @@ export default function ReclamosPeticiones() {
     }
 
     const token = localStorage.getItem("token"); // Asegúrate de que el token esté almacenado correctamente
-
     try {
       const response = await fetch("http://localhost:3000/api/comunicaciones", {
         method: "POST",
@@ -209,7 +208,7 @@ export default function ReclamosPeticiones() {
                 placeholder={`Escriba su ${tipo} aquí...`}
                 value={texto}
                 onChange={handleTextoChange}
-                className="w-full p-3 border border-[#63997a] rounded-lg focus:ring-2 focus:ring-[#fa7f4b] focus:border-transparent transition-shadow"
+                className="w-full p-3 border text-black-500 border-[#63997a] rounded-lg focus:ring-2 focus:ring-[#fa7f4b] focus:border-transparent transition-shadow"
               />
               <p className="text-sm text-[#63997a] mt-1">
                 {wordCount} / 300 palabras

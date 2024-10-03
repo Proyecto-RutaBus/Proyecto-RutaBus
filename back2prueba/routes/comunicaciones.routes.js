@@ -22,8 +22,8 @@ router.post("/comunicaciones", upload.single("archivo"), async (req, res) => {
       descripcion,
       anonimo,
       archivo: req.file ? req.file.path : "",
-      usuarioId: !anonimo ? usuarioId : null, // Guardar usuarioId solo si no es anónimo
-      nombre: !anonimo ? nombre : null, // Guardar nombre solo si no es anónimo
+      usuarioId: anonimo ? usuarioId : null, // Guardar usuarioId solo si no es anónimo
+      nombre: anonimo ? nombre : null, // Guardar nombre solo si no es anónimo
     });
 
     await nuevaComunicacion.save();

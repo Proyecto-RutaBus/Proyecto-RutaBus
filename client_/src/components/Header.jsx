@@ -19,6 +19,8 @@ export default function Header() {
             },
           });
           const data = await response.json();
+          //console.log(data);
+
           if (response.ok) {
             setUserName(data.nombre);
           } else {
@@ -47,11 +49,11 @@ export default function Header() {
       <nav className="flex justify-between items-center p-4">
         <div>
           <a href="/home">
-          <img
-            src="/assets/img/Logo-nav.png"
-            className="h-[100px] mt-1"
-            alt="Logo"
-          />
+            <img
+              src="/assets/img/Logo-nav.png"
+              className="h-[100px] mt-1"
+              alt="Logo"
+            />
           </a>
         </div>
         <div className="flex gap-8 ml-2 mr-12">
@@ -143,7 +145,7 @@ export default function Header() {
 const MenuItem = ({ href, iconPath, text }) => (
   <a
     href={href}
-    className="block px-6 py-3 text-base text-gray-700 hover:bg-gray-100 transition-colors duration-200 flex items-center"
+    className=" px-6 py-3 text-base text-gray-700 hover:bg-gray-100 transition-colors duration-200 flex items-center"
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"

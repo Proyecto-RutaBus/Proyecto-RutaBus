@@ -11,18 +11,30 @@ import Profile from "../views/Profile.jsx";
 const AppRouter = () => {
   // Almacenar el token
   const token = localStorage.getItem("token");
-  console.log("Token encontrado:", token);
+  //console.log("Token encontrado:", token);
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={token ? <Navigate to="/home" /> : <Landing />} />
+        <Route
+          path="/"
+          element={token ? <Navigate to="/home" /> : <Landing />}
+        />
         {/* Si hay token, redirigir a home, de lo contrario, mostrar Login */}
-        <Route path="/login" element={token ? <Navigate to="/home" /> : <Login />} />
+        <Route
+          path="/login"
+          element={token ? <Navigate to="/home" /> : <Login />}
+        />
         <Route path="/reclamos" element={<ReclamosPeticiones />} />
         {/* Si hay token, mostrar Home, de lo contrario, redirigir a Login */}
-        <Route path="/home" element={token ? <Home /> : <Navigate to="/login" />} />
-        <Route path="/profile" element={token ? <Profile /> : <Navigate to="/" />} />
+        <Route
+          path="/home"
+          element={token ? <Home /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/profile"
+          element={token ? <Profile /> : <Navigate to="/" />}
+        />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
       </Routes>
