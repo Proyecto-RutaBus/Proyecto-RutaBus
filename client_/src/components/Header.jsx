@@ -19,7 +19,6 @@ export default function Header() {
             },
           });
           const data = await response.json();
-          //console.log(data);
 
           if (response.ok) {
             setUserName(data.nombre);

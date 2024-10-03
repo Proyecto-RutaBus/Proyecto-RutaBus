@@ -106,7 +106,6 @@ export const MapPage = function () {
     }).setContent(popupContent);
   };
 
-
   const toggleStopOnMap = (stop) => {
     const existingMarker = markers.find(
       (marker) => marker.options.id === stop.nombre
