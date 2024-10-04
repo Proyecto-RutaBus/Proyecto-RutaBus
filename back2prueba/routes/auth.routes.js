@@ -1,6 +1,7 @@
 import {
   registro,
   login,
+  updateUser,
   validarSesion,
 } from "../controllers/auth.controller.js";
 import { validarToken } from "../middleware/validarSesion.js";
@@ -14,6 +15,9 @@ router.post("/register", registro);
 
 // Lo mismo que el registro pero con el login.
 router.post("/login", login);
+
+// Ruta para actualizar usuario
+router.put("/updateUser", validarToken, updateUser);
 
 // Ruta para validar la sesion.
 router.get("/validarSesion", validarToken, validarSesion);

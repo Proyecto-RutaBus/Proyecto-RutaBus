@@ -19,17 +19,10 @@ export const validarToken = async (req, res, next) => {
     if (!usuario) {
       return res.status(404).json({ message: "Usuario no encontrado" });
     }
-
+console.log("Usuario:", usuario);
     // Retornamos los datos completos del usuario
-    res.json({
-      nombre: usuario.nombre,
-      email: usuario.email,
-      birthDate: usuario.FecNac,
-    });
-
-    // Si necesitas que el middleware continúe en otras rutas
-    // req.usuario = usuario;
-    // next();
+    req.usuario = usuario;
+    next();
 
   } catch (error) {
     console.log("Error verificando el token:", error.message);
