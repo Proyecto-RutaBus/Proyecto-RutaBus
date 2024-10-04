@@ -2,19 +2,35 @@ import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
-// Simula una función para obtener los datos del usuario
-const fetchUserData = () => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        name: "Juan Pérez",
-        birthDate: "1990-01-01",
-        email: "juan@example.com",
-        password: "********", // No mostrar la contraseña real
-      });
-    }, 1000);
+// Función para obtener los datos del usuario
+const fetchUserData = async () => {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch("http://localhost:3000/validarSesion", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
   });
+
+  const data = await response.json();
+  console.log(data);
+  
+  
+  if (response.ok) {
+    return {
+      name: data.nombre,
+      email: data.email,
+      birthDate: data.birthDate,
+      password: "********", // Contraseña ocultada
+    };
+  } else {
+    console.error("Error en la validación de sesión:", data.message);
+    return null;
+  }
 };
+
 
 // Simula una función para actualizar los datos del usuario
 const updateUserData = (userData) => {
@@ -35,11 +51,16 @@ export default function Profile() {
     const loadUserData = async () => {
       setIsLoading(true);
       const data = await fetchUserData();
-      setUser(data);
+      if (data) {
+        setUser(data);
+      } else {
+        console.error("No se pudieron cargar los datos del usuario.");
+      }
       setIsLoading(false);
     };
     loadUserData();
   }, []);
+  
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -102,7 +123,7 @@ export default function Profile() {
                     value={user.name}
                     onChange={handleInputChange}
                     required
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#63997a] focus:ring focus:ring-[#63997a] focus:ring-opacity-50"
+                    className="mt-1 block p-2 bg-gray-400 w-full rounded-md border-gray-300 shadow-sm focus:border-[#63997a] focus:ring focus:ring-[#63997a] focus:ring-opacity-50"
                   />
                 </div>
                 <div>
@@ -116,7 +137,7 @@ export default function Profile() {
                     value={user.birthDate}
                     onChange={handleInputChange}
                     required
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#63997a] focus:ring focus:ring-[#63997a] focus:ring-opacity-50"
+                    className="mt-1 block p-2 bg-gray-400 w-full rounded-md border-gray-300 shadow-sm focus:border-[#63997a] focus:ring focus:ring-[#63997a] focus:ring-opacity-50"
                   />
                 </div>
                 <div>
@@ -130,7 +151,7 @@ export default function Profile() {
                     value={user.email}
                     onChange={handleInputChange}
                     required
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#63997a] focus:ring focus:ring-[#63997a] focus:ring-opacity-50"
+                    className="mt-1 block p-2 bg-gray-400 w-full rounded-md border-gray-300 shadow-sm focus:border-[#63997a] focus:ring focus:ring-[#63997a] focus:ring-opacity-50"
                   />
                 </div>
                 <div>
@@ -144,7 +165,7 @@ export default function Profile() {
                     value={user.password}
                     onChange={handleInputChange}
                     required
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#63997a] focus:ring focus:ring-[#63997a] focus:ring-opacity-50"
+                    className="mt-1 block p-2 bg-gray-400 w-full rounded-md border-gray-500 shadow-sm focus:border-[#63997a] focus:ring focus:ring-[#63997a] focus:ring-opacity-50"
                   />
                 </div>
                 <div className="flex justify-end space-x-2">
@@ -169,19 +190,19 @@ export default function Profile() {
               <div className="space-y-4">
                 <div>
                   <h3 className="text-lg font-semibold text-[#63997a]">Nombre</h3>
-                  <p>{user.name}</p>
+                  <p className="text-gray-900">{user.name}</p>
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-[#63997a]">Fecha de Nacimiento</h3>
-                  <p>{user.birthDate}</p>
+                  <p className="text-gray-900">{user.birthDate}</p>
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-[#63997a]">Correo Electrónico</h3>
-                  <p>{user.email}</p>
+                  <p className="text-gray-900">{user.email}</p>
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-[#63997a]">Contraseña</h3>
-                  <p>********</p> {/* Mostrar la contraseña oculta */}
+                  <p className="text-gray-900">********</p> {/* Mostrar la contraseña oculta */}
                 </div>
                 <button
                   onClick={() => setIsEditing(true)}

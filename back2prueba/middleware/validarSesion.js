@@ -24,7 +24,7 @@ export const validarToken = async (req, res, next) => {
     res.json({
       nombre: usuario.nombre,
       email: usuario.email,
-      birthDate: usuario.birthDate,
+      birthDate: usuario.FecNac,
     });
 
     // Si necesitas que el middleware continúe en otras rutas

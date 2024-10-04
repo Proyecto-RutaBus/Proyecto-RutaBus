@@ -69,11 +69,13 @@ ctrl.validarSesion = async (req, res) => {
       return res.status(404).json({ message: "Usuario no encontrado" });
     }
 
-    // Enviar solo el nombre del usuario
+    // Enviar los datos del usuario
     res.json({
       message: "Sesion valida",
       id: usuario._id,
       nombre: usuario.nombre,
+      email: usuario.email,
+      birthDate: usuario.birthDate,
     });
   } catch (error) {
     res.status(500).json({ message: "Error al validar sesión" });
