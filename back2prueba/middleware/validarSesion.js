@@ -1,3 +1,4 @@
+// middleware/validarSesion.js
 import jwt from "jsonwebtoken";
 import Usuario from "../models/Usuarios.js";
 
@@ -10,7 +11,7 @@ export const validarToken = async (req, res, next) => {
 
   try {
     // Verificar el token
-    const decoded = jwt.verify(token, "mysecret"); // Asegúrate de usar la misma clave
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || "mysecret"); // Usa el secret del .env
 
     // Buscar el usuario por su ID en MongoDB usando Mongoose
     const usuario = await Usuario.findById(decoded.id).select("-contrasenia");
@@ -19,9 +20,17 @@ export const validarToken = async (req, res, next) => {
       return res.status(404).json({ message: "Usuario no encontrado" });
     }
 
-    // Continuamos con el middleware si el usuario es válido
-    req.usuario = usuario;
-    next();
+    // Retornamos los datos completos del usuario
+    res.json({
+      nombre: usuario.nombre,
+      email: usuario.email,
+      birthDate: usuario.FecNac,
+    });
+
+    // Si necesitas que el middleware continúe en otras rutas
+    // req.usuario = usuario;
+    // next();
+
   } catch (error) {
     console.log("Error verificando el token:", error.message);
     return res.status(401).json({ message: "Token inválido" });

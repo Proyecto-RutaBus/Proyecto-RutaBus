@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { Map as MapIcon, Bus, Star, MapPin, Search, Menu } from "lucide-react";
 import L from "leaflet";
+import Header from "../components/Header";
 import "leaflet/dist/leaflet.css";
 
 export default function MapPage() {
@@ -150,8 +151,9 @@ export default function MapPage() {
 
   return (
     <div className="h-screen flex flex-col bg-gray-100">
+      <Header />
       <header className="bg-[#63997a] text-white p-4 flex justify-between items-center z-50">
-        <h1 className="text-2xl font-bold">RutaBus</h1>
+        <h1 className="text-2xl font-bold">Mapa Interactivo</h1>
         <button
           onClick={toggleSidebar}
           className="text-white hover:text-[#fa7f4b] transition-colors"

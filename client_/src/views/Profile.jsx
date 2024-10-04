@@ -1,61 +1,105 @@
-import React, { useEffect, useState } from "react"
-import Header from "../components/Header"
-import Footer from "../components/Footer"
+import React, { useEffect, useState } from "react";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
-// Simula una función para obtener los datos del usuario
-const fetchUserData = () => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        name: "Juan Pérez",
-        birthDate: "1990-01-01",
-        email: "juan@example.com",
-        password: "********",
-      })
-    }, 1000)
-  })
-}
+// Función para obtener los datos del usuario
+const fetchUserData = async () => {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch("http://localhost:3000/validarSesion", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const data = await response.json();
+  console.log(data);
+  
+  
+  if (response.ok) {
+    return {
+      name: data.nombre,
+      email: data.email,
+      birthDate: data.birthDate,
+      password: "********", // Contraseña ocultada
+    };
+  } else {
+    console.error("Error en la validación de sesión:", data.message);
+    return null;
+  }
+};
+
 
 // Simula una función para actualizar los datos del usuario
 const updateUserData = (userData) => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      console.log("Datos actualizados:", userData)
-      resolve({ success: true })
-    }, 1000)
-  })
-}
+      console.log("Datos actualizados:", userData);
+      resolve({ success: true });
+    }, 1000);
+  });
+};
 
 export default function Profile() {
-  const [user, setUser] = useState({ name: "", birthDate: "", email: "", password: "" })
-  const [isEditing, setIsEditing] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const [user, setUser] = useState({ name: "", birthDate: "", email: "", password: "" });
+  const [isEditing, setIsEditing] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const loadUserData = async () => {
-      setIsLoading(true)
-      const data = await fetchUserData()
-      setUser(data)
-      setIsLoading(false)
-    }
-    loadUserData()
-  }, [])
+      setIsLoading(true);
+      const data = await fetchUserData();
+      if (data) {
+        setUser(data);
+      } else {
+        console.error("No se pudieron cargar los datos del usuario.");
+      }
+      setIsLoading(false);
+    };
+    loadUserData();
+  }, []);
+  
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target
-    setUser((prevUser) => ({ ...prevUser, [name]: value }))
-  }
+    const { name, value } = e.target;
+    setUser((prevUser) => ({ ...prevUser, [name]: value }));
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setIsLoading(true)
-    await updateUserData(user)
-    setIsLoading(false)
-    setIsEditing(false)
-  }
+    e.preventDefault();
+
+    // Validación del correo electrónico
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(user.email)) {
+      alert("Por favor ingresa un correo electrónico válido.");
+      return;
+    }
+
+    // Validación de la longitud de la contraseña
+    if (user.password.length < 6) {
+      alert("La contraseña debe tener al menos 6 caracteres.");
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const response = await updateUserData(user);
+      if (response.success) {
+        setIsEditing(false);
+      } else {
+        alert("Error al actualizar los datos");
+      }
+    } catch (error) {
+      alert("Hubo un problema al actualizar los datos");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#f0f4f5]"> {/* Celeste muy clarito casi gris */}
+    <div className="min-h-screen flex flex-col bg-[#f0f4f5]">
+      {/* Celeste muy clarito casi gris */}
       <Header />
 
       <main className="flex-grow container mx-auto px-4 py-8">
@@ -69,7 +113,9 @@ export default function Profile() {
             ) : isEditing ? (
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700">Nombre</label>
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                    Nombre
+                  </label>
                   <input
                     id="name"
                     name="name"
@@ -77,11 +123,13 @@ export default function Profile() {
                     value={user.name}
                     onChange={handleInputChange}
                     required
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#63997a] focus:ring focus:ring-[#63997a] focus:ring-opacity-50"
+                    className="mt-1 block p-2 bg-gray-400 w-full rounded-md border-gray-300 shadow-sm focus:border-[#63997a] focus:ring focus:ring-[#63997a] focus:ring-opacity-50"
                   />
                 </div>
                 <div>
-                  <label htmlFor="birthDate" className="block text-sm font-medium text-gray-700">Fecha de Nacimiento</label>
+                  <label htmlFor="birthDate" className="block text-sm font-medium text-gray-700">
+                    Fecha de Nacimiento
+                  </label>
                   <input
                     id="birthDate"
                     name="birthDate"
@@ -89,11 +137,13 @@ export default function Profile() {
                     value={user.birthDate}
                     onChange={handleInputChange}
                     required
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#63997a] focus:ring focus:ring-[#63997a] focus:ring-opacity-50"
+                    className="mt-1 block p-2 bg-gray-400 w-full rounded-md border-gray-300 shadow-sm focus:border-[#63997a] focus:ring focus:ring-[#63997a] focus:ring-opacity-50"
                   />
                 </div>
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700">Correo Electrónico</label>
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                    Correo Electrónico
+                  </label>
                   <input
                     id="email"
                     name="email"
@@ -101,11 +151,13 @@ export default function Profile() {
                     value={user.email}
                     onChange={handleInputChange}
                     required
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#63997a] focus:ring focus:ring-[#63997a] focus:ring-opacity-50"
+                    className="mt-1 block p-2 bg-gray-400 w-full rounded-md border-gray-300 shadow-sm focus:border-[#63997a] focus:ring focus:ring-[#63997a] focus:ring-opacity-50"
                   />
                 </div>
                 <div>
-                  <label htmlFor="password" className="block text-sm font-medium text-gray-700">Contraseña</label>
+                  <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                    Contraseña
+                  </label>
                   <input
                     id="password"
                     name="password"
@@ -113,16 +165,16 @@ export default function Profile() {
                     value={user.password}
                     onChange={handleInputChange}
                     required
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#63997a] focus:ring focus:ring-[#63997a] focus:ring-opacity-50"
+                    className="mt-1 block p-2 bg-gray-400 w-full rounded-md border-gray-500 shadow-sm focus:border-[#63997a] focus:ring focus:ring-[#63997a] focus:ring-opacity-50"
                   />
                 </div>
                 <div className="flex justify-end space-x-2">
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="px-4 py-2 bg-[#fa7f4b] text-white rounded-md hover:bg-[#e57243] focus:outline-none focus:ring-2 focus:ring-[#fa7f4b] focus:ring-opacity-50 transition duration-200"
+                    className={`px-4 py-2 ${isLoading ? 'bg-gray-400' : 'bg-[#fa7f4b]'} text-white rounded-md hover:bg-[#e57243] focus:outline-none focus:ring-2 focus:ring-[#fa7f4b] focus:ring-opacity-50 transition duration-200`}
                   >
-                    Guardar Cambios
+                    {isLoading ? "Guardando..." : "Guardar Cambios"}
                   </button>
                   <button
                     type="button"
@@ -138,19 +190,19 @@ export default function Profile() {
               <div className="space-y-4">
                 <div>
                   <h3 className="text-lg font-semibold text-[#63997a]">Nombre</h3>
-                  <p>{user.name}</p>
+                  <p className="text-gray-900">{user.name}</p>
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-[#63997a]">Fecha de Nacimiento</h3>
-                  <p>{user.birthDate}</p>
+                  <p className="text-gray-900">{user.birthDate}</p>
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-[#63997a]">Correo Electrónico</h3>
-                  <p>{user.email}</p>
+                  <p className="text-gray-900">{user.email}</p>
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-[#63997a]">Contraseña</h3>
-                  <p>{user.password}</p>
+                  <p className="text-gray-900">********</p> {/* Mostrar la contraseña oculta */}
                 </div>
                 <button
                   onClick={() => setIsEditing(true)}
@@ -166,5 +218,5 @@ export default function Profile() {
 
       <Footer />
     </div>
-  )
+  );
 }
