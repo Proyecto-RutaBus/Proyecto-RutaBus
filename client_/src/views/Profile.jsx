@@ -22,7 +22,7 @@ const fetchUserData = async () => {
     return {
       name: data.nombre,
       email: data.email,
-      birthDate: data.birthDate,
+      birthDate: new Date(data.birthDate).toISOString().split("T")[0], // Solo la fecha
       password: "********", // Contraseña ocultada
     };
   } else {
@@ -32,15 +32,33 @@ const fetchUserData = async () => {
 };
 
 
-// Simula una función para actualizar los datos del usuario
-const updateUserData = (userData) => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      console.log("Datos actualizados:", userData);
-      resolve({ success: true });
-    }, 1000);
-  });
+// Función para actualizar los datos del usuario
+const updateUserData = async (userData) => {
+  const token = localStorage.getItem("token");
+
+  try {
+    const response = await fetch("http://localhost:3000/updateUser", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(userData),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "Error al actualizar los datos");
+    }
+
+    return { success: true };
+  } catch (error) {
+    console.error("Error al actualizar los datos:", error);
+    return { success: false };
+  }
 };
+
 
 export default function Profile() {
   const [user, setUser] = useState({ name: "", birthDate: "", email: "", password: "" });

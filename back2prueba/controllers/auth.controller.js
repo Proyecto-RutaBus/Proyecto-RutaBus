@@ -58,6 +58,42 @@ ctrl.login = async (req, res) => {
   }
 };
 
+// Funcion para modificar los datos de un usuario
+ctrl.updateUser = async (req, res) => {
+  const { name, birthDate, email, password } = req.body;
+
+  try {
+    // Utiliza el ID del usuario extraído desde req.usuario que proviene del token
+    const usuario = await Usuario.findById(req.usuario._id);
+
+    if (!usuario) {
+      return res.status(404).json({ message: "Usuario no encontrado" });
+    }
+
+    // Actualizar los campos si los datos están presentes en la solicitud, o deja el valor actual
+    usuario.nombre = name || usuario.nombre;
+    usuario.FecNac = birthDate || usuario.FecNac; 
+    usuario.email = email || usuario.email;
+
+    // Si se proporciona la contraseña y cumple con la longitud mínima, actualiza
+    if (password && password.length >= 6) {
+      // encriptar la contraseña
+      const hashedPassword = await bcrypt.hash(password, 10);
+      usuario.contrasenia = hashedPassword; // guardar la contraseña encriptada
+    }
+
+    // Guarda los cambios en la base de datos
+    await usuario.save();
+
+    // Devuelve una respuesta indicando que todo fue exitoso
+    res.json({ message: "Perfil actualizado correctamente" });
+  } catch (error) {
+    console.error("Error actualizando el perfil:", error);
+    res.status(500).json({ message: "Error actualizando el perfil" });
+  }
+};
+
+
 // Funcion para validar la sesion
 ctrl.validarSesion = async (req, res) => {
   try {
@@ -75,7 +111,7 @@ ctrl.validarSesion = async (req, res) => {
       id: usuario._id,
       nombre: usuario.nombre,
       email: usuario.email,
-      birthDate: usuario.birthDate,
+      birthDate: usuario.FecNac,
     });
   } catch (error) {
     res.status(500).json({ message: "Error al validar sesión" });
@@ -83,4 +119,4 @@ ctrl.validarSesion = async (req, res) => {
 };
 
 // Exportamos el objeto con los controladores.
-export const { registro, login, validarSesion } = ctrl;
+export const { registro, login, updateUser, validarSesion } = ctrl;
