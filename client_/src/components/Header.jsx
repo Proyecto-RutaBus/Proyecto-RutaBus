@@ -48,7 +48,7 @@ export default function Header() {
     <header className="bg-[#63997a] w-full z-50">
       <nav className="flex justify-between items-center p-4">
         <div>
-          <a href="/home">
+          <a href="/">
             <img
               src="/assets/img/Logo-nav.png"
               className="h-[100px] mt-1"
@@ -61,16 +61,16 @@ export default function Header() {
             <a href="/login">
               <button
                 id="botonIngresar"
-                className="bg-[#fa7f4b] h-[50px] w-[150px] rounded-md hover:bg-[rgb(255,151,14)] transition-colors duration-300"
+                className="bg-[#fa7f4b] h-[50px] w-[150px] rounded-md text-white text-lg hover:text-slate-950 hover:bg-[#F2D680] hover:scale-105 transition-transform transition-colors duration-300"
               >
-                <span className="text-white text-lg">Ingresar</span>
+                Ingresar
               </button>
             </a>
           ) : (
             <div className="relative">
               <button
                 onClick={toggleUserMenu}
-                className="flex items-center space-x-2 text-black hover:text-white transition-colors duration-300 bg-gray-100 hover:bg-gray-800 py-2 px-4 rounded-full"
+                className="flex items-center space-x-2 bg-[#fa7f4b] text-white hover:text-black transition-colors duration-300 hover:bg-[#F2D680] py-2 px-4 rounded-full"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -89,7 +89,7 @@ export default function Header() {
                 <span className="font-semibold">{userName}</span>
               </button>
               {isMenuOpen && (
-                <div className="absolute z-50 top-14 right-0 bg-white border border-gray-200 shadow-xl rounded-lg overflow-hidden w-72">
+                <div className="absolute z-50 top-14 right-0 bg-red-100 border border-gray-200 shadow-xl rounded-lg overflow-hidden w-72">
                   <div className="py-4 px-6 bg-gray-50 border-b border-gray-200">
                     <p className="text-base text-gray-500">Hola,</p>
                     <p className="text-xl font-semibold text-gray-800">

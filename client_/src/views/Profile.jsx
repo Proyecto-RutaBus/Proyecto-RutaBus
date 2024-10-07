@@ -190,7 +190,7 @@ export default function Profile() {
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className={`px-4 py-2 ${isLoading ? 'bg-gray-400' : 'bg-[#fa7f4b]'} text-white rounded-md hover:bg-[#e57243] focus:outline-none focus:ring-2 focus:ring-[#fa7f4b] focus:ring-opacity-50 transition duration-200`}
+                    className={`px-4 py-2 ${isLoading ? 'bg-gray-400' : 'bg-[#fa7f4b]'} text-white rounded-md hover:bg-[#F2D680] hover:text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#fa7f4b] focus:ring-opacity-50 transition duration-200`}
                   >
                     {isLoading ? "Guardando..." : "Guardar Cambios"}
                   </button>
@@ -224,7 +224,7 @@ export default function Profile() {
                 </div>
                 <button
                   onClick={() => setIsEditing(true)}
-                  className="px-4 py-2 bg-[#fa7f4b] text-white rounded-md hover:bg-[#e57243] focus:outline-none focus:ring-2 focus:ring-[#fa7f4b] focus:ring-opacity-50 transition duration-200"
+                  className="px-4 py-2 bg-[#fa7f4b] text-white rounded-md hover:bg-[#F2D680] hover:text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#fa7f4b] focus:ring-opacity-50 transition duration-200"
                 >
                   Editar Perfil
                 </button>
