@@ -12,6 +12,7 @@ export const MapPage = function () {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredStops, setFilteredStops] = useState([]);
   const [favorites, setFavorites] = useState({});
+  const [activeTab, setActiveTab] = useState("lines");
 
   const customIcon = L.icon({
     iconUrl: "./public/assets/img/autobus.png",
@@ -58,7 +59,6 @@ export const MapPage = function () {
 
       setPolyline(newPolyline);
 
-      // Zoom y centra el mapa en la ruta
       const bounds = newPolyline.getBounds();
       map.fitBounds(bounds, { padding: [40, 40] });
     } catch (error) {
@@ -106,7 +106,6 @@ export const MapPage = function () {
     }).setContent(popupContent);
   };
 
-
   const toggleStopOnMap = (stop) => {
     const existingMarker = markers.find(
       (marker) => marker.options.id === stop.nombre
@@ -127,8 +126,6 @@ export const MapPage = function () {
         .openPopup();
 
       setMarkers((prevMarkers) => [...prevMarkers, newMarker]);
-
-      // Zoom y centra el mapa en la parada seleccionada
       map.setView(stop.coordenadas, 16);
     }
   };
@@ -201,78 +198,200 @@ export const MapPage = function () {
           )}
         </div>
 
-        <aside className="w-80 bg-white border-l border-gray-200 overflow-y-auto shadow-lg">
-          <div className="p-4 space-y-6">
-            <div className="space-y-2">
-              <h2 className="text-xl font-semibold text-[#63997a]">Líneas</h2>
-              <div className="max-h-60 overflow-y-auto pr-2 space-y-2">
-                {lines.map((line) => (
-                  <button
-                    key={line._id}
-                    onClick={() => toggleLine(line)}
-                    className={`w-full p-3 rounded-md flex items-center justify-between transition-colors duration-300 ${
-                      activeLine === line._id
-                        ? "bg-[#63997a] text-white"
-                        : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                    }`}
-                  >
-                    <span className="font-medium">{line.nombre}</span>
-                    <span>{activeLine === line._id ? "✓" : ""}</span>
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <h2 className="text-xl font-semibold text-[#63997a]">Paradas</h2>
+        <aside className="w-96 bg-white border-l border-gray-200 overflow-y-auto shadow-lg">
+          <div className="p-6 space-y-6">
+            <div className="relative">
               <input
                 type="text"
                 value={searchTerm}
                 onChange={handleSearch}
-                placeholder="Buscar parada..."
-                className="w-full p-2 bg-gray-700 border border-gray-300 rounded-md"
+                placeholder="Buscar ubicación..."
+                className="w-full p-3 pr-10 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400 text-black"
               />
-              <div className="max-h-[calc(100vh-300px)] overflow-y-auto pr-2 space-y-3">
+              <button className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  ></path>
+                </svg>
+              </button>
+            </div>
+
+            <div>
+              <h2 className="text-2xl font-bold mb-2 text-black ">
+                Controles del Mapa
+              </h2>
+              <p className="text-sm text-black mb-4">
+                Gestiona líneas, paradas y favoritos
+              </p>
+              <div className="flex border-b border-gray-200">
+                <button
+                  className={`flex-1 py-2 px-4 text-center ${
+                    activeTab === "lines"
+                      ? "border-b-2 border-custom text-black"
+                      : "text-gray-500"
+                  }`}
+                  onClick={() => setActiveTab("lines")}
+                >
+                  Líneas
+                </button>
+                <button
+                  className={`flex-1 py-2 px-4 text-center ${
+                    activeTab === "stops"
+                      ? "border-b-2 border-custom text-black"
+                      : "text-gray-500"
+                  }`}
+                  onClick={() => setActiveTab("stops")}
+                >
+                  Paradas
+                </button>
+                <button
+                  className={`flex-1 py-2 px-4 text-center ${
+                    activeTab === "favorites"
+                      ? "border-b-2 border-custom text-black"
+                      : "text-gray-500"
+                  }`}
+                  onClick={() => setActiveTab("favorites")}
+                >
+                  Favoritos
+                </button>
+              </div>
+            </div>
+
+            {activeTab === "lines" && (
+              <div className="space-y-4">
+                <div className="grid grid-cols-2 gap-3 max-h-96 overflow-y-auto pr-2">
+                  {lines.map((line) => (
+                    <button
+                      key={line._id}
+                      onClick={() => toggleLine(line)}
+                      className={`p-3 rounded-lg flex items-center justify-center transition-all duration-300 ${
+                        activeLine === line._id
+                          ? "bg-[#fa7f4b] text-white shadow-md transform scale-105"
+                          : "bg-gray-200 text-gray-700 hover:bg-gray-400"
+                      }`}
+                    >
+                      <span className="font-medium text-sm">{line.nombre}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {activeTab === "stops" && (
+              <div className="space-y-3 max-h-96 overflow-y-auto pr-2">
                 {filteredStops.length > 0 ? (
                   filteredStops.map((stop) => (
                     <div
                       key={stop.nombre}
-                      className="p-3 bg-gray-50 rounded-md shadow-sm border border-gray-200 cursor-pointer flex justify-between items-center"
+                      className="p-4 bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-300"
                     >
-                      <div onClick={() => toggleStopOnMap(stop)}>
-                        <h3 className="font-semibold text-[#63997a] mb-1">
-                          {stop.nombre}
-                        </h3>
-                        <p className="text-sm text-gray-700">{stop.info}</p>
-                      </div>
-                      <button
-                        onClick={() => toggleFavorite(stop.nombre)}
-                        className="ml-2 p-1 rounded-full hover:bg-gray-200 transition-colors duration-200"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill={favorites[stop.nombre] ? "black" : "none"}
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          className="w-6 h-6"
+                      <div className="flex justify-between items-start">
+                        <div
+                          className="cursor-pointer flex-grow"
+                          onClick={() => toggleStopOnMap(stop)}
                         >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                          />
-                        </svg>
-                      </button>
+                          <h3 className="font-semibold text-[#63997a] mb-1">
+                            {stop.nombre}
+                          </h3>
+                          <p className="text-sm text-gray-600">{stop.info}</p>
+                        </div>
+                        <button
+                          onClick={() => toggleFavorite(stop.nombre)}
+                          className="ml-2 p-1 rounded-full hover:bg-gray-100 transition-colors duration-200"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill={favorites[stop.nombre] ? "blue" : "none"}
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            className="w-6 h-6"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                            />
+                          </svg>
+                        </button>
+                      </div>
                     </div>
                   ))
                 ) : (
-                  <p className="text-gray-500 italic">
+                  <p className="text-gray-500 italic text-center">
                     No se encontraron paradas.
                   </p>
                 )}
               </div>
-            </div>
+            )}
+
+            {activeTab === "favorites" && (
+              <div className="space-y-3 max-h-96 overflow-y-auto pr-2">
+                {Object.entries(favorites).filter(
+                  ([_, isFavorite]) => isFavorite
+                ).length > 0 ? (
+                  Object.entries(favorites)
+                    .filter(([_, isFavorite]) => isFavorite)
+                    .map(([stopName]) => {
+                      const stop = stops.find((s) => s.nombre === stopName);
+                      if (!stop) return null;
+                      return (
+                        <div
+                          key={stop.nombre}
+                          className="p-4 bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-300"
+                        >
+                          <div className="flex justify-between items-start">
+                            <div
+                              className="cursor-pointer flex-grow"
+                              onClick={() => toggleStopOnMap(stop)}
+                            >
+                              <h3 className="font-semibold text-blue-500 mb-1">
+                                {stop.nombre}
+                              </h3>
+                              <p className="text-sm text-gray-600">
+                                {stop.info}
+                              </p>
+                            </div>
+                            <button
+                              onClick={() => toggleFavorite(stop.nombre)}
+                              className="ml-2 p-1 rounded-full hover:bg-gray-100 transition-colors duration-200"
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="blue"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                className="w-6 h-6"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                                />
+                              </svg>
+                            </button>
+                          </div>
+                        </div>
+                      );
+                    })
+                ) : (
+                  <p className="text-gray-500 italic text-center">
+                    No hay paradas favoritas.
+                  </p>
+                )}
+              </div>
+            )}
           </div>
         </aside>
       </main>
