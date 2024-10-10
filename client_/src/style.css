@@ -1,4 +1,5 @@
-@import 'leaflet/dist/leaflet.css';
+@import "leaflet/dist/leaflet.css";
+@import "leaflet-search/dist/leaflet-search.min.css";
 
 @tailwind base;
 @tailwind components;
@@ -69,4 +70,8 @@
 
 .custom-popup .popup-footer svg {
   margin-right: 4px;
+}
+
+.border-custom {
+  border-color: #fa7f4b;
 }
