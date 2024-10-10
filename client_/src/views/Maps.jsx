@@ -1,6 +1,8 @@
 import { React, ReactDOMServer, useEffect, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import "leaflet.locatecontrol/dist/L.Control.Locate.min.css"; // Importa los estilos
+import "leaflet.locatecontrol/dist/L.Control.Locate.min.js"; // Importa el script de locatecontrol
 
 export const MapPage = function () {
   const [map, setMap] = useState(null);
@@ -159,6 +161,22 @@ export const MapPage = function () {
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(mapInstance);
 
+    // Agregar control de ubicación
+    L.control
+      .locate({
+        position: "topright",
+        strings: {
+          title: "Mostrar mi ubicación", // Texto del botón
+        },
+        drawCircle: true,
+        showPopup: true,
+        locateOptions: {
+          maxZoom: 16,
+          enableHighAccuracy: true,
+        },
+      })
+      .addTo(mapInstance);
+
     setMap(mapInstance);
 
     fetchLines();
@@ -192,12 +210,11 @@ export const MapPage = function () {
       <main className="flex-1 flex">
         <div id="mapa" className="flex-1 bg-white relative z-40">
           {map ? null : (
-            <div className="h-full flex items-center justify-center text-gray-400 text-2xl font-bold">
+            <div className="w-full h-full flex justify-center items-center">
               Cargando mapa...
             </div>
           )}
         </div>
-
         <aside className="w-96 bg-white border-l border-gray-200 overflow-y-auto shadow-lg">
           <div className="p-6 space-y-6">
             <div className="relative">
