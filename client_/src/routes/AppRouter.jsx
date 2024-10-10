@@ -12,7 +12,6 @@ import MapaPage from "../views/mapa.jsx";
 const AppRouter = () => {
   // Almacenar el token
   const token = localStorage.getItem("token");
-  //console.log("Token encontrado:", token);
 
   return (
     <BrowserRouter>

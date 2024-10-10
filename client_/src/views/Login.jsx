@@ -69,7 +69,7 @@ export const Login = function Login() {
                 {isLogin ? "Bienvenido a RutaBus" : "Únete a nosotros"}
               </h2>
             </div>
-            <form onSubmit={handleSubmit} className="p-8 space-y-6">
+            <form onSubmit={handleSubmit} className="p-8 space-y-6 bg-[#F2F2F2]">
               {error && (
                 <div className="text-red-500 text-sm text-center">{error}</div>
               )}
@@ -159,7 +159,7 @@ export const Login = function Login() {
                 </button>
               </div>
             </form>
-            <div className="px-8 pb-8">
+            <div className="px-8 pb-8 bg-[#F2F2F2]">
               <button
                 onClick={toggleForm}
                 className="w-full text-center text-sm text-[#63997a] hover:text-[#fa7f4b] transition-colors duration-300"
