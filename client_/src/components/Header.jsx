@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 export default function Header() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState("");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const menuRef = useRef(null); // Referencia para el menú
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -43,6 +44,21 @@ export default function Header() {
     setIsMenuOpen((prev) => !prev);
   };
 
+  // Manejador de clic para cerrar el menú al hacer clic fuera de él
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [menuRef]);
+
   return (
     <header className="bg-[#63997a] w-full z-50">
       <nav className="flex justify-between items-center p-4">
@@ -66,7 +82,7 @@ export default function Header() {
               </button>
             </a>
           ) : (
-            <div className="relative">
+            <div className="relative" ref={menuRef}>
               <button
                 onClick={toggleUserMenu}
                 className="flex items-center space-x-2 bg-[#fa7f4b] text-white hover:text-black transition-colors duration-300 hover:bg-[#F2D680] py-2 px-4 rounded-full"
