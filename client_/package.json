@@ -20,6 +20,7 @@
     "clsx": "^2.1.1",
     "framer-motion": "^11.9.0",
     "leaflet": "^1.9.4",
+    "leaflet-control-geocoder": "^2.4.0",
     "leaflet-routing-machine": "^3.2.12",
     "leaflet-search": "^4.0.0",
     "leaflet.locatecontrol": "^0.81.1",
