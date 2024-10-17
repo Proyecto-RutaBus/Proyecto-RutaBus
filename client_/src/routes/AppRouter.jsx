@@ -7,6 +7,7 @@ import Home from "../views/Home.jsx";
 import About from "../views/About.jsx";
 import Contact from "../views/Contact.jsx";
 import Profile from "../views/Profile.jsx";
+import MapaPage from "../views/mapa.jsx";
 
 const AppRouter = () => {
   // Almacenar el token
@@ -37,6 +38,7 @@ const AppRouter = () => {
         />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/mapaP" element={<MapaPage />} />
       </Routes>
     </BrowserRouter>
   );
