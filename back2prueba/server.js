@@ -5,6 +5,14 @@ import connectDB from "./db/database.js";
 import comunicacionesRoutes from "./routes/comunicaciones.routes.js";
 import lineasRoutes from "./routes/lineas.routes.js";
 import favoritosRoutes from "./routes/favoritos.routes.js";
+import path from "path";
+import morgan from "morgan";
+
+import { fileURLToPath } from "url";
+
+// Obtener el directorio del archivo actual
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -14,6 +22,7 @@ connectDB();
 
 // Middleware para parsear JSON
 app.use(cors());
+app.use(morgan("dev"));
 app.use(express.json());
 app.use("/uploads", express.static("uploads")); // Servir archivos estáticos
 

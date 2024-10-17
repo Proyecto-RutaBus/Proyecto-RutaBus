@@ -1,30 +1,15 @@
+// models/Favorite.js
 import mongoose from "mongoose";
 
-const favoritoSchema = new mongoose.Schema({
-  usuarioId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Usuario", // Referencia al modelo de usuarios
-    required: true,
-  },
-  paradaId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Parada", // Referencia al modelo de paradas
-    required: true,
-  },
-  nombreParada: {
-    type: String,
-    required: true,
-  },
-  nombreFavorito: {
-    type: String, // El nombre personalizado que puede darle el usuario
-    default: null,
-  },
-  creadoEn: {
-    type: Date,
-    default: Date.now,
+const favoriteSchema = new mongoose.Schema({
+  stopName: { type: String, required: true },
+  isFavorite: { type: Boolean, required: true },
+  coordinates: {
+    lat: { type: Number, required: true },
+    lng: { type: Number, required: true },
   },
 });
 
-const Favorito = mongoose.model("Favorito", favoritoSchema);
+const Favorite = mongoose.model("Favorite", favoriteSchema);
 
-export default Favorito;
+export default Favorite;

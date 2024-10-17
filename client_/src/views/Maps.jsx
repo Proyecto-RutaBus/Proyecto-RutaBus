@@ -6,6 +6,7 @@ import "leaflet/dist/leaflet.css";
 import "leaflet.locatecontrol/dist/L.Control.Locate.min.css";
 import "leaflet.locatecontrol/dist/L.Control.Locate.min.js";
 import "leaflet-control-geocoder";
+import axios from "axios";
 
 export const MapPage = function () {
   const [map, setMap] = useState(null);
@@ -145,30 +146,31 @@ export const MapPage = function () {
     }
   };
 
-  const toggleFavorite = (stopName) => {
-    setFavorites((prevFavorites) => {
-      const newFavorites = {
-        ...prevFavorites,
-        [stopName]: !prevFavorites[stopName],
-      };
+  const toggleFavorite = async (stopName, coordinates) => {
+    setFavorites((prevFavorites) => ({
+      ...prevFavorites,
+      [stopName]: !prevFavorites[stopName],
+    }));
 
-      // Actualizar el contenido del popup para reflejar el cambio en favoritos
-      markers.forEach((marker) => {
-        if (marker.options.id === stopName) {
-          marker.setPopupContent(
-            ReactDOMServer.renderToString(
-              createCustomPopup(
-                marker.options.stop,
-                newFavorites[stopName],
-                toggleFavorite
-              )
-            )
-          );
-        }
+    try {
+      const response = await fetch("http://localhost:3000/api/favorites", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          stopName,
+          isFavorite: !favorites[stopName],
+          coordinates,
+        }),
       });
 
-      return newFavorites;
-    });
+      if (!response.ok) {
+        throw new Error("Error saving favorite");
+      }
+    } catch (error) {
+      console.error("Error saving favorite:", error);
+    }
   };
 
   useEffect(() => {
@@ -405,12 +407,14 @@ export const MapPage = function () {
                               </p>
                             </div>
                             <button
-                              onClick={() => toggleFavorite(stop.nombre)}
+                              onClick={() =>
+                                toggleFavorite(stop.nombre, stop.coordinates)
+                              }
                               className="ml-2 p-1 rounded-full hover:bg-gray-100 transition-colors duration-200"
                             >
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
-                                fill="blue"
+                                fill={favorites[stop.nombre] ? "blue" : "none"}
                                 viewBox="0 0 24 24"
                                 stroke="currentColor"
                                 className="w-6 h-6"
