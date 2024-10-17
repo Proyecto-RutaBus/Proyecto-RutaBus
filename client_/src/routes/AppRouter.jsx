@@ -37,7 +37,7 @@ const AppRouter = () => {
         />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/mapaP" element={<MapaPage />} />
+        <Route path="/mapa" element={<MapaPage />} />
       </Routes>
     </BrowserRouter>
   );
