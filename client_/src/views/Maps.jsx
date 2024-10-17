@@ -1,8 +1,11 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import "leaflet.locatecontrol/dist/L.Control.Locate.min.css"; // Importa los estilos
-import "leaflet.locatecontrol/dist/L.Control.Locate.min.js"; // Importa el script de locatecontrol
+import "leaflet.locatecontrol/dist/L.Control.Locate.min.css";
+import "leaflet.locatecontrol/dist/L.Control.Locate.min.js";
+import "leaflet-control-geocoder";
 
 export const MapPage = function () {
   const [map, setMap] = useState(null);
@@ -110,15 +113,33 @@ export const MapPage = function () {
     }
   };
 
-  const handleSearch = (event) => {
+  const handleSearch = async (event) => {
     const term = event.target.value.toLowerCase();
     setSearchTerm(term);
 
     if (term) {
+      // Filtrar paradas
       const filtered = stops.filter((stop) =>
         stop.nombre.toLowerCase().includes(term)
       );
       setFilteredStops(filtered);
+
+      // Geocodificación
+      try {
+        const provider = new L.Control.Geocoder.Nominatim();
+        const results = await new Promise((resolve) => {
+          provider.geocode(term, (results) => {
+            resolve(results);
+          });
+        });
+        if (results && results.length > 0) {
+          const { center, name } = results[0];
+          map.setView(center, 16);
+          L.marker(center).addTo(map).bindPopup(name).openPopup();
+        }
+      } catch (error) {
+        console.error("Error en la geocodificación:", error);
+      }
     } else {
       setFilteredStops(stops);
     }
@@ -158,21 +179,28 @@ export const MapPage = function () {
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(mapInstance);
 
-    // Agregar control de ubicación
-    L.control
+    const locateControl = L.control
       .locate({
         position: "topright",
         strings: {
-          title: "Mostrar mi ubicación", // Texto del botón
+          title: "Mostrar mi ubicación",
         },
         drawCircle: true,
         showPopup: true,
+        initialZoomLevel: 16,
         locateOptions: {
           maxZoom: 16,
           enableHighAccuracy: true,
         },
+        flyTo: true,
       })
       .addTo(mapInstance);
+
+    mapInstance.on("locationerror", function (e) {
+      alert(
+        "No se pudo obtener su ubicación. Por favor, habilite la geolocalización en su navegador."
+      );
+    });
 
     setMap(mapInstance);
 
@@ -307,7 +335,7 @@ export const MapPage = function () {
                   filteredStops.map((stop) => (
                     <div
                       key={stop.nombre}
-                      className="p-4 bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-300"
+                      className="p-4 bg-white  rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-300"
                     >
                       <div className="flex justify-between items-start">
                         <div

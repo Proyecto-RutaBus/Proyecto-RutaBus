@@ -47,13 +47,15 @@ export const LandingPage = () => {
                     Tu tiempo es valioso.
                   </span>
                 </motion.p>
+                <a href="/login">
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="px-8 py-4 bg-[#fa7f4b] text-white text-lg font-bold rounded-full hover:bg-[#fa7f4b]/90 transition-colors shadow-lg uppercase tracking-wide"
+                  className="px-8 py-4 bg-[#fa7f4b] text-white text-lg font-bold rounded-md hover:text-black hover:bg-[#F2D680]/90 transition-colors shadow-lg uppercase tracking-wide"
                 >
                   Descubre cómo
                 </motion.button>
+                </a>
               </div>
               <motion.div
                 initial={{ opacity: 0, x: 100 }}
@@ -166,7 +168,7 @@ export const LandingPage = () => {
                     key={index}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="px-6 py-3 bg-[#fa7f4b] text-white rounded-full hover:bg-[#fa7f4b]/90 transition-colors shadow-md hover:shadow-lg text-lg font-bold uppercase tracking-wide"
+                    className="px-6 py-3 bg-[#fa7f4b] text-white rounded-full hover:text-black hover:bg-[#F2D680]/90 transition-colors shadow-md hover:shadow-lg text-lg font-bold uppercase tracking-wide"
                   >
                     {action}
                   </motion.button>

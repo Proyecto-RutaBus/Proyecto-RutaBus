@@ -12,7 +12,6 @@ import MapaPage from "../views/mapa.jsx";
 const AppRouter = () => {
   // Almacenar el token
   const token = localStorage.getItem("token");
-  //console.log("Token encontrado:", token);
 
   return (
     <BrowserRouter>
@@ -38,7 +37,7 @@ const AppRouter = () => {
         />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/mapaP" element={<MapaPage />} />
+        <Route path="/mapa" element={<MapaPage />} />
       </Routes>
     </BrowserRouter>
   );
