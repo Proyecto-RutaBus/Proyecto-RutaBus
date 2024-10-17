@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios'; // Importamos axios
-import { MessageCircle, Send } from 'lucide-react';
+import axios from 'axios';
+import { MessageCircle, Send, User } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -10,17 +10,15 @@ export default function Forum() {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
 
-  // Función para alternar entre abrir y cerrar el foro
   const toggleForum = () => {
-    console.log("Toggle Forum:", !isOpen); // verifica que se este corriendo el toggle
+    console.log("Toggle Forum:", !isOpen);
     setIsOpen(!isOpen);
   };
 
-  // Efecto para obtener comentarios al cargar el componente
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const response = await axios.get('/forums'); // Obtener comentarios desde la API
+        const response = await axios.get('/forums');
         setComments(response.data);
       } catch (error) {
         console.error('Error al obtener los comentarios:', error);
@@ -30,7 +28,6 @@ export default function Forum() {
     fetchComments();
   }, []);
 
-  // Función para agregar un nuevo comentario
   const handleAddComment = async () => {
     const token = localStorage.getItem('token');
 
@@ -40,7 +37,7 @@ export default function Forum() {
           { content: newComment }, 
           {
             headers: {
-              Authorization: `Bearer ${token}`, // Acá enviamos el token
+              Authorization: `Bearer ${token}`,
             },
           }
         );
@@ -52,7 +49,6 @@ export default function Forum() {
     }
   };
 
-  // Efecto para detectar clics fuera del foro y cerrarlo
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (isOpen && !event.target.closest('.foro-popup') && !event.target.closest('.foro-icon')) {
@@ -66,6 +62,17 @@ export default function Forum() {
     };
   }, [isOpen]);
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleString('es-ES', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
+
   return (
     <div className="fixed bottom-4 right-4 z-50">
       <Button
@@ -77,20 +84,25 @@ export default function Forum() {
       </Button>
 
       {isOpen && (
-        <div className="fixed bottom-20 right-4 bg-background rounded-lg shadow-lg w-80 p-4 max-h-[calc(100vh-6rem)] flex flex-col transition-all duration-300 ease-in-out animate-in slide-in-from-bottom-5 foro-popup">
+        <div className="fixed bottom-20 right-4 bg-background rounded-lg shadow-lg w-96 p-4 max-h-[calc(100vh-6rem)] flex flex-col transition-all duration-300 ease-in-out animate-in slide-in-from-bottom-5 foro-popup">
           <h2 className="text-lg font-bold mb-4">Lo que está diciendo la gente</h2>
           
-          <ScrollArea className="flex-grow mb-4">
+          <ScrollArea className="scroll-area-content flex-grow mb-4 pr-4">
             {Array.isArray(comments) && comments.map((comment) => (
-              <div key={comment._id} className="bg-muted p-3 my-2 rounded-lg">
-              <p className="text-sm text-foreground">{comment.content}</p> {/* Comentario */}
-              <p className="text-xs text-gray-500"> {/* Información adicional */}
-                {comment.author?.nombre || 'Anónimo'} {/* Mostrar el nombre del autor */}
-              </p>
-              <p className="text-xs text-gray-400"> {/* Fecha del comentario */}
-                {new Date(comment.createdAt).toLocaleString()} {/* Convertir la fecha a formato legible */}
-              </p>
-            </div>
+              <div key={comment._id} className="bg-muted p-4 my-3 rounded-lg shadow">
+                <div className="flex items-start space-x-3">
+                  <div className="bg-primary rounded-full p-1">
+                    <User className="h-5 w-5 text-primary-foreground" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex justify-between items-baseline">
+                      <h3 className="text-sm font-semibold text-primary">{comment.author?.nombre || 'Anónimo'}</h3>
+                      <span className="text-xs text-muted-foreground">{formatDate(comment.createdAt)}</span>
+                    </div>
+                    <p className="mt-1 text-sm text-foreground">{comment.content}</p>
+                  </div>
+                </div>
+              </div>
             ))}
           </ScrollArea>
 

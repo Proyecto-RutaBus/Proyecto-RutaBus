@@ -61,7 +61,7 @@ const updateUserData = async (userData) => {
 
 
 export default function Profile() {
-  const [user, setUser] = useState({ name: "", birthDate: "", email: "", password: "" });
+  const [user, setUser] = useState({ name: "", birthDate: "", email: "", contrasenia: "" });
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -95,7 +95,7 @@ export default function Profile() {
     }
 
     // Validación de la longitud de la contraseña
-    if (user.password.length < 6) {
+    if (user.contrasenia.length < 6) {
       alert("La contraseña debe tener al menos 6 caracteres.");
       return;
     }
@@ -180,7 +180,7 @@ export default function Profile() {
                     id="password"
                     name="password"
                     type="password"
-                    value={user.password}
+                    value={user.contrasenia}
                     onChange={handleInputChange}
                     required
                     className="mt-1 block p-2 bg-gray-400 w-full rounded-md border-gray-500 shadow-sm focus:border-[#63997a] focus:ring focus:ring-[#63997a] focus:ring-opacity-50"

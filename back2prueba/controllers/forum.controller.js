@@ -21,7 +21,7 @@ export const createPost = async (req, res) => {
 // Obtener todos los posts del foro
 export const getPosts = async (req, res) => {
   try {
-    const posts = await ForumPost.find().populate("author", "nombre"); // Fijarse que el campo 'nombre' sea igual en el modelo de usuario
+    const posts = await ForumPost.find().populate("author", "nombre").sort({ createdAt: -1 }); // Fijarse que el campo 'nombre' sea igual en el modelo de usuario
     return res.status(200).json(posts);
   } catch (error) {
     console.error(error);
