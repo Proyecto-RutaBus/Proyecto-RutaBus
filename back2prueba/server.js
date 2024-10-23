@@ -18,10 +18,13 @@ app.use(express.json());
 app.use("/uploads", express.static("uploads")); // Servir archivos estáticos
 
 import router from "./routes/auth.routes.js";
+import routerForum from "./routes/forum.routes.js";
 app.use(router);
 app.use("/api", comunicacionesRoutes);
 app.use("/api", lineasRoutes);
 app.use("/api", favoritosRoutes);
+app.use("/forums", routerForum);
+
 
 // Iniciar el servidor
 app.listen(PORT, () => {

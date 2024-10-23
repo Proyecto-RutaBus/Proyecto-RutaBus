@@ -1,8 +1,8 @@
-// Reemplaza la URL base por la de tu backend
 const API_URL = "http://localhost:3000";
 
 export const loginUser = async (email, contrasenia) => {
   try {
+    console.log("datos enviados:", { email, contrasenia });
     const response = await fetch(`${API_URL}/login`, {
       method: "POST",
       headers: {

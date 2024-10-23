@@ -150,3 +150,8 @@
 .border-custom {
   border-color: #fa7f4b;
 }
+
+.scroll-area-content {
+  display: flex;
+  flex-direction: column-reverse;
+}

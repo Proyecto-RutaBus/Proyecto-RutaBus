@@ -29,12 +29,16 @@ ctrl.registro = async (req, res) => {
 };
 
 ctrl.login = async (req, res) => {
+  console.log(req.body);
+  
   const { email, contrasenia } = req.body;
 
   try {
     // Buscar usuario por email
     const usuario = await Usuario.findOne({ email });
     if (!usuario) {
+      console.log("Usuario no encontrado");
+      
       return res
         .status(400)
         .json({ mensaje: "Usuario o contraseña incorrectos." });
@@ -43,6 +47,8 @@ ctrl.login = async (req, res) => {
     // Comparar la contraseña
     const esValida = await bcrypt.compare(contrasenia, usuario.contrasenia);
     if (!esValida) {
+      console.log("Contrasenia incorrecta");
+      
       return res
         .status(400)
         .json({ mensaje: "Usuario o contraseña incorrectos." });

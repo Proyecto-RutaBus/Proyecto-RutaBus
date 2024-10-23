@@ -9,4 +9,9 @@ export default defineConfig({
       "@": path.resolve(__dirname, "src"), // Asegúrate de que 'src' apunte a la carpeta correcta
     },
   },
+  server: {
+    proxy: {
+      '/forums': 'http://localhost:3000'
+    }
+  }
 });
