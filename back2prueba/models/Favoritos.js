@@ -5,8 +5,8 @@ const favoriteSchema = new mongoose.Schema({
   stopName: { type: String, required: true },
   isFavorite: { type: Boolean, required: true },
   coordinates: {
-    lat: { type: Number, required: true },
-    lng: { type: Number, required: true },
+    type: [Number], // Cambiar a array de números
+    required: true,
   },
 });
 

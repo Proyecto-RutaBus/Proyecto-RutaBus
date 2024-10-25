@@ -350,7 +350,9 @@ export const MapPage = function () {
                           <p className="text-sm text-gray-600">{stop.info}</p>
                         </div>
                         <button
-                          onClick={() => toggleFavorite(stop.nombre)}
+                          onClick={() =>
+                            toggleFavorite(stop.nombre, stop.coordenadas)
+                          }
                           className="ml-2 p-1 rounded-full hover:bg-gray-100 transition-colors duration-200"
                         >
                           <svg
@@ -408,7 +410,7 @@ export const MapPage = function () {
                             </div>
                             <button
                               onClick={() =>
-                                toggleFavorite(stop.nombre, stop.coordinates)
+                                toggleFavorite(stop.nombre, stop.coordenadas)
                               }
                               className="ml-2 p-1 rounded-full hover:bg-gray-100 transition-colors duration-200"
                             >
