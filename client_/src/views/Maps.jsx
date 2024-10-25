@@ -246,14 +246,16 @@ export const MapPage = function () {
         </div>
         <aside className="w-96 bg-white border-l border-gray-200 overflow-y-auto shadow-lg">
           <div className="p-6 space-y-6">
-            <div className="relative">
-              <a href="/mapa">
-                <button className="absolute right-1/2 transform translate-x-1/2 top-1/2 -translate-y-1/2 bg-orange-400 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded-full shadow-md">
+            <div className="bg-gray-100 rounded-lg shadow-sm p-3 text-center max-w-xs mx-auto">
+              <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                ¿No sabes qué línea tomar?
+              </h3>
+              <a href="/mapa" className="inline-block">
+                <button className="bg-orange-400 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded-full text-sm transition duration-300 ease-in-out">
                   Planificar ruta
                 </button>
               </a>
             </div>
-
             <div>
               <h2 className="text-2xl font-bold mb-2 text-black ">
                 Controles del Mapa
