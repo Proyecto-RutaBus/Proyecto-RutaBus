@@ -8,6 +8,11 @@ const favoriteSchema = new mongoose.Schema({
     type: [Number], // Cambiar a array de números
     required: true,
   },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Usuario",
+    required: true,
+  }, // Añadir referencia al usuario
 });
 
 const Favorite = mongoose.model("Favorite", favoriteSchema);

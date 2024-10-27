@@ -153,25 +153,36 @@ export const MapPage = function () {
     }));
 
     try {
-      const response = await fetch("http://localhost:3000/api/favorites", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          stopName,
-          isFavorite: !favorites[stopName],
-          coordinates,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Error saving favorite");
-      }
+      const token = localStorage.getItem("token"); // Obtener el token del almacenamiento local
+      await axios.post(
+        "http://localhost:3000/api/favorites",
+        { stopName, isFavorite: !favorites[stopName], coordinates },
+        { headers: { Authorization: `Bearer ${token}` } } // Incluir el token en los headers
+      );
     } catch (error) {
       console.error("Error saving favorite:", error);
     }
   };
+
+  const fetchFavorites = async () => {
+    try {
+      const token = localStorage.getItem('token'); // Obtener el token del almacenamiento local
+      const response = await axios.get("http://localhost:3000/api/favorites", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const favoritesData = response.data.reduce((acc, favorite) => {
+        acc[favorite.stopName] = favorite.isFavorite;
+        return acc;
+      }, {});
+      setFavorites(favoritesData);
+    } catch (error) {
+      console.error("Error fetching favorites:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchFavorites(); // Cargar los favoritos al montar el componente
+  }, []);
 
   useEffect(() => {
     const mapInstance = L.map("mapa").setView([-26.1849, -58.1731], 13);

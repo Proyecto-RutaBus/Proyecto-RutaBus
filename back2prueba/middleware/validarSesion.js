@@ -17,12 +17,11 @@ export const validarToken = async (req, res, next) => {
     const usuario = await Usuario.findById(decoded.id).select("-contrasenia");
     // Si el usuario no existe, retornamos un error
     if (!usuario) {
-      return res.status(404).json({ message: "Usuario no encontrado" });
+      return res.status(401).json({ message: "Usuario no encontrado" });
     }
     // Retornamos los datos completos del usuario
     req.usuario = usuario;
     next();
-
   } catch (error) {
     console.log("Error verificando el token:", error.message);
     return res.status(401).json({ message: "Token inválido" });
