@@ -11,17 +11,34 @@ export const createPost = async (req, res) => {
     });
 
     await newPost.save();
-    return res.status(201).json(newPost);
+
+    // Popular el campo 'author' con el nombre del usuario antes de enviar la respuesta
+    const populatedPost = await ForumPost.findById(newPost._id).populate("author", "nombre");
+
+    return res.status(201).json(populatedPost);
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Error creando el post" });
   }
 };
 
-// Obtener todos los posts del foro
+// Obtener todos los posts del foro del día actual
 export const getPosts = async (req, res) => {
   try {
-    const posts = await ForumPost.find().populate("author", "nombre").sort({ createdAt: -1 }); // Fijarse que el campo 'nombre' sea igual en el modelo de usuario
+    // Fecha y hora de inicio y fin del día actual
+    const startOfDay = new Date();
+    startOfDay.setHours(0, 0, 0, 0);
+
+    const endOfDay = new Date();
+    endOfDay.setHours(23, 59, 59, 999);
+
+    // Filtrar posts creados solo dentro del rango del día actual
+    const posts = await ForumPost.find({
+      createdAt: { $gte: startOfDay, $lt: endOfDay },
+    })
+      .populate("author", "nombre")
+      .sort({ createdAt: -1 });
+
     return res.status(200).json(posts);
   } catch (error) {
     console.error(error);
