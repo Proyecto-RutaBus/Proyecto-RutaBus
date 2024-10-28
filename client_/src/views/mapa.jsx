@@ -1,320 +1,306 @@
-"use client";
-import { useEffect, useState } from "react";
-import { Map as MapIcon, Bus, Star, MapPin, Search, Menu } from "lucide-react";
+import React, { useEffect, useState } from "react";
 import L from "leaflet";
-import Header from "../components/Header";
-import "leaflet/dist/leaflet.css";
+import "leaflet-routing-machine";
 
-export default function MapPage() {
+export default function MapComponent() {
   const [map, setMap] = useState(null);
-  const [lines, setLines] = useState([]);
-  const [stops, setStops] = useState([]);
-  const [activeLine, setActiveLine] = useState(null);
-  const [polyline, setPolyline] = useState(null);
-  const [markers, setMarkers] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [filteredStops, setFilteredStops] = useState([]);
-  const [favorites, setFavorites] = useState({});
-  const [showSidebar, setShowSidebar] = useState(true);
-  const [activeTab, setActiveTab] = useState("líneas");
-  const [showAllStops, setShowAllStops] = useState(false);
-
-  const customIcon = L.icon({
-    iconUrl: "./assets/img/autobus.png",
-    iconSize: [32, 32],
-    iconAnchor: [16, 32],
-    popupAnchor: [0, -32],
-    shadowSize: [41, 41],
-  });
-
-  const fetchLines = async () => {
-    try {
-      const response = await fetch("http://localhost:3000/api/lineas");
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      const data = await response.json();
-      setLines(data);
-    } catch (error) {
-      console.error("Error fetching lines:", error);
-    }
-  };
-
-  const fetchStopsAndRoute = async (line) => {
-    try {
-      const response = await fetch(
-        `http://localhost:3000/api/lineas/${line._id}`
-      );
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      const data = await response.json();
-
-      setStops(data.paradas);
-      setFilteredStops(data.paradas);
-
-      if (polyline) {
-        map.removeLayer(polyline);
-      }
-
-      const newPolyline = L.polyline(
-        data.recorrido.map((coord) => [coord.lat, coord.lng]),
-        { color: "#fa7f4b", weight: 5 }
-      ).addTo(map);
-
-      setPolyline(newPolyline);
-
-      const bounds = newPolyline.getBounds();
-      map.fitBounds(bounds, { padding: [50, 50] });
-
-      addStopMarkers(data.paradas);
-    } catch (error) {
-      console.error("Error fetching stops and route:", error);
-    }
-  };
-
-  const addStopMarkers = (stopsData) => {
-    markers.forEach((marker) => map.removeLayer(marker));
-    setMarkers([]);
-
-    const newMarkers = stopsData.map((stop) => {
-      const marker = L.marker([stop.coordenadas.lat, stop.coordenadas.lng], {
-        icon: customIcon,
-      })
-        .addTo(map)
-        .bindPopup(`<b>${stop.nombre}</b>`);
-      return marker;
-    });
-
-    setMarkers(newMarkers);
-  };
+  const [originMarker, setOriginMarker] = useState(null);
+  const [destinationMarker, setDestinationMarker] = useState(null);
+  const [routingControl, setRoutingControl] = useState(null);
+  const [step, setStep] = useState("origin");
+  const [routeOptions, setRouteOptions] = useState([]);
+  const [selectedRoute, setSelectedRoute] = useState(null);
+  const [instructions, setInstructions] = useState([]);
+  const [originAddress, setOriginAddress] = useState("");
+  const [destinationAddress, setDestinationAddress] = useState("");
+  const [recommendedLine, setRecommendedLine] = useState(null);
+  const [boardingStop, setBoardingStop] = useState(null);
+  const [alightingStop, setAlightingStop] = useState(null);
 
   useEffect(() => {
-    const mapInstance = L.map("mapa").setView([-26.1849, -58.1731], 13);
+    const initialMap = L.map("map").setView([-26.1849, -58.1731], 13);
 
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    }).addTo(mapInstance);
+      attribution: "&copy; OpenStreetMap contributors",
+    }).addTo(initialMap);
 
-    setMap(mapInstance);
-    fetchLines();
+    setMap(initialMap);
 
     return () => {
-      mapInstance.off();
-      mapInstance.remove();
-      markers.forEach((marker) => mapInstance.removeLayer(marker));
+      if (initialMap) {
+        initialMap.remove();
+      }
     };
   }, []);
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    const term = searchQuery.toLowerCase();
-    if (term) {
-      const filtered = stops.filter((stop) =>
-        stop.nombre.toLowerCase().includes(term)
-      );
-      setFilteredStops(filtered);
-    } else {
-      setFilteredStops(stops);
+  const getAddress = (lat, lng, callback) => {
+    const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}&addressdetails=1`;
+
+    fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data && data.address) {
+          const address = `${data.address.road || ""} ${
+            data.address.house_number || ""
+          }, ${data.address.city || data.address.town || ""}`.trim();
+          callback(address || "Dirección no disponible");
+        } else {
+          callback("Dirección no disponible");
+        }
+      })
+      .catch((error) => {
+        console.error("Error al obtener la dirección:", error);
+        callback("Error al obtener la dirección");
+      });
+  };
+
+  const fetchLinesData = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/api/lineas");
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Error al obtener las líneas de colectivos:", error);
+      return [];
     }
   };
 
-  const toggleSidebar = () => setShowSidebar(!showSidebar);
+  const findClosestLineAndStops = (origin, destination, lines) => {
+    let closestLine = null;
+    let minDistance = Infinity;
+    let boardingStop = null;
+    let alightingStop = null;
 
-  const toggleLineSelection = (line) => {
-    if (activeLine && activeLine._id === line._id) {
-      setActiveLine(null);
-      setStops([]);
-      if (polyline) {
-        map.removeLayer(polyline);
-        setPolyline(null);
+    lines.forEach((line) => {
+      line.paradas.forEach((stop) => {
+        const stopLatLng = L.latLng(stop.coordenadas[0], stop.coordenadas[1]);
+        const distanceToOrigin = origin.distanceTo(stopLatLng);
+        const distanceToDestination = destination.distanceTo(stopLatLng);
+        const totalDistance = distanceToOrigin + distanceToDestination;
+
+        if (totalDistance < minDistance) {
+          minDistance = totalDistance;
+          closestLine = line.nombre;
+          boardingStop =
+            distanceToOrigin < distanceToDestination ? stop : boardingStop;
+          alightingStop =
+            distanceToDestination < distanceToOrigin ? stop : alightingStop;
+        }
+      });
+    });
+
+    return { closestLine, boardingStop, alightingStop };
+  };
+
+  const onMapClick = async (e) => {
+    if (step === "origin") {
+      if (originMarker) {
+        map.removeLayer(originMarker);
       }
-      markers.forEach((marker) => map.removeLayer(marker));
-      setMarkers([]);
-    } else {
-      setActiveLine(line);
-      fetchStopsAndRoute(line);
+      const marker = L.marker(e.latlng, { draggable: false })
+        .addTo(map)
+        .bindPopup("Origen")
+        .openPopup();
+      setOriginMarker(marker);
+      setStep("destination");
+    } else if (step === "destination") {
+      if (destinationMarker) {
+        map.removeLayer(destinationMarker);
+      }
+      const marker = L.marker(e.latlng, { draggable: false })
+        .addTo(map)
+        .bindPopup("Destino")
+        .openPopup();
+      setDestinationMarker(marker);
+
+      if (routingControl) {
+        map.removeControl(routingControl);
+      }
+
+      const control = L.Routing.control({
+        waypoints: [originMarker.getLatLng(), marker.getLatLng()],
+        routeWhileDragging: false,
+        language: "es",
+        showAlternatives: true,
+        lineOptions: {
+          styles: [{ color: "#3B82F6", opacity: 0.8, weight: 6 }],
+        },
+        altLineOptions: {
+          styles: [{ color: "#9CA3AF", opacity: 0.6, weight: 6 }],
+        },
+        createMarker: function () {
+          return null;
+        },
+        addWaypoints: false,
+        draggableWaypoints: false,
+      }).addTo(map);
+
+      control.on("routesfound", function (e) {
+        const routes = e.routes;
+        setRouteOptions(routes);
+        setSelectedRoute(routes[0]);
+        updateRouteInfo(routes[0]);
+      });
+
+      control.on("routeselected", function (e) {
+        const selectedRoute = e.route;
+        setSelectedRoute(selectedRoute);
+        updateRouteInfo(selectedRoute);
+      });
+
+      setRoutingControl(control);
+      setStep("complete");
+
+      getAddress(
+        originMarker.getLatLng().lat,
+        originMarker.getLatLng().lng,
+        setOriginAddress
+      );
+      getAddress(
+        marker.getLatLng().lat,
+        marker.getLatLng().lng,
+        setDestinationAddress
+      );
+
+      const lines = await fetchLinesData();
+
+      const { closestLine, boardingStop, alightingStop } =
+        findClosestLineAndStops(
+          originMarker.getLatLng(),
+          marker.getLatLng(),
+          lines
+        );
+
+      setRecommendedLine(closestLine);
+      setBoardingStop(boardingStop);
+      setAlightingStop(alightingStop);
     }
   };
 
-  const toggleFavorite = (stopName) => {
-    setFavorites((prev) => ({
-      ...prev,
-      [stopName]: !prev[stopName],
-    }));
+  const resetRoute = () => {
+    if (originMarker) {
+      map.removeLayer(originMarker);
+      setOriginMarker(null);
+    }
+    if (destinationMarker) {
+      map.removeLayer(destinationMarker);
+      setDestinationMarker(null);
+    }
+    if (routingControl) {
+      map.removeControl(routingControl);
+      setRoutingControl(null);
+    }
+    setStep("origin");
+    setRouteOptions([]);
+    setSelectedRoute(null);
+    setInstructions([]);
+    setOriginAddress("");
+    setDestinationAddress("");
+    setRecommendedLine(null);
+    setBoardingStop(null);
+    setAlightingStop(null);
   };
 
-  const handleStopClick = (stop) => {
-    map.setView([stop.coordenadas.lat, stop.coordenadas.lng], 16);
+  const updateRouteInfo = (route) => {
+    setInstructions(
+      route.instructions || route.segments.map((seg) => seg.instructions)
+    );
   };
+
+  useEffect(() => {
+    if (map) {
+      map.on("click", onMapClick);
+    }
+
+    return () => {
+      if (map) {
+        map.off("click", onMapClick);
+      }
+    };
+  }, [map, step, originMarker, destinationMarker, routingControl]);
 
   return (
-    <div className="h-screen flex flex-col bg-gray-100">
-      <Header />
-      <header className="bg-[#63997a] text-white p-4 flex justify-between items-center z-50">
-        <h1 className="text-2xl font-bold">Mapa Interactivo</h1>
-        <button
-          onClick={toggleSidebar}
-          className="text-white hover:text-[#fa7f4b] transition-colors"
-        >
-          <Menu size={24} />
-        </button>
-      </header>
-
-      <main className="flex-1 flex overflow-hidden relative">
-        <div className="flex-1 relative">
-          <div className="absolute top-4 left-4 right-4 z-50">
-            <form onSubmit={handleSearch} className="flex gap-2">
-              <input
-                type="text"
-                placeholder="Buscar ubicación..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="flex-grow px-4 py-2 rounded-l-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#63997a]"
-              />
-              <button
-                type="submit"
-                className="bg-[#fa7f4b] text-white px-4 py-2 rounded-r-md hover:bg-[#e86f3a] transition-colors"
-              >
-                <Search size={20} />
-              </button>
-            </form>
-          </div>
-          <div id="mapa" className="h-full w-full"></div>
+    <div className="flex h-screen bg-gray-100">
+      <aside className="w-1/4 bg-white p-6 overflow-y-auto shadow-lg">
+        <h1 className="text-3xl font-bold mb-6 text-blue-700">
+          Planificador de Ruta
+        </h1>
+        <div className="mb-6">
+          <h2 className="text-xl font-semibold mb-2 text-gray-800">
+            Instrucciones
+          </h2>
+          {step === "origin" && (
+            <div
+              className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4"
+              role="alert"
+            >
+              <p className="font-bold">Atención</p>
+              <p>Haga clic en el mapa para seleccionar el punto de origen.</p>
+            </div>
+          )}
+          {step === "destination" && (
+            <div
+              className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4"
+              role="alert"
+            >
+              <p className="font-bold">Atención</p>
+              <p>
+                Ahora, haga clic en el mapa para seleccionar el punto de
+                destino.
+              </p>
+            </div>
+          )}
+          {step === "complete" && (
+            <div
+              className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4"
+              role="alert"
+            >
+              <p className="font-bold">Completado</p>
+              <p>
+                Ruta calculada. Puede reiniciar para planificar una nueva ruta.
+              </p>
+            </div>
+          )}
         </div>
-
-        {showSidebar && (
-          <aside className="w-80 bg-white border-l border-gray-200 overflow-y-auto flex flex-col">
-            <nav className="p-4 bg-[#63997a] text-white">
-              <ul className="flex justify-around">
-                {["Líneas", "Paradas", "Favoritos"].map((tab) => (
-                  <li key={tab}>
-                    <button
-                      onClick={() => setActiveTab(tab.toLowerCase())}
-                      className={`px-4 py-2 rounded-md transition-colors ${
-                        activeTab === tab.toLowerCase()
-                          ? "bg-[#fa7f4b] text-white"
-                          : "hover:bg-[#5a8a6e]"
-                      }`}
-                    >
-                      {tab}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-
-            <div className="flex-1 overflow-y-auto">
-              <div className="p-4">
-                {activeTab === "líneas" && (
-                  <div className="space-y-4">
-                    <input
-                      type="text"
-                      placeholder="Filtrar líneas..."
-                      className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#63997a]"
-                    />
-                    <div className="grid grid-cols-2 gap-2">
-                      {lines.map((line) => (
-                        <button
-                          key={line._id}
-                          onClick={() => toggleLineSelection(line)}
-                          className={`p-2 rounded-md text-center transition-colors ${
-                            activeLine && activeLine._id === line._id
-                              ? "bg-[#fa7f4b] text-white"
-                              : "bg-gray-100 hover:bg-[#fa7f4b] hover:text-white"
-                          }`}
-                        >
-                          {line.nombre}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {activeTab === "paradas" && (
-                  <div className="space-y-4">
-                    <div className="flex items-center space-x-2">
-                      <input
-                        type="checkbox"
-                        id="show-all-stops"
-                        checked={showAllStops}
-                        onChange={() => setShowAllStops(!showAllStops)}
-                        className="rounded text-[#fa7f4b] focus:ring-[#63997a]"
-                      />
-                      <label
-                        htmlFor="show-all-stops"
-                        className="text-sm text-gray-600"
-                      >
-                        Mostrar todas las paradas
-                      </label>
-                    </div>
-                    <div className="space-y-2 max-h-[calc(100vh-300px)] overflow-y-auto">
-                      {filteredStops.map((stop) => (
-                        <div
-                          key={stop._id}
-                          className="p-2 bg-gray-100 rounded-md cursor-pointer hover:bg-gray-200"
-                          onClick={() => handleStopClick(stop)}
-                        >
-                          <h3 className="font-semibold text-[#63997a]">
-                            {stop.nombre}
-                          </h3>
-                          <p className="text-sm text-gray-600">{stop.info}</p>
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              toggleFavorite(stop.nombre);
-                            }}
-                            className="mt-1 text-[#fa7f4b] hover:text-[#e86f3a]"
-                          >
-                            <Star
-                              size={16}
-                              fill={favorites[stop.nombre] ? "#fa7f4b" : "none"}
-                            />
-                          </button>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {activeTab === "favoritos" && (
-                  <div className="space-y-4">
-                    <h2 className="text-xl font-semibold text-[#63997a]">
-                      Favoritos
-                    </h2>
-                    <div className="space-y-2 max-h-[calc(100vh-300px)] overflow-y-auto">
-                      {Object.entries(favorites)
-                        .filter(([_, isFavorite]) => isFavorite)
-                        .map(([stopName]) => (
-                          <div
-                            key={stopName}
-                            className="p-2 bg-gray-100 rounded-md flex justify-between items-center"
-                          >
-                            <span className="text-[#63997a]">{stopName}</span>
-                            <button
-                              onClick={() => toggleFavorite(stopName)}
-                              className="text-[#fa7f4b] hover:text-[#e86f3a]"
-                            >
-                              <Star size={16} fill="#fa7f4b" />
-                            </button>
-                          </div>
-                        ))}
-                    </div>
-                  </div>
-                )}
+        {selectedRoute && (
+          <div className="bg-blue-50 p-4 rounded-lg shadow">
+            <h2 className="text-xl font-semibold mb-4 text-blue-800">
+              Ruta Recomendada
+            </h2>
+            <div className="space-y-2">
+              <div className="bg-[#fa7f4b] p-3 rounded-md mt-4">
+                <p className="font-bold text-black-800">
+                  Línea Recomendada:{" "}
+                  <span className="font-normal">{recommendedLine}</span>
+                </p>
+              </div>
+              <div className="bg-green-300 p-3 rounded-md mt-2">
+                <p className="font-bold text-green-800">
+                  Parada de Subida:{" "}
+                  <span className="font-normal">
+                    {boardingStop ? boardingStop.nombre : "N/A"}
+                  </span>
+                </p>
+              </div>
+              <div className="bg-green-300 p-3 rounded-md mt-2">
+                <p className="font-bold text-green-800">
+                  Parada de Bajada:{" "}
+                  <span className="font-normal">
+                    {alightingStop ? alightingStop.nombre : "N/A"}
+                  </span>
+                </p>
               </div>
             </div>
-
-            <footer className="p-4 bg-gray-100 mt-auto">
-              <button className="w-full bg-[#63997a] text-white px-4 py-2 rounded-md hover:bg-[#5a8a6e] transition-colors flex items-center justify-center">
-                <Bus size={20} className="mr-2" />
-                Planificar Ruta
-              </button>
-            </footer>
-          </aside>
+            <button
+              onClick={resetRoute}
+              className="mt-6 w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+            >
+              Reiniciar Ruta
+            </button>
+          </div>
         )}
-      </main>
+      </aside>
+      <div id="map" className="flex-1 h-screen"></div>
     </div>
   );
 }

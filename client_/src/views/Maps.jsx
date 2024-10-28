@@ -1,8 +1,12 @@
-import { React, ReactDOMServer, useEffect, useState } from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import "leaflet.locatecontrol/dist/L.Control.Locate.min.css"; // Importa los estilos
-import "leaflet.locatecontrol/dist/L.Control.Locate.min.js"; // Importa el script de locatecontrol
+import "leaflet.locatecontrol/dist/L.Control.Locate.min.css";
+import "leaflet.locatecontrol/dist/L.Control.Locate.min.js";
+import "leaflet-control-geocoder";
+import MapaPage from "./mapa.jsx";
 
 export const MapPage = function () {
   const [map, setMap] = useState(null);
@@ -132,15 +136,33 @@ export const MapPage = function () {
     }
   };
 
-  const handleSearch = (event) => {
+  const handleSearch = async (event) => {
     const term = event.target.value.toLowerCase();
     setSearchTerm(term);
 
     if (term) {
+      // Filtrar paradas
       const filtered = stops.filter((stop) =>
         stop.nombre.toLowerCase().includes(term)
       );
       setFilteredStops(filtered);
+
+      // Geocodificación
+      try {
+        const provider = new L.Control.Geocoder.Nominatim();
+        const results = await new Promise((resolve) => {
+          provider.geocode(term, (results) => {
+            resolve(results);
+          });
+        });
+        if (results && results.length > 0) {
+          const { center, name } = results[0];
+          map.setView(center, 16);
+          L.marker(center).addTo(map).bindPopup(name).openPopup();
+        }
+      } catch (error) {
+        console.error("Error en la geocodificación:", error);
+      }
     } else {
       setFilteredStops(stops);
     }
@@ -161,21 +183,28 @@ export const MapPage = function () {
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(mapInstance);
 
-    // Agregar control de ubicación
-    L.control
+    const locateControl = L.control
       .locate({
         position: "topright",
         strings: {
-          title: "Mostrar mi ubicación", // Texto del botón
+          title: "Mostrar mi ubicación",
         },
         drawCircle: true,
         showPopup: true,
+        initialZoomLevel: 16,
         locateOptions: {
           maxZoom: 16,
           enableHighAccuracy: true,
         },
+        flyTo: true,
       })
       .addTo(mapInstance);
+
+    mapInstance.on("locationerror", function (e) {
+      alert(
+        "No se pudo obtener su ubicación. Por favor, habilite la geolocalización en su navegador."
+      );
+    });
 
     setMap(mapInstance);
 
@@ -217,32 +246,16 @@ export const MapPage = function () {
         </div>
         <aside className="w-96 bg-white border-l border-gray-200 overflow-y-auto shadow-lg">
           <div className="p-6 space-y-6">
-            <div className="relative">
-              <input
-                type="text"
-                value={searchTerm}
-                onChange={handleSearch}
-                placeholder="Buscar ubicación..."
-                className="w-full p-3 pr-10 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400 text-black"
-              />
-              <button className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                  ></path>
-                </svg>
-              </button>
+            <div className="bg-gray-100 rounded-lg shadow-sm p-3 text-center max-w-xs mx-auto">
+              <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                ¿No sabes qué línea tomar?
+              </h3>
+              <a href="/mapa" className="inline-block">
+                <button className="bg-orange-400 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded-full text-sm transition duration-300 ease-in-out">
+                  Planificar ruta
+                </button>
+              </a>
             </div>
-
             <div>
               <h2 className="text-2xl font-bold mb-2 text-black ">
                 Controles del Mapa
@@ -310,7 +323,7 @@ export const MapPage = function () {
                   filteredStops.map((stop) => (
                     <div
                       key={stop.nombre}
-                      className="p-4 bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-300"
+                      className="p-4 bg-white  rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-300"
                     >
                       <div className="flex justify-between items-start">
                         <div
