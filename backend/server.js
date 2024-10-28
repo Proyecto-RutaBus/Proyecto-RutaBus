@@ -1,40 +1,32 @@
+// server.js
 import express from "express";
 import cors from "cors";
-import morgan from "morgan";
-import path from "path";
-import connectDB from "./bd/database.js";
+import connectDB from "./db/database.js";
+import comunicacionesRoutes from "./routes/comunicaciones.routes.js";
+import lineasRoutes from "./routes/lineas.routes.js";
+import favoritosRoutes from "./routes/favoritos.routes.js";
 
-import { fileURLToPath } from "url";
-
-// Obtener el directorio del archivo actual
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-//IMPORT
-import { routerPeticiones } from "./routes/peticiones.routes.js";
-import { routerReclamos } from "./routes/reclamos.routes.js";
-
-// Inicializamos express
 const app = express();
+const PORT = process.env.PORT || 3000;
 
 // Conectar a la base de datos
 connectDB();
 
-//Aplicamos los middlewares.
-app.use(cors()); // cors para que nos permita realizar peticiones desde cualquier cliente.
-app.use(morgan("dev")); // morgan para mostrar informacion acerca de las peticiones que llegan a nuestro servidor.
-app.use(express.json()); // express.json para que nuestro servidor pueda reconocer los json que recibimos por el body.
-//Requerimos nuestras rutas.
-//app.use(require("./routes/auth.routes"));
+// Middleware para parsear JSON
+app.use(cors());
+app.use(express.json());
+app.use("/uploads", express.static("uploads")); // Servir archivos estáticos
+
 import router from "./routes/auth.routes.js";
+import routerForum from "./routes/forum.routes.js";
 app.use(router);
+app.use("/api", comunicacionesRoutes);
+app.use("/api", lineasRoutes);
+app.use("/api", favoritosRoutes);
+app.use("/forums", routerForum);
 
-// Servir archivos estáticos desde la carpeta client
-app.use(express.static(path.join(__dirname, "../client")));
 
-app.use("/comunicaciones", routerPeticiones);
-app.use("/comunicaciones", routerReclamos);
-
-app.listen(3000, () => {
-  console.log("Servidor iniciado en el puerto 3000 http://localhost:3000");
+// Iniciar el servidor
+app.listen(PORT, () => {
+  console.log(`Servidor escuchando en http://localhost:${PORT}`);
 });
