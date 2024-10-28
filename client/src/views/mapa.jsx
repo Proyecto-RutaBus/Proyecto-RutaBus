@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import L from "leaflet";
 import "leaflet-routing-machine";
+import Header from "../components/Header";
 
 export default function MapComponent() {
   const [map, setMap] = useState(null);
@@ -220,87 +221,91 @@ export default function MapComponent() {
   }, [map, step, originMarker, destinationMarker, routingControl]);
 
   return (
-    <div className="flex h-screen bg-gray-100">
-      <aside className="w-1/4 bg-white p-6 overflow-y-auto shadow-lg">
-        <h1 className="text-3xl font-bold mb-6 text-blue-700">
-          Planificador de Ruta
-        </h1>
-        <div className="mb-6">
-          <h2 className="text-xl font-semibold mb-2 text-gray-800">
-            Instrucciones
-          </h2>
-          {step === "origin" && (
-            <div
-              className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4"
-              role="alert"
-            >
-              <p className="font-bold">Atención</p>
-              <p>Haga clic en el mapa para seleccionar el punto de origen.</p>
-            </div>
-          )}
-          {step === "destination" && (
-            <div
-              className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4"
-              role="alert"
-            >
-              <p className="font-bold">Atención</p>
-              <p>
-                Ahora, haga clic en el mapa para seleccionar el punto de
-                destino.
-              </p>
-            </div>
-          )}
-          {step === "complete" && (
-            <div
-              className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4"
-              role="alert"
-            >
-              <p className="font-bold">Completado</p>
-              <p>
-                Ruta calculada. Puede reiniciar para planificar una nueva ruta.
-              </p>
-            </div>
-          )}
-        </div>
-        {selectedRoute && (
-          <div className="bg-blue-50 p-4 rounded-lg shadow">
-            <h2 className="text-xl font-semibold mb-4 text-blue-800">
-              Ruta Recomendada
+    <div className="flex flex-col h-screen bg-gray-100">
+      <Header />
+      <div className="flex flex-1 overflow-hidden">
+        <aside className="w-1/4 bg-white p-6 overflow-y-auto shadow-lg">
+          <h1 className="text-3xl font-bold mb-6 text-[#fa7f4b]">
+            Planificador de Ruta
+          </h1>
+          <div className="mb-6">
+            <h2 className="text-xl font-semibold mb-2 text-gray-800">
+              Instrucciones
             </h2>
-            <div className="space-y-2">
-              <div className="bg-[#fa7f4b] p-3 rounded-md mt-4">
-                <p className="font-bold text-black-800">
-                  Línea Recomendada:{" "}
-                  <span className="font-normal">{recommendedLine}</span>
+            {step === "origin" && (
+              <div
+                className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4"
+                role="alert"
+              >
+                <p className="font-bold">Atención</p>
+                <p>Haga clic en el mapa para seleccionar el punto de origen.</p>
+              </div>
+            )}
+            {step === "destination" && (
+              <div
+                className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4"
+                role="alert"
+              >
+                <p className="font-bold">Atención</p>
+                <p>
+                  Ahora, haga clic en el mapa para seleccionar el punto de
+                  destino.
                 </p>
               </div>
-              <div className="bg-green-300 p-3 rounded-md mt-2">
-                <p className="font-bold text-green-800">
-                  Parada de Subida:{" "}
-                  <span className="font-normal">
-                    {boardingStop ? boardingStop.nombre : "N/A"}
-                  </span>
+            )}
+            {step === "complete" && (
+              <div
+                className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4"
+                role="alert"
+              >
+                <p className="font-bold">Completado</p>
+                <p>
+                  Ruta calculada. Puede reiniciar para planificar una nueva
+                  ruta.
                 </p>
               </div>
-              <div className="bg-green-300 p-3 rounded-md mt-2">
-                <p className="font-bold text-green-800">
-                  Parada de Bajada:{" "}
-                  <span className="font-normal">
-                    {alightingStop ? alightingStop.nombre : "N/A"}
-                  </span>
-                </p>
-              </div>
-            </div>
-            <button
-              onClick={resetRoute}
-              className="mt-6 w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-            >
-              Reiniciar Ruta
-            </button>
+            )}
           </div>
-        )}
-      </aside>
-      <div id="map" className="flex-1 h-screen"></div>
+          {selectedRoute && (
+            <div className="bg-blue-50 p-4 rounded-lg shadow">
+              <h2 className="text-xl font-semibold mb-4 text-black-800">
+                Ruta Recomendada
+              </h2>
+              <div className="space-y-2">
+                <div className="bg-[#fa7f4b] p-3 rounded-md mt-4">
+                  <p className="font-bold text-black">
+                    Línea Recomendada:{" "}
+                    <span className="font-normal">{recommendedLine}</span>
+                  </p>
+                </div>
+                <div className="bg-green-300 p-3 rounded-md mt-2">
+                  <p className="font-bold text-green-800">
+                    Parada de Subida:{" "}
+                    <span className="font-normal">
+                      {boardingStop ? boardingStop.nombre : "N/A"}
+                    </span>
+                  </p>
+                </div>
+                <div className="bg-green-300 p-3 rounded-md mt-2">
+                  <p className="font-bold text-green-800">
+                    Parada de Bajada:{" "}
+                    <span className="font-normal">
+                      {alightingStop ? alightingStop.nombre : "N/A"}
+                    </span>
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={resetRoute}
+                className="mt-6 w-full bg-[#fa7f4b] text-white py-2 px-4 rounded-md hover:bg-orange-400 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+              >
+                Reiniciar Ruta
+              </button>
+            </div>
+          )}
+        </aside>
+        <div id="map" className="flex-1 relative z-40"></div>
+      </div>
     </div>
   );
 }
