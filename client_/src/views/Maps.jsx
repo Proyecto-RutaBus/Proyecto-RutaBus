@@ -6,6 +6,7 @@ import "leaflet/dist/leaflet.css";
 import "leaflet.locatecontrol/dist/L.Control.Locate.min.css";
 import "leaflet.locatecontrol/dist/L.Control.Locate.min.js";
 import "leaflet-control-geocoder";
+import MapaPage from "./mapa.jsx";
 import axios from "axios";
 
 export const MapPage = function () {
@@ -255,32 +256,16 @@ export const MapPage = function () {
         </div>
         <aside className="w-96 bg-white border-l border-gray-200 overflow-y-auto shadow-lg">
           <div className="p-6 space-y-6">
-            <div className="relative">
-              <input
-                type="text"
-                value={searchTerm}
-                onChange={handleSearch}
-                placeholder="Buscar ubicación..."
-                className="w-full p-3 pr-10 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400 text-black"
-              />
-              <button className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                  ></path>
-                </svg>
-              </button>
+            <div className="bg-gray-100 rounded-lg shadow-sm p-3 text-center max-w-xs mx-auto">
+              <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                ¿No sabes qué línea tomar?
+              </h3>
+              <a href="/mapa" className="inline-block">
+                <button className="bg-orange-400 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded-full text-sm transition duration-300 ease-in-out">
+                  Planificar ruta
+                </button>
+              </a>
             </div>
-
             <div>
               <h2 className="text-2xl font-bold mb-2 text-black ">
                 Controles del Mapa

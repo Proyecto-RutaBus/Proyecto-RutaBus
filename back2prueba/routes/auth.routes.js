@@ -5,8 +5,8 @@ import {
   validarSesion,
 } from "../controllers/auth.controller.js";
 import { validarToken } from "../middleware/validarSesion.js";
-
 import express from "express";
+
 const router = express.Router();
 
 

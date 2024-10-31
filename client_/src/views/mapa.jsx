@@ -1,195 +1,306 @@
-"use client";
-
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import L from "leaflet";
-import "leaflet-control-geocoder";
+import "leaflet-routing-machine";
 
-// Estilos personalizados para el control de geocodificación
-const customStyles = `
-  .leaflet-control-geocoder {
-    background: white;
-    box-shadow: 0 1px 5px rgba(0,0,0,0.4);
-    border-radius: 5px;
-    padding: 5px;
-  }
-  .leaflet-control-geocoder-form input {
-    width: 200px;
-    border: 1px solid #ccc;
-    padding: 5px;
-    font-size: 14px;
-  }
-  .leaflet-control-geocoder-form button {
-    background: #0078A8;
-    border: none;
-    color: white;
-    padding: 5px 10px;
-    cursor: pointer;
-  }
-  .leaflet-control-geocoder-form button:hover {
-    background: #005f86;
-  }
-`;
-
-// Añadir estilos al documento
-const styleElement = document.createElement("style");
-styleElement.textContent = customStyles;
-document.head.appendChild(styleElement);
-
-export default function MapaPage() {
-  const mapRef = useRef(null);
+export default function MapComponent() {
+  const [map, setMap] = useState(null);
+  const [originMarker, setOriginMarker] = useState(null);
+  const [destinationMarker, setDestinationMarker] = useState(null);
+  const [routingControl, setRoutingControl] = useState(null);
+  const [step, setStep] = useState("origin");
+  const [routeOptions, setRouteOptions] = useState([]);
+  const [selectedRoute, setSelectedRoute] = useState(null);
+  const [instructions, setInstructions] = useState([]);
+  const [originAddress, setOriginAddress] = useState("");
+  const [destinationAddress, setDestinationAddress] = useState("");
+  const [recommendedLine, setRecommendedLine] = useState(null);
+  const [boardingStop, setBoardingStop] = useState(null);
+  const [alightingStop, setAlightingStop] = useState(null);
 
   useEffect(() => {
-    if (mapRef.current) return;
-
-    // Inicializa el mapa
-    mapRef.current = L.map("map", {
-      zoomControl: false, // Desactivamos el control de zoom predeterminado
-    }).setView([-26.1842, -58.1975], 13);
+    const initialMap = L.map("map").setView([-26.1849, -58.1731], 13);
 
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      maxZoom: 19,
-    }).addTo(mapRef.current);
+      attribution: "&copy; OpenStreetMap contributors",
+    }).addTo(initialMap);
 
-    // Estilos personalizados para el control de geocodificación
-    const customStyles2 = `
-      .leaflet-control-geocoder {
-        border: none;
-        border-radius: 8px;
-        background: white;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      }
-      .leaflet-control-geocoder-form {
-        display: flex;
-        align-items: center;
-      }
-      .leaflet-control-geocoder-form input {
-        width: 250px;
-        padding: 10px 15px;
-        font-size: 16px;
-        border: none;
-        border-radius: 8px;
-        outline: none;
-        background-color: #f8f9fa;
-      }
-      .leaflet-control-geocoder-icon {
-        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%234a5568" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>');
-        background-size: 20px;
-        background-position: center;
-        width: 40px;
-        height: 40px;
-        border: none;
-        background-color: #4a5568;
-        border-radius: 8px;
-        cursor: pointer;
-      }
-      .leaflet-control-geocoder-icon:hover {
-        background-color: #2d3748;
-      }
-      .leaflet-control-geocoder-alternatives {
-        background: white;
-        border-radius: 0 0 8px 8px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      }
-      .leaflet-control-geocoder-alternatives li {
-        padding: 10px 15px;
-        font-size: 14px;
-        border-top: 1px solid #eee;
-        cursor: pointer;
-        transition: background-color 0.2s;
-      }
-      .leaflet-control-geocoder-alternatives li:hover {
-        background-color: #f0f0f0;
-      }
-      .custom-zoom-control {
-        position: absolute;
-        bottom: 20px;
-        right: 20px;
-        display: flex;
-        flex-direction: column;
-        z-index: 1000;
-      }
-      .zoom-button {
-        width: 40px;
-        height: 40px;
-        background-color: white;
-        border: none;
-        font-size: 24px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      }
-      .zoom-button:first-child {
-        border-radius: 5px 5px 0 0;
-      }
-      .zoom-button:last-child {
-        border-radius: 0 0 5px 5px;
-      }
-      .zoom-button:hover {
-        background-color: #f0f0f0;
-      }
-    `;
+    setMap(initialMap);
 
-    // Añadir estilos al documento
-    const styleElement2 = document.createElement("style");
-    styleElement2.textContent = customStyles2;
-    document.head.appendChild(styleElement2);
-
-    // Control de geocodificación
-    const geocoder = L.Control.geocoder({
-      defaultMarkGeocode: true,
-      placeholder: "Buscar dirección...",
-      errorMessage: "No se encontró la dirección.",
-      suggestMinLength: 3,
-      suggestTimeout: 250,
-      queryMinLength: 1,
-    }).addTo(mapRef.current);
-
-    // Manejar el resultado de la búsqueda
-    geocoder.on("markgeocode", (e) => {
-      const latlng = e.geocode.center;
-      L.marker(latlng)
-        .addTo(mapRef.current)
-        .bindPopup(e.geocode.name)
-        .openPopup();
-      mapRef.current.setView(latlng, 13);
-    });
-
-    // Agregar controles de zoom personalizados
-    const zoomControl = L.control({ position: "bottomright" });
-    zoomControl.onAdd = function () {
-      const container = L.DomUtil.create("div", "custom-zoom-control");
-      const zoomInButton = L.DomUtil.create("button", "zoom-button", container);
-      zoomInButton.innerHTML = "+";
-      const zoomOutButton = L.DomUtil.create(
-        "button",
-        "zoom-button",
-        container
-      );
-      zoomOutButton.innerHTML = "−";
-
-      L.DomEvent.on(zoomInButton, "click", function () {
-        mapRef.current.zoomIn();
-      });
-
-      L.DomEvent.on(zoomOutButton, "click", function () {
-        mapRef.current.zoomOut();
-      });
-
-      return container;
-    };
-    zoomControl.addTo(mapRef.current);
-
-    // Limpiar al desmontar
     return () => {
-      if (mapRef.current) {
-        mapRef.current.remove();
+      if (initialMap) {
+        initialMap.remove();
       }
-      document.head.removeChild(styleElement);
-      document.head.removeChild(styleElement2);
     };
   }, []);
 
-  return <div id="map" style={{ height: "100vh", width: "100%" }} />;
+  const getAddress = (lat, lng, callback) => {
+    const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}&addressdetails=1`;
+
+    fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data && data.address) {
+          const address = `${data.address.road || ""} ${
+            data.address.house_number || ""
+          }, ${data.address.city || data.address.town || ""}`.trim();
+          callback(address || "Dirección no disponible");
+        } else {
+          callback("Dirección no disponible");
+        }
+      })
+      .catch((error) => {
+        console.error("Error al obtener la dirección:", error);
+        callback("Error al obtener la dirección");
+      });
+  };
+
+  const fetchLinesData = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/api/lineas");
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Error al obtener las líneas de colectivos:", error);
+      return [];
+    }
+  };
+
+  const findClosestLineAndStops = (origin, destination, lines) => {
+    let closestLine = null;
+    let minDistance = Infinity;
+    let boardingStop = null;
+    let alightingStop = null;
+
+    lines.forEach((line) => {
+      line.paradas.forEach((stop) => {
+        const stopLatLng = L.latLng(stop.coordenadas[0], stop.coordenadas[1]);
+        const distanceToOrigin = origin.distanceTo(stopLatLng);
+        const distanceToDestination = destination.distanceTo(stopLatLng);
+        const totalDistance = distanceToOrigin + distanceToDestination;
+
+        if (totalDistance < minDistance) {
+          minDistance = totalDistance;
+          closestLine = line.nombre;
+          boardingStop =
+            distanceToOrigin < distanceToDestination ? stop : boardingStop;
+          alightingStop =
+            distanceToDestination < distanceToOrigin ? stop : alightingStop;
+        }
+      });
+    });
+
+    return { closestLine, boardingStop, alightingStop };
+  };
+
+  const onMapClick = async (e) => {
+    if (step === "origin") {
+      if (originMarker) {
+        map.removeLayer(originMarker);
+      }
+      const marker = L.marker(e.latlng, { draggable: false })
+        .addTo(map)
+        .bindPopup("Origen")
+        .openPopup();
+      setOriginMarker(marker);
+      setStep("destination");
+    } else if (step === "destination") {
+      if (destinationMarker) {
+        map.removeLayer(destinationMarker);
+      }
+      const marker = L.marker(e.latlng, { draggable: false })
+        .addTo(map)
+        .bindPopup("Destino")
+        .openPopup();
+      setDestinationMarker(marker);
+
+      if (routingControl) {
+        map.removeControl(routingControl);
+      }
+
+      const control = L.Routing.control({
+        waypoints: [originMarker.getLatLng(), marker.getLatLng()],
+        routeWhileDragging: false,
+        language: "es",
+        showAlternatives: true,
+        lineOptions: {
+          styles: [{ color: "#3B82F6", opacity: 0.8, weight: 6 }],
+        },
+        altLineOptions: {
+          styles: [{ color: "#9CA3AF", opacity: 0.6, weight: 6 }],
+        },
+        createMarker: function () {
+          return null;
+        },
+        addWaypoints: false,
+        draggableWaypoints: false,
+      }).addTo(map);
+
+      control.on("routesfound", function (e) {
+        const routes = e.routes;
+        setRouteOptions(routes);
+        setSelectedRoute(routes[0]);
+        updateRouteInfo(routes[0]);
+      });
+
+      control.on("routeselected", function (e) {
+        const selectedRoute = e.route;
+        setSelectedRoute(selectedRoute);
+        updateRouteInfo(selectedRoute);
+      });
+
+      setRoutingControl(control);
+      setStep("complete");
+
+      getAddress(
+        originMarker.getLatLng().lat,
+        originMarker.getLatLng().lng,
+        setOriginAddress
+      );
+      getAddress(
+        marker.getLatLng().lat,
+        marker.getLatLng().lng,
+        setDestinationAddress
+      );
+
+      const lines = await fetchLinesData();
+
+      const { closestLine, boardingStop, alightingStop } =
+        findClosestLineAndStops(
+          originMarker.getLatLng(),
+          marker.getLatLng(),
+          lines
+        );
+
+      setRecommendedLine(closestLine);
+      setBoardingStop(boardingStop);
+      setAlightingStop(alightingStop);
+    }
+  };
+
+  const resetRoute = () => {
+    if (originMarker) {
+      map.removeLayer(originMarker);
+      setOriginMarker(null);
+    }
+    if (destinationMarker) {
+      map.removeLayer(destinationMarker);
+      setDestinationMarker(null);
+    }
+    if (routingControl) {
+      map.removeControl(routingControl);
+      setRoutingControl(null);
+    }
+    setStep("origin");
+    setRouteOptions([]);
+    setSelectedRoute(null);
+    setInstructions([]);
+    setOriginAddress("");
+    setDestinationAddress("");
+    setRecommendedLine(null);
+    setBoardingStop(null);
+    setAlightingStop(null);
+  };
+
+  const updateRouteInfo = (route) => {
+    setInstructions(
+      route.instructions || route.segments.map((seg) => seg.instructions)
+    );
+  };
+
+  useEffect(() => {
+    if (map) {
+      map.on("click", onMapClick);
+    }
+
+    return () => {
+      if (map) {
+        map.off("click", onMapClick);
+      }
+    };
+  }, [map, step, originMarker, destinationMarker, routingControl]);
+
+  return (
+    <div className="flex h-screen bg-gray-100">
+      <aside className="w-1/4 bg-white p-6 overflow-y-auto shadow-lg">
+        <h1 className="text-3xl font-bold mb-6 text-blue-700">
+          Planificador de Ruta
+        </h1>
+        <div className="mb-6">
+          <h2 className="text-xl font-semibold mb-2 text-gray-800">
+            Instrucciones
+          </h2>
+          {step === "origin" && (
+            <div
+              className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4"
+              role="alert"
+            >
+              <p className="font-bold">Atención</p>
+              <p>Haga clic en el mapa para seleccionar el punto de origen.</p>
+            </div>
+          )}
+          {step === "destination" && (
+            <div
+              className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4"
+              role="alert"
+            >
+              <p className="font-bold">Atención</p>
+              <p>
+                Ahora, haga clic en el mapa para seleccionar el punto de
+                destino.
+              </p>
+            </div>
+          )}
+          {step === "complete" && (
+            <div
+              className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4"
+              role="alert"
+            >
+              <p className="font-bold">Completado</p>
+              <p>
+                Ruta calculada. Puede reiniciar para planificar una nueva ruta.
+              </p>
+            </div>
+          )}
+        </div>
+        {selectedRoute && (
+          <div className="bg-blue-50 p-4 rounded-lg shadow">
+            <h2 className="text-xl font-semibold mb-4 text-blue-800">
+              Ruta Recomendada
+            </h2>
+            <div className="space-y-2">
+              <div className="bg-[#fa7f4b] p-3 rounded-md mt-4">
+                <p className="font-bold text-black-800">
+                  Línea Recomendada:{" "}
+                  <span className="font-normal">{recommendedLine}</span>
+                </p>
+              </div>
+              <div className="bg-green-300 p-3 rounded-md mt-2">
+                <p className="font-bold text-green-800">
+                  Parada de Subida:{" "}
+                  <span className="font-normal">
+                    {boardingStop ? boardingStop.nombre : "N/A"}
+                  </span>
+                </p>
+              </div>
+              <div className="bg-green-300 p-3 rounded-md mt-2">
+                <p className="font-bold text-green-800">
+                  Parada de Bajada:{" "}
+                  <span className="font-normal">
+                    {alightingStop ? alightingStop.nombre : "N/A"}
+                  </span>
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={resetRoute}
+              className="mt-6 w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+            >
+              Reiniciar Ruta
+            </button>
+          </div>
+        )}
+      </aside>
+      <div id="map" className="flex-1 h-screen"></div>
+    </div>
+  );
 }
