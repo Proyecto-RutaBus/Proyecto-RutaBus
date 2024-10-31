@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Clock, MapPin, MessageSquare, ChevronDown } from "lucide-react";
 import { motion } from "framer-motion";
 import Map from "../components/Map.jsx"; // Importa el componente del mapa
+import { useNavigate } from "react-router-dom";
 
 export const LandingPage = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -48,13 +49,13 @@ export const LandingPage = () => {
                   </span>
                 </motion.p>
                 <a href="/login">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="px-8 py-4 bg-[#fa7f4b] text-white text-lg font-bold rounded-md hover:text-black hover:bg-[#F2D680]/90 transition-colors shadow-lg uppercase tracking-wide"
-                >
-                  Descubre cómo
-                </motion.button>
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="px-8 py-4 bg-[#fa7f4b] text-white text-lg font-bold rounded-md hover:text-black hover:bg-[#F2D680]/90 transition-colors shadow-lg uppercase tracking-wide"
+                  >
+                    Descubre cómo
+                  </motion.button>
                 </a>
               </div>
               <motion.div
@@ -169,8 +170,12 @@ export const LandingPage = () => {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     className="px-6 py-3 bg-[#fa7f4b] text-white rounded-full hover:text-black hover:bg-[#F2D680]/90 transition-colors shadow-md hover:shadow-lg text-lg font-bold uppercase tracking-wide"
+                    onClick={() => navigate("/login")}
                   >
-                    {action}
+                    {" "}
+                    <a href="/login" className="text-white no-underline">
+                      {action}
+                    </a>
                   </motion.button>
                 )
               )}

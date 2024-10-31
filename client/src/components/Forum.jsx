@@ -41,7 +41,7 @@ export default function Forum() {
             },
           }
         );
-        setComments([...comments, response.data]);
+        setComments([response.data, ...comments]);
         setNewComment("");
       } catch (error) {
         console.error('Error al agregar el comentario:', error);
@@ -65,11 +65,8 @@ export default function Forum() {
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleString('es-ES', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
       hour: '2-digit',
-      minute: '2-digit'
+      minute: '2-digit',
     });
   };
 

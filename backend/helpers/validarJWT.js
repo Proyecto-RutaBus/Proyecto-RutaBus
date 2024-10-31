@@ -1,33 +1,29 @@
 import jwt from "jsonwebtoken";
-import { newConnection } from "../bd/BD.js";
+import Usuario from "../models/Usuarios.js";
+import mongoose from "mongoose";
 
 const validarJWT = async (token) => {
   try {
-    // Verificar el token usando el método verify.
-    const { id } = jwt.verify(token, "mysecret");
+    const secret = process.env.JWT_SECRET || "mysecret";
 
-    // Establecer una nueva conexión a la base de datos.
-    const connection = await newConnection();
+    // Verificar el token
+    const { id } = jwt.verify(token, secret);
 
-    // Buscar el usuario por ID.
-    const [usuario] = await connection.query(
-      "SELECT * FROM USUARIOS WHERE id=? LIMIT 1",
-      [id]
-    );
-
-    // Cerrar la conexión a la base de datos.
-    await connection.end();
-
-    // Si no se encuentra el usuario, retornar false.
-    if (!usuario.length) {
-      return false;
-    } else {
-      // Si se encuentra el usuario, retornarlo.
-      return usuario[0];
+    // Verificar que el ID sea válido como string y no un objeto
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      throw new Error("ID inválido");
     }
+
+    // Buscar al usuario por su ID en MongoDB usando Mongoose
+    const usuario = await Usuario.findById(id).select("-contrasenia");
+
+    if (!usuario) {
+      return false;
+    }
+
+    return usuario;
   } catch (error) {
-    // Mostrar el error por consola y retornar false.
-    console.log(error);
+    console.log("Error verificando el token:", error.message);
     return false;
   }
 };
