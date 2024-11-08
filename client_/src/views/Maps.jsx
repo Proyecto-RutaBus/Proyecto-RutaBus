@@ -73,19 +73,39 @@ export const MapPage = function () {
     }
   };
 
-  const createCustomPopup = (stop, isFavorite, toggleFavorite) => {
-    const popupContent = (
-      <PopupContent
-        stop={stop}
-        isFavorite={isFavorite}
-        toggleFavorite={toggleFavorite}
-      />
-    );
+  const createCustomPopup = (stop) => {
+    const popupContent = `
+      <div class="custom-popup">
+        <div class="popup-header" style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <h3 style="margin: 0;">${stop.nombre}</h3>
+            <div class="popup-subtitle" style="display: flex; align-items: center;">
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+              Parada
+            </div>
+          </div>
+        </div>
+        <div class="popup-content">
+          <p>${stop.info}</p>
+          <div class="popup-footer">
+            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 11a9 9 0 0 1 9 9"></path>
+              <path d="M4 4a16 16 0 0 1 16 16"></path>
+              <circle cx="5" cy="19" r="2"></circle>
+            </svg>
+            Próximos buses: No disponible
+          </div>
+        </div>
+      </div>
+    `;
 
     return L.popup({
       maxWidth: 250,
       className: "custom-popup-wrapper",
-    }).setContent(ReactDOMServer.renderToString(popupContent));
+    }).setContent(popupContent);
   };
 
   const toggleStopOnMap = (stop) => {
@@ -167,7 +187,7 @@ export const MapPage = function () {
 
   const fetchFavorites = async () => {
     try {
-      const token = localStorage.getItem('token'); // Obtener el token del almacenamiento local
+      const token = localStorage.getItem("token"); // Obtener el token del almacenamiento local
       const response = await axios.get("http://localhost:3000/api/favorites", {
         headers: { Authorization: `Bearer ${token}` },
       });
