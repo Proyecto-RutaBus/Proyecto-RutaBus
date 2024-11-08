@@ -1,51 +1,37 @@
+// routes/favoritos.routes.js
 import express from "express";
-import Favorito from "../models/Favoritos.js";
+import Favorite from "../models/Favoritos.js";
+import { validarToken } from "../middleware/validarSesion.js";
 
 const router = express.Router();
 
-// Ruta para obtener todos los favoritos de un usuario
-router.get("/favoritos/:usuarioId", async (req, res) => {
-  const { usuarioId } = req.params;
+router.post("/favorites", validarToken, async (req, res) => {
+  const { stopName, isFavorite, coordinates } = req.body;
+  const userId = req.usuario._id; // Obtener el ID del usuario desde el token
 
   try {
-    const favoritos = await Favorito.find({ usuarioId });
-    res.status(200).json(favoritos);
+    const favorite = await Favorite.findOneAndUpdate(
+      { stopName, userId }, // Buscar por stopName y userId
+      { isFavorite, coordinates, userId }, // Actualizar o crear con estos datos
+      { new: true, upsert: true }
+    );
+    res.json(favorite);
   } catch (error) {
-    console.error("Error al obtener los favoritos:", error);
-    res.status(500).json({ message: "Error al obtener los favoritos." });
+    console.error("Error saving favorite:", error);
+    res.status(500).json({ error: "Error saving favorite" });
   }
 });
 
-// Ruta para agregar un nuevo favorito
-router.post("/favoritos", async (req, res) => {
-  const { nombreParada, nombreFavorito, usuarioId, paradaId } = req.body; // Asegúrate de que el body contenga estos campos
+// Nueva ruta para obtener los favoritos del usuario autenticado
+router.get("/favorites", validarToken, async (req, res) => {
+  const userId = req.usuario._id; // Obtener el ID del usuario desde el token
 
   try {
-    const nuevoFavorito = new Favorito({
-      nombreParada,
-      nombreFavorito,
-      usuarioId,
-      paradaId, // Agregamos paradaId si estás almacenando una referencia a la parada
-    });
-
-    await nuevoFavorito.save();
-    res.status(201).json({ message: "Favorito guardado exitosamente." });
+    const favorites = await Favorite.find({ userId });
+    res.json(favorites);
   } catch (error) {
-    console.error("Error al guardar el favorito:", error);
-    res.status(500).json({ message: "Error al guardar el favorito." });
-  }
-});
-
-// Ruta para eliminar un favorito
-router.delete("/favoritos/:id", async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    await Favorito.findByIdAndDelete(id);
-    res.status(200).json({ message: "Favorito eliminado exitosamente." });
-  } catch (error) {
-    console.error("Error al eliminar el favorito:", error);
-    res.status(500).json({ message: "Error al eliminar el favorito." });
+    console.error("Error fetching favorites:", error);
+    res.status(500).json({ error: "Error fetching favorites" });
   }
 });
 
