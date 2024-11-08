@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet.locatecontrol/dist/L.Control.Locate.min.css";
-import "leaflet.locatecontrol/dist/L.Control.Locate.min.js";
+import "leaflet.locatecontrol";
 import "leaflet-control-geocoder";
 import MapaPage from "./mapa.jsx";
 import axios from "axios";

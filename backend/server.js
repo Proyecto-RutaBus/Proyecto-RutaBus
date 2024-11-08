@@ -1,40 +1,52 @@
+// server.js
 import express from "express";
 import cors from "cors";
-import morgan from "morgan";
-import path from "path";
-import connectDB from "./bd/database.js";
+import connectDB from "./db/database.js";
+import comunicacionesRoutes from "./routes/comunicaciones.routes.js";
+import lineasRoutes from "./routes/lineas.routes.js";
+import favoritosRoutes from "./routes/favoritos.routes.js";
+import http from 'http'
+import { Server } from 'socket.io'
 
-import { fileURLToPath } from "url";
 
-// Obtener el directorio del archivo actual
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-//IMPORT
-import { routerPeticiones } from "./routes/peticiones.routes.js";
-import { routerReclamos } from "./routes/reclamos.routes.js";
-
-// Inicializamos express
 const app = express();
+const PORT = process.env.PORT || 3000;
+const server = http.createServer(app); // crea el servidor
+const io = new Server(server, { cors: { origin: 'http://localhost:5173', methods: ['GET', 'POST'] } }); // configura Socket.io
 
 // Conectar a la base de datos
 connectDB();
 
-//Aplicamos los middlewares.
-app.use(cors()); // cors para que nos permita realizar peticiones desde cualquier cliente.
-app.use(morgan("dev")); // morgan para mostrar informacion acerca de las peticiones que llegan a nuestro servidor.
-app.use(express.json()); // express.json para que nuestro servidor pueda reconocer los json que recibimos por el body.
-//Requerimos nuestras rutas.
-//app.use(require("./routes/auth.routes"));
+// Middleware para parsear JSON
+app.use(cors());
+app.use(express.json());
+app.use("/uploads", express.static("uploads")); // Servir archivos estáticos
+app.use((req, res, next)=>{
+  req.io = io;
+  next();
+}); // Pasar la variable 'io' a la solicitud
+
 import router from "./routes/auth.routes.js";
+import routerForum from "./routes/forum.routes.js";
 app.use(router);
+app.use("/api", comunicacionesRoutes);
+app.use("/api", lineasRoutes);
+app.use("/api", favoritosRoutes);
+app.use("/forums", routerForum);
 
-// Servir archivos estáticos desde la carpeta client
-app.use(express.static(path.join(__dirname, "../client")));
 
-app.use("/comunicaciones", routerPeticiones);
-app.use("/comunicaciones", routerReclamos);
 
-app.listen(3000, () => {
-  console.log("Servidor iniciado en el puerto 3000 http://localhost:3000");
+// Manejo de la conexión de socket
+io.on('connection', (socket) => {
+  console.log('Nuevo cliente conectado');
+  
+  // Emitir el evento cuando se crea un nuevo comentario
+  socket.on('newComment', (post) => {
+    io.emit('newComment', post); // Enviar el post a todos los clientes conectados
+  });
+});
+
+// Iniciar el servidor
+server.listen(PORT, () => {
+  console.log(`Servidor escuchando en http://localhost:${PORT}`);
 });

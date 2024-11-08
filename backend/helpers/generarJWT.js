@@ -1,23 +1,25 @@
-// const jwt = require("jsonwebtoken");
 import jwt from "jsonwebtoken";
 
 const generarJWT = (id) => {
   return new Promise((resolve, reject) => {
-    // Para generar un token se utiliza el metodo sign que significa fimar.
-    // Recibe como primer parametro la informacion y como segundo el 'secret' que seria la firma del token.
+    // Si id es un objeto, conviértelo a string antes de firmar el token
+    const userId = id.toString();
+
     jwt.sign(
-      id,
-      "mysecret",
+      { id: userId },  // Pasar el id como un string
+      process.env.JWT_SECRET || "mysecret",
       {
-        // Se establece un tiempo de duración del token.
-        expiresIn: 60 * 60,
+        expiresIn: 60 * 60,  // Expira en 1 hora
       },
       (err, token) => {
-        err ? reject(err) : resolve(token);
+        if (err) {
+          reject(err);
+        } else {
+          resolve(token);
+        }
       }
     );
   });
 };
 
-// module.exports = generarJWT;
 export { generarJWT };
