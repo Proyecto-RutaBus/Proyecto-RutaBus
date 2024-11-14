@@ -125,6 +125,12 @@ export default function Forum() {
               placeholder="Deja tu comentario..."
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault(); // Evita el salto de línea
+                  handleAddComment();
+                }
+              }}
               className="flex-grow"
             />
             <Button onClick={handleAddComment} size="icon">
