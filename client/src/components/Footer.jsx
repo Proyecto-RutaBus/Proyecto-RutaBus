@@ -92,8 +92,8 @@ const Footer = () => {
             <h3 className="text-3xl font-extrabold mb-6">Sobre RutaBus</h3>
             <p className="text-lg leading-relaxed">
               Revolucionamos el transporte público con nuestra plataforma
-              innovadora. Explora rutas, realiza seguimiento en tiempo real y
-              optimiza tus viajes con RutaBus: el futuro de la movilidad urbana.
+              innovadora. Explora rutas y optimiza tus viajes con RutaBus:{" "}
+              <strong>el futuro de la movilidad urbana.</strong>
             </p>
           </div>
         </div>
