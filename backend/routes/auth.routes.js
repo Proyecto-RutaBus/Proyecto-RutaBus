@@ -9,7 +9,6 @@ import express from "express";
 
 const router = express.Router();
 
-
 // Creamos una ruta /register con el metodo 'POST' ya que recibiremos datos desde el cliente a traves de este metodo.
 router.post("/register", registro);
 
@@ -49,7 +48,6 @@ router.get("/login", (req, res) => {
 router.get("/home", verificarAutenticacion, (req, res) => {
   res.send("Página de inicio de sesión");
 });
-
 
 // Exportamos las rutas
 export default router;

@@ -15,6 +15,10 @@ export const createPost = async (req, res) => {
     // Popular el campo 'author' con el nombre del usuario antes de enviar la respuesta
     const populatedPost = await ForumPost.findById(newPost._id).populate("author", "nombre");
 
+     // Emitir el nuevo comentario a todos los clientes conectados
+     req.io.emit('newComment', populatedPost); // Emite el evento 'newComment
+
+
     return res.status(201).json(populatedPost);
   } catch (error) {
     console.error(error);

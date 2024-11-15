@@ -4,11 +4,27 @@ import { MessageCircle, Send, User } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { io } from 'socket.io-client' 
 
 export default function Forum() {
   const [isOpen, setIsOpen] = useState(false);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
+
+  useEffect(() => {
+    const socket = io('http://localhost:3000'); // Dirección del servidor backend
+    
+    // Escuchar el evento 'newComment' desde el servidor
+    socket.on('newComment', (comment) => {
+      console.log('Nuevo comentario:', comment);
+      setComments((prevComments) => [comment, ...prevComments]);  // Actualiza la lista de comentarios
+    });
+
+    // Limpiar la conexión cuando el componente se desmonte
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   const toggleForum = () => {
     console.log("Toggle Forum:", !isOpen);
