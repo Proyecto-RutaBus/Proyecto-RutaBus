@@ -20,6 +20,7 @@ export const MapPage = function () {
   const [filteredStops, setFilteredStops] = useState([]);
   const [favorites, setFavorites] = useState({});
   const [activeTab, setActiveTab] = useState("lines");
+  const [selectedStops, setSelectedStops] = useState(new Set());
 
   const customIcon = L.icon({
     iconUrl: "./public/assets/img/autobus.png",
@@ -108,6 +109,18 @@ export const MapPage = function () {
     }).setContent(popupContent);
   };
 
+  const toggleStopSelection = (stop) => {
+    setSelectedStops((prev) => {
+      const newSelection = new Set(prev);
+      if (newSelection.has(stop.nombre)) {
+        newSelection.delete(stop.nombre);
+      } else {
+        newSelection.add(stop.nombre);
+      }
+      return newSelection;
+    });
+  };
+
   const toggleStopOnMap = (stop) => {
     const existingMarker = markers.find(
       (marker) => marker.options.id === stop.nombre
@@ -122,7 +135,7 @@ export const MapPage = function () {
       const newMarker = L.marker(stop.coordenadas, {
         icon: customIcon,
         id: stop.nombre,
-        stop: stop, // Pasar la parada completa
+        stop: stop,
       })
         .addTo(map)
         .bindPopup(
@@ -133,6 +146,7 @@ export const MapPage = function () {
       setMarkers((prevMarkers) => [...prevMarkers, newMarker]);
       map.setView(stop.coordenadas, 16);
     }
+    toggleStopSelection(stop);
   };
 
   const handleSearch = async (event) => {
@@ -140,13 +154,11 @@ export const MapPage = function () {
     setSearchTerm(term);
 
     if (term) {
-      // Filtrar paradas
       const filtered = stops.filter((stop) =>
         stop.nombre.toLowerCase().includes(term)
       );
       setFilteredStops(filtered);
 
-      // Geocodificación
       try {
         const provider = new L.Control.Geocoder.Nominatim();
         const results = await new Promise((resolve) => {
@@ -174,11 +186,11 @@ export const MapPage = function () {
     }));
 
     try {
-      const token = localStorage.getItem("token"); // Obtener el token del almacenamiento local
+      const token = localStorage.getItem("token");
       await axios.post(
         "http://localhost:3000/api/favorites",
         { stopName, isFavorite: !favorites[stopName], coordinates },
-        { headers: { Authorization: `Bearer ${token}` } } // Incluir el token en los headers
+        { headers: { Authorization: `Bearer ${token}` } }
       );
     } catch (error) {
       console.error("Error saving favorite:", error);
@@ -187,7 +199,7 @@ export const MapPage = function () {
 
   const fetchFavorites = async () => {
     try {
-      const token = localStorage.getItem("token"); // Obtener el token del almacenamiento local
+      const token = localStorage.getItem("token");
       const response = await axios.get("http://localhost:3000/api/favorites", {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -202,7 +214,7 @@ export const MapPage = function () {
   };
 
   useEffect(() => {
-    fetchFavorites(); // Cargar los favoritos al montar el componente
+    fetchFavorites();
   }, []);
 
   useEffect(() => {
@@ -258,6 +270,7 @@ export const MapPage = function () {
       }
       markers.forEach((marker) => map.removeLayer(marker));
       setMarkers([]);
+      setSelectedStops(new Set());
     } else {
       setActiveLine(line._id);
       fetchStopsAndRoute(line);
@@ -353,27 +366,30 @@ export const MapPage = function () {
                   filteredStops.map((stop) => (
                     <div
                       key={stop.nombre}
-                      className="p-4 bg-white  rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-300"
+                      className={`p-4 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-300 cursor-pointer ${
+                        selectedStops.has(stop.nombre)
+                          ? "bg-green-100"
+                          : "bg-white"
+                      }`}
+                      onClick={() => toggleStopOnMap(stop)}
                     >
                       <div className="flex justify-between items-start">
-                        <div
-                          className="cursor-pointer flex-grow"
-                          onClick={() => toggleStopOnMap(stop)}
-                        >
+                        <div className="flex-grow">
                           <h3 className="font-semibold text-[#63997a] mb-1">
                             {stop.nombre}
                           </h3>
                           <p className="text-sm text-gray-600">{stop.info}</p>
                         </div>
                         <button
-                          onClick={() =>
-                            toggleFavorite(stop.nombre, stop.coordenadas)
-                          }
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            toggleFavorite(stop.nombre, stop.coordenadas);
+                          }}
                           className="ml-2 p-1 rounded-full hover:bg-gray-100 transition-colors duration-200"
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            fill={favorites[stop.nombre] ? "blue" : "none"}
+                            fill={favorites[stop.nombre] ? "red" : "none"}
                             viewBox="0 0 24 24"
                             stroke="currentColor"
                             className="w-6 h-6"
@@ -410,13 +426,15 @@ export const MapPage = function () {
                       return (
                         <div
                           key={stop.nombre}
-                          className="p-4 bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-300"
+                          className={`p-4 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-300 cursor-pointer ${
+                            selectedStops.has(stop.nombre)
+                              ? "bg-green-100"
+                              : "bg-white"
+                          }`}
+                          onClick={() => toggleStopOnMap(stop)}
                         >
                           <div className="flex justify-between items-start">
-                            <div
-                              className="cursor-pointer flex-grow"
-                              onClick={() => toggleStopOnMap(stop)}
-                            >
+                            <div className="flex-grow">
                               <h3 className="font-semibold text-blue-500 mb-1">
                                 {stop.nombre}
                               </h3>
@@ -425,14 +443,15 @@ export const MapPage = function () {
                               </p>
                             </div>
                             <button
-                              onClick={() =>
-                                toggleFavorite(stop.nombre, stop.coordenadas)
-                              }
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                toggleFavorite(stop.nombre, stop.coordenadas);
+                              }}
                               className="ml-2 p-1 rounded-full hover:bg-gray-100 transition-colors duration-200"
                             >
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
-                                fill={favorites[stop.nombre] ? "blue" : "none"}
+                                fill={favorites[stop.nombre] ? "red" : "none"}
                                 viewBox="0 0 24 24"
                                 stroke="currentColor"
                                 className="w-6 h-6"
